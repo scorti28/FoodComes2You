@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { TransitionPresets } from '@react-navigation/stack';
 import SignInWelcomeScreen from '../screens/authScreens/SignInWelcomeScreen';
 import SignInScreen from '../screens/authScreens/SignInScreen';
+import HomeScreen from '../screens/HomeScreen';
 
 const AuthStack = createStackNavigator();
 
@@ -26,6 +27,16 @@ export default function AuthFunction() {
           ...TransitionPresets.RevealFromBottomAndroid
         }}
       />
+
+      <AuthStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.RevealFromBottomAndroid
+        }}
+      />
+      
     </AuthStack.Navigator>
   );
 }

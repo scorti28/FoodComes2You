@@ -20,10 +20,6 @@ export default function SignInScreen({navigation}) {
         <Text style={styles.title}>Sign In</Text>
       </View>
 
-      <View style={{ alignItems: "center", marginTop: 10 }}>
-        <Text style={styles.text1}>Please introduce your email and password!</Text>
-      </View>
-
       <View>
         <View style={{ marginTop: 20 }}>
           <TextInput
@@ -64,6 +60,7 @@ export default function SignInScreen({navigation}) {
             title = "SIGN IN"
             buttonStyle = {parameters.styledButton}
             titleStyle = {parameters.buttonTitle}
+            onPress = {() => navigation.navigate("HomeScreen")}
         />
       </View>
 
