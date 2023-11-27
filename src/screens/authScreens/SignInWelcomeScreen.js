@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper';
 import { Button } from 'react-native-elements';
 import { colors, parameters } from '../../global/styles';
 
-export default function SignInWelcomeScreen() {
+export default function SignInWelcomeScreen({navigation}) {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
@@ -43,6 +43,7 @@ export default function SignInWelcomeScreen() {
             title="SIGN IN"
             buttonStyle={parameters.styledButton}
             titleStyle={parameters.buttonTitle}
+            onPress={() => navigation.navigate("SignInScreen")}
           />
         </View>
 

@@ -3,14 +3,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import { colors, parameters } from '../global/styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function Header({ title, type }) {
+export default function Header({ title, type, navigation }) {
   return (
     <View style={styles.header}>
       <Icon
         name={type}
         color={colors.headerText}
         size={28}
-        onPress={() => {}}
+        onPress={() => {navigation.goBack()}}
       />
       <Text style={styles.headerText}>{title}</Text>
     </View>
