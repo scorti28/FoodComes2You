@@ -65,7 +65,6 @@ export default function SignInScreen() {
             buttonStyle = {parameters.styledButton}
             titleStyle = {parameters.buttonTitle}
         />
-
       </View>
 
       <View style = {{alignItems:"center", marginTop:15}}>
