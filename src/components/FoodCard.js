@@ -22,7 +22,6 @@ export default function FoodCard({
                     style = {{...styles.image, width:screenWidth}}
                     source = {images}
                 />
-            </View>
 
             <View>
                 <View>
@@ -44,6 +43,8 @@ export default function FoodCard({
                     </View>
                 </View>
             </View>
+            </View>
+
             <View style={styles.review}>
                 <Text style={styles.averageReview}>{averageReview}</Text>
                 <Text style={styles.numberOfReview}>{numberOfReview} reviews</Text>
