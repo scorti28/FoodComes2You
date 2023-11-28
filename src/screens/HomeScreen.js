@@ -19,7 +19,7 @@ export default function HomeScreen() {
                 stickyHeaderIndices={[0]}
                 showsVerticalScrollIndicator = {true}
             >
-            <View>
+            <View style = {styles.tabScrolling}>
                 <View style={styles.deliveryCofiguration}>
                     <TouchableOpacity onPress={() => setDelivery(true)}>
                         <View style={{ ...styles.deliveryButton, backgroundColor: delivery ? colors.buttons : colors.grey5 }}>
@@ -271,5 +271,9 @@ const styles = StyleSheet.create({
     },
     viewRestaurant:{
         paddingBottom:20
+    },
+    tabScrolling:{
+        backgroundColor: colors.cardbackground,
+        paddingBottom:5
     }
 });
