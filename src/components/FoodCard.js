@@ -20,7 +20,7 @@ export default function FoodCard({
             <View style = {{...styles.cardView, width:screenWidth}}>
                 <Image 
                     style = {{...styles.image, width:screenWidth}}
-                    source = {{uri:images}}
+                    source = {images}
                 />
             </View>
 

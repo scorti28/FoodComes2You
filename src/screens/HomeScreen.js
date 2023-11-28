@@ -107,6 +107,7 @@ export default function HomeScreen() {
               <View>
                 <FoodCard
                   screenWidth={SCREEN_WIDTH * 0.8}
+                  images = {item.images}
                 />
               </View>
             )}
