@@ -1,9 +1,12 @@
 import HomeHeader from "../components/HomeHeader";
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
-import {filterData} from '../global/Data';
+import {filterData, restaurantsData} from '../global/Data';
+import FoodCard from "../components/FoodCard";
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen() {
     const [delivery, setDelivery] = useState(true);
@@ -70,32 +73,45 @@ export default function HomeScreen() {
             </View>
 
             <View>
-                <FlatList
-                    horizontal = {true}
-                    showsHorizontalScrollIndicator = {false}
-                    data = {filterData}
-                    keyExtractor = {(item) => item.id}
-                    extraData = {indexCheck}
-                    renderItem = {({item, index}) => (
-                        <Pressable onPress = {() => {setIndexCheck(item.id)}}>
-
-                            <View style = {indexCheck === item.id ? {...styles.smallCardSelected}:{...styles.smallCard}}>
-                                <Image 
-                                    style = {styles.imageCardStyle}
-                                    source = {item.image}
-                                />
-                                <View>
-                                    <Text style = {indexCheck === item.id ? {...styles.textCardSelectedStyle} : {...styles.textCardNotSelectedStyle}}>{item.name}</Text>
-                                </View>
-                            </View>
-                        </Pressable>
-                    )}
-                
-                />
-            </View>
+                 <FlatList
+                   horizontal={true}
+                   showsHorizontalScrollIndicator={false}
+                   data={filterData}
+                   keyExtractor={(item) => item.id.toString()} 
+                   extraData={indexCheck}
+                   renderItem={({ item, index }) => (
+                     <Pressable onPress={() => { setIndexCheck(item.id) }}>
+                       <View style={indexCheck === item.id ? { ...styles.smallCardSelected } : { ...styles.smallCard }}>
+                         <Image
+                           style={styles.imageCardStyle}
+                           source={item.image}
+                         />
+                         <View>
+                           <Text style={indexCheck === item.id ? { ...styles.textCardSelectedStyle } : { ...styles.textCardNotSelectedStyle }}>{item.name}</Text>
+                         </View>
+                       </View>
+                     </Pressable>
+                   )}
+  />
+</View>
             <View style = {styles.categoriesTextView}>
                 <Text style = {styles.categoriesStyle}>Free Delivery Now</Text>
             </View>
+        <View>
+          <FlatList
+            style={styles.restaurantList}
+            horizontal={true}
+            data={restaurantsData}
+            keyExtractor={(item, index) => index.toString()} 
+            renderItem={({ item }) => (
+              <View>
+                <FoodCard
+                  screenWidth={SCREEN_WIDTH * 0.8}
+                />
+              </View>
+            )}
+          />
+        </View>
             </ScrollView>
         </View>
     );
@@ -190,5 +206,9 @@ const styles = StyleSheet.create({
     textCardNotSelectedStyle:{
         fontWeight:"bold",
         color: colors.grey2
+    },
+    restaurantList:{
+        marginTop:10,
+        marginBottom:10
     }
 });
