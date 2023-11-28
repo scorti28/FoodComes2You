@@ -46,7 +46,7 @@ export default function FoodCard({
             </View>
             <View style={styles.review}>
                 <Text style={styles.averageReview}>{averageReview}</Text>
-                <Text>{numberOfReview} reviews</Text>
+                <Text style={styles.numberOfReview}>{numberOfReview} reviews</Text>
             </View>
         </TouchableOpacity>
     )
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
         fontSize:17,
         fontWeight:'bold',
         color:colors.grey1,
-        marginTop:5
+        marginTop:5,
+        marginLeft:10
     },
     detailsCard:{
         flex:1,
@@ -116,5 +117,11 @@ const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:'bold',
         marginTop:-3
+    },
+    numberOfReview:{
+        color:"white",
+        fontSize:13,
+        marginRight:0,
+        marginLeft:0
     }
 })
