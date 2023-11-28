@@ -93,7 +93,7 @@ export default function HomeScreen() {
                      </Pressable>
                    )}
   />
-</View>
+        </View>
             <View style = {styles.categoriesTextView}>
                 <Text style = {styles.categoriesStyle}>Free Delivery Now</Text>
             </View>
@@ -118,6 +118,53 @@ export default function HomeScreen() {
               </View>
             )}
           />
+        </View>
+
+        <View style = {styles.categoriesTextView}>
+                <Text style = {styles.categoriesStyle}>Available promotions</Text>
+            </View>
+        <View>
+          <FlatList
+            style={styles.restaurantList}
+            horizontal={true}
+            data={restaurantsData}
+            keyExtractor={(item, index) => index.toString()} 
+            showsHorizontalScrollIndicator = {false}
+            renderItem={({ item }) => (
+              <View style = {{marginRight:5}}>
+                <FoodCard
+                  screenWidth={SCREEN_WIDTH * 0.8}
+                  images = {item.images}
+                  restaurantName={item.restaurantName}
+                  farAway={item.farAway}
+                  businessAddress={item.businessAddress}
+                  averageReview={item.averageReview}
+                  numberOfReview={item.numberOfReviews}
+                />
+              </View>
+            )}
+          />
+        </View>
+
+        <View style = {styles.categoriesTextView}>
+                <Text style = {styles.categoriesStyle}>Restaurants near you</Text>
+            </View>
+        <View style = {styles.mapRenderer}>
+                {
+                    restaurantsData.map(item => (
+                        <View key={item.id} style={styles.viewRestaurant}>
+                            <FoodCard
+                                screenWidth={SCREEN_WIDTH * 0.95}
+                                images = {item.images}
+                                restaurantName={item.restaurantName}
+                                farAway={item.farAway}
+                                businessAddress={item.businessAddress}
+                                averageReview={item.averageReview}
+                                numberOfReview={item.numberOfReviews}
+                            />
+                        </View>
+                    ))
+                }
         </View>
             </ScrollView>
         </View>
@@ -217,5 +264,12 @@ const styles = StyleSheet.create({
     restaurantList:{
         marginTop:10,
         marginBottom:10
+    },
+    mapRenderer:{
+        width:SCREEN_WIDTH,
+        paddingTop: 10
+    },
+    viewRestaurant:{
+        paddingBottom:20
     }
 });
