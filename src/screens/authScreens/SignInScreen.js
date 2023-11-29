@@ -60,7 +60,6 @@ export default function SignInScreen({navigation}) {
             title = "SIGN IN"
             buttonStyle = {parameters.styledButton}
             titleStyle = {parameters.buttonTitle}
-            headerShown = {false}
             onPress = {() => navigation.navigate("RootClientTabs")}
         />
       </View>

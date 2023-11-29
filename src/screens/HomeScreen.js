@@ -9,7 +9,7 @@ import Countdown from 'react-native-countdown-component';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     const [delivery, setDelivery] = useState(true);
     const [indexCheck, setIndexCheck] = useState("0");
 
@@ -28,7 +28,8 @@ export default function HomeScreen() {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setDelivery(false)}>
+                    <TouchableOpacity onPress={() => {setDelivery(false) 
+                                                      navigation.navigate("RestaurantMapScreen")}}>
                         <View style={{ ...styles.deliveryButton, backgroundColor: delivery ? colors.grey5 : colors.buttons }}>
                             <Text style={styles.deliveryText}>Pick-Up</Text>
                         </View>
@@ -179,6 +180,19 @@ export default function HomeScreen() {
                 }
         </View>
             </ScrollView>
+            { delivery && //delivery is true => render data
+            <View style = {styles.floatingButton}>
+                <TouchableOpacity onPress={() => navigation.navigate("RestaurantMapScreen")}> 
+                    <Icon 
+                        name = "map-marker-outline"
+                        type = "material-community"
+                        size = {32}
+                        color={colors.buttons}
+                    />
+                    <Text style = {styles.mapStyle}>Map</Text>
+                </TouchableOpacity>
+            </View>
+            }
         </View>
     );
 }
@@ -297,5 +311,20 @@ const styles = StyleSheet.create({
         fontSize:16,
         marginTop:-10,
         marginRight:5
+    },
+    floatingButton:{
+        position:"absolute",
+        bottom:10,
+        right:15,
+        backgroundColor:"white",
+        elevation:10, 
+        width:60,
+        height:60,
+        borderRadius:30,
+        alignItems:"center"
+    },
+    mapStyle:{
+        color:colors.grey2
     }
+
 });
