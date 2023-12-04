@@ -6,7 +6,7 @@ import SignInScreen from '../screens/authScreens/SignInScreen';
 import HomeScreen from '../screens/HomeScreen';
 import RootClientTabs from './ClientTabs';
 import RestaurantMapScreen from '../screens/RestaurantMapScreen';
-import DrawerNavigator from './DrawerNavigator';
+import DrawerNavigator from "./DrawerNavigator";
 
 const AuthStack = createStackNavigator();
 
