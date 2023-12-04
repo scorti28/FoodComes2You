@@ -56,12 +56,12 @@ export default function SignInScreen({navigation}) {
         </View>
 
       <View style = {{marginHorizontal:20, marginTop:20}}>
-        <Button 
-            title = "SIGN IN"
-            buttonStyle = {parameters.styledButton}
-            titleStyle = {parameters.buttonTitle}
-            onPress = {() => navigation.navigate("RootClientTabs")}
-        />
+      <Button 
+        title="SIGN IN"
+        buttonStyle={parameters.styledButton}
+        titleStyle={parameters.buttonTitle}
+        onPress={() => navigation.navigate('DrawerNavigator')}
+      />
       </View>
 
       <View style = {{alignItems:"center", marginTop:15}}>

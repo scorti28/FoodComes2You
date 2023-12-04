@@ -32,12 +32,12 @@ export default function AuthFunction() {
       />
 
       <AuthStack.Screen
-          name="RootClientTabs"
-          component={RootClientTabs}
-          options={{
+        name="DrawerNavigator"
+        component={DrawerNavigator}
+        options={{
             headerShown: false,
             ...TransitionPresets.RevealFromBottomAndroid
-          }}
+        }}
       />
 
       <AuthStack.Screen
