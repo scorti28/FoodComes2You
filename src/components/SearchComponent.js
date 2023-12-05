@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from '@react-navigation/native';
 import { filterData } from '../global/Data';
+import { filter } from 'lodash';
 
 export default function SearchComponent() {
 
@@ -13,6 +14,21 @@ export default function SearchComponent() {
   const textInput = useRef(0);
   const [data, setData] = useState([...filterData]);
   const navigation = useNavigation();
+
+  const contains = ({name}, query) => {
+    if(name.includes(query)){
+        return true;
+    }
+    return false;
+  }
+
+  const handleSearch = (text) => {
+    const dataS = filter(filterData, userSearch => {
+      return contains(userSearch, text);
+    });
+  
+    setData([...dataS]);
+  }
 
   return (
     <View style={{alignItems:"center"}}>
@@ -33,12 +49,15 @@ export default function SearchComponent() {
         <View style={styles.modal}>
             <View style={styles.view1}>
                 <View style={styles.textInput}>
-                    <Animatable.View>
+                    <Animatable.View
+                        animation={textInputFocussed ? "fadeInRight" : "fadeInLeft"}
+                        duration={400}
+                    >
                         <Icon name={textInputFocussed ? "arrow-back" : "search"}
                             onPress={() => {
                                 if(textInputFocussed)
                                 setModalVisible(false)
-                                setTextInputFocussed(false)
+                                setTextInputFocussed(true)
                             }}
                             style = {styles.icon2}
                             type='material'
@@ -51,9 +70,15 @@ export default function SearchComponent() {
                         placeholder=''
                         autoFocus = {false}
                         ref = {textInput}
+                        onFocus={() => setTextInputFocussed(true)}
+                        onBlur={() => setTextInputFocussed(false)}
+                        onChangeText={handleSearch}
                     />
 
-                    <Animatable.View>
+                    <Animatable.View
+                        animation={textInputFocussed ? "fadeInLeft" : ""}
+                        duration={400}
+                    >
                       <Icon
                         name = {textInputFocussed ? "window-close" : null}
                         iconStyle = {{color:colors.grey3}}
@@ -73,7 +98,7 @@ export default function SearchComponent() {
                 renderItem={({item}) => (
                     <TouchableOpacity
                         onPress={() => {
-                            Keyboard.dismiss
+                            Keyboard.dismiss()
                             navigation.navigate("RestaurantSearchScreen", {item:item.name})
                             setModalVisible(false)
                             setTextInputFocussed(true)
