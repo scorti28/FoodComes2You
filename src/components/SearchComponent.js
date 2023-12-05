@@ -99,7 +99,7 @@ export default function SearchComponent() {
                     <TouchableOpacity
                         onPress={() => {
                             Keyboard.dismiss()
-                            navigation.navigate("RestaurantSearchScreen", {item:item.name})
+                            navigation.navigate("SearchResultScreen", {item:item.name})
                             setModalVisible(false)
                             setTextInputFocussed(true)
                         }}>

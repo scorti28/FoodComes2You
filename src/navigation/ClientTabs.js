@@ -7,6 +7,7 @@ import { colors } from '../global/styles';
 import MySearchScreen from '../screens/SearchScreen';
 import MyOrdersScreen from '../screens/MyOrdersScreen';
 import MyAccountScreen from '../screens/MyAccountScreen';
+import { ClientStack } from './ClientStack';
 
 const ClientTabs = createBottomTabNavigator();
 
@@ -34,7 +35,7 @@ export default function RootClientTabs(){
 
             <ClientTabs.Screen
                 name = "SearchScreen"
-                component={MySearchScreen} 
+                component={ClientStack} 
                 options={
                     {
                         headerShown: false,
