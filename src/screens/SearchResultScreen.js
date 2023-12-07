@@ -24,6 +24,7 @@ const SearchResultScreen = ({ navigation, route }) => {
               farAway={item.farAway}
               businessAddress={item.businessAddress}
               productData={item.productData}
+              OnPressRestaurantCard={() => navigation.navigate("RestaurantHomeScreen", {id:index, restaurant:item.restaurantName})}
             />
             )}
 

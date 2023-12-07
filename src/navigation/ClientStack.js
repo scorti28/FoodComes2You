@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import MySearchScreen from '../screens/SearchScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
+import RestaurantHomeScreen from '../screens/RestaurantHomeScreen';
 
 
 const ClientSearch = createStackNavigator();
@@ -23,6 +24,16 @@ export function ClientStack() {
         <ClientSearch.Screen 
             name="SearchResultScreen"
             component={SearchResultScreen}
+            options={
+                () => ({
+                    headerShown:false
+                })
+            }
+        />
+
+        <ClientSearch.Screen 
+            name="RestaurantHomeScreen"
+            component={RestaurantHomeScreen}
             options={
                 () => ({
                     headerShown:false
