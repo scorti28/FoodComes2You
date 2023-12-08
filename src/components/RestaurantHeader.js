@@ -23,7 +23,6 @@ export default function RestaurantHeader({navigation, id}) {
       <ImageBackground
         style={styles.container}
         source={restaurantsData[id].images}
-        imageStyle={styles.image}
       >
 
         <View style={styles.view1}>
@@ -57,11 +56,6 @@ export default function RestaurantHeader({navigation, id}) {
 
 const styles = StyleSheet.create({
     container:{height:150,
-    },
-
-    image:{
-        borderTopLeftRadius:5,
-        borderTopRightRadius:5
     },
 
 view1: {flexDirection:"row",

@@ -23,3 +23,31 @@ export const productData = [
     {name:"American bucket", price:60, image: require("../images/American.jpeg"), details:"Fresh checken meat", id:6}, 
     {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg"), details:"Bucket for every Christmas", id:7}
 ];
+
+export const menuData = [
+    
+    {title:"Beef",special:false,key:0,},
+    {title:"Chicken", special:false,key:1},
+    {title:"Veggie burger",special:false ,key:2},
+    {title:"Fries",special:false ,key:3},
+    {title:"Salads",special:false,key:4},
+    {title:"Milkshakes",special:false,key:5},
+    {title:"Cold drinks",special:false,key:6},
+    {title:"Desserts",special:false,key:7},
+    {title:"Hot drinks",special:false,key:8},
+  
+];
+  
+  export const specialData =[
+    {title:"Limited offer",key:0},
+    {title:"Salads offer",key:1},
+    {title:"Fast food offer",key:2},
+];    
+
+export const menu = [
+    { key: 1, title: 'Beef' },
+    { key: 2, title: 'Chicken' },
+    { key: 3, title: 'Veggie burger' },
+    { key: 4, title: 'Share box' }
+];
+

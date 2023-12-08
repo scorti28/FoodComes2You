@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View , Dimensions} from 'react-native';
+import { StyleSheet, Text, View , Dimensions, TouchableOpacity, Modal} from 'react-native';
 import React, {useState} from 'react';
 import RestaurantHeader from '../components/RestaurantHeader';
 import { colors, fonts } from '../global/styles';
 import { ScrollView } from 'react-native';
-import { restaurantsData } from '../global/Data';
 import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
+import MenuScreen from './RestaurantTabs/MenuScreen';
+import { restaurantsData} from '../global/Data';
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const initialLayout = SCREEN_WIDTH;
@@ -14,11 +16,11 @@ export default function RestaurantHomeScreen({navigation, route}) {
   
   const {id, restaurant} = route.params;
   const [routes] = useState([
-        {key:'first', title:"Menu"},
-        {key:'second', title:"Info"},
-        {key:'third', title:"Reviews"},
-        {key:'fourth', title:"Gallery"}
-  ])
+        {key:1, title:"Menu"},
+        {key:2, title:"Info"},
+        {key:3, title:"Reviews"},
+        {key:4, title:"Gallery"}
+  ]);
 
   const [index, setIndex] = useState(0);
 
@@ -34,12 +36,17 @@ export default function RestaurantHomeScreen({navigation, route}) {
     />
 )
 
+
     const updateRoute1 = () => {
         return(
             <View>
 
             </View>
         )
+    }
+
+    const menuPressed = () => {
+        navigation.navigate("MenuProductsScreen");
     }
 
 
@@ -106,14 +113,30 @@ export default function RestaurantHomeScreen({navigation, route}) {
                 />
 
             </View>
+              {
+                index === 0 && 
+                    <MenuScreen onPress={menuPressed}/>
+              }  
+
         </ScrollView>
+
+        <TouchableOpacity>
+            <View style={styles.view11}>
+                <View style={styles.view12}>
+                    <Text style={styles.text13}>View Shopping Cart</Text>
+                    <View style={styles.view13}>
+                        <Text style={styles.text13}>0</Text>
+                    </View>
+                </View>
+
+            </View>
+        </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     container:{flex:1,
-        paddingTop:20
     },
 
 view1:{
@@ -291,7 +314,7 @@ paddingTop:25
 
 text14:{fontWeight:"bold",
         marginLeft:40,
-        color:colors.black,
+        color:"#FFFFFF",
         fontSize:18
     },
 
