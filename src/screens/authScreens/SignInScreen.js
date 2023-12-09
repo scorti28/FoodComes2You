@@ -129,6 +129,7 @@ export default function SignInScreen({navigation}) {
             title = "Create a new account!"
             buttonStyle = {styles.createButton}
             titleStyle = {styles.createButtonTitle}
+            onPress={() => navigation.navigate("SignUpScreen")}
         />
       </View>
 
