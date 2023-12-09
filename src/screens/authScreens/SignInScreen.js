@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useContext} from 'react';
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { colors, parameters } from '../../global/styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,6 +7,7 @@ import * as Animatable from 'react-native-animatable';
 import { Button, SocialIcon } from 'react-native-elements';
 import { Formik } from 'formik';
 import auth from "@react-native-firebase/auth";
+import { SignInContext } from '../../contexts/authContext';
 
 
 export default function SignInScreen({navigation}) {
@@ -14,13 +15,14 @@ export default function SignInScreen({navigation}) {
   const[textInput2Focussed, setTextInput2Focussed] = useState(false);
   const textInput1 = useRef(1);
   const textInput2 = useRef(2);
+  const {dispatchSignedIn} = useContext(SignInContext);
 
   async function signIn(data){
     try{
     const {password, email} = data
     const user = await auth().signInWithEmailAndPassword(email, password)
     if(user){
-      console.log("User is signed in");
+      dispatchSignedIn({type:"UPDATE_SIGN_IN", payload:{userToken:"signed-in"}})
     }
     }
     catch(error){
