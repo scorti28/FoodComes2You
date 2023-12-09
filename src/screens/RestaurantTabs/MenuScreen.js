@@ -10,7 +10,7 @@ export default function MenuScreen({navigation, restaurant, onPress}) {
     <View style={styles.container}>
       <View>
         {
-            specialData.map((items) => 
+            specialData && specialData.map((items) => 
                 <View key={items.key} style={styles.view1}>
                     <TouchableOpacity onPress={onPress}>
                         <View style={styles.view2}>
@@ -29,7 +29,7 @@ export default function MenuScreen({navigation, restaurant, onPress}) {
 
       <View>
         {
-            menuData.map((items) => 
+            menuData && menuData.map((items) => 
                 <View key={items.key} style={styles.view1}>
                     <TouchableOpacity onPress={onPress}>
                         <View style={styles.view2}>

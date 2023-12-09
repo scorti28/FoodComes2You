@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , Dimensions, TouchableOpacity, Modal} from 'react-native';
+import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import RestaurantHeader from '../components/RestaurantHeader';
 import { colors, fonts } from '../global/styles';
@@ -16,10 +16,10 @@ export default function RestaurantHomeScreen({navigation, route}) {
   
   const {id, restaurant} = route.params;
   const [routes] = useState([
-        {key:1, title:"Menu"},
-        {key:2, title:"Info"},
-        {key:3, title:"Reviews"},
-        {key:4, title:"Gallery"}
+        {key:'first', title:"Menu"},
+        {key:'second', title:"Info"},
+        {key:'third', title:"Reviews"},
+        {key:'forth', title:"Gallery"}
   ]);
 
   const [index, setIndex] = useState(0);

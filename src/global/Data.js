@@ -39,9 +39,9 @@ export const menuData = [
 ];
   
   export const specialData =[
-    {title:"Limited offer",key:0},
-    {title:"Salads offer",key:1},
-    {title:"Fast food offer",key:2},
+    {key:0, title:"Limited offer"},
+    {key:1, title:"Salads offer"},
+    {key:2, title:"Fast food offer"},
 ];    
 
 export const menu = [
