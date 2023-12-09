@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "541404345413",
+    "project_id": "foodcomes2you",
+    "storage_bucket": "foodcomes2you.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541404345413:android:520d66e06a7e23afcd5f2c",
+        "android_client_info": {
+          "package_name": "com.foodcomestoyou"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0PUMChSqEQc2VsU1RbEB5FuUxxGsu5h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

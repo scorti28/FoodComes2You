@@ -1,10 +1,12 @@
 import React, {useRef, useState} from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { colors, parameters } from '../../global/styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../../components/Header';
 import * as Animatable from 'react-native-animatable';
 import { Button, SocialIcon } from 'react-native-elements';
+import { Formik } from 'formik';
+import auth from "@react-native-firebase/auth";
 
 
 export default function SignInScreen({navigation}) {
@@ -13,6 +15,19 @@ export default function SignInScreen({navigation}) {
   const textInput1 = useRef(1);
   const textInput2 = useRef(2);
 
+  async function signIn(data){
+    try{
+    const {password, email} = data
+    const user = await auth().signInWithEmailAndPassword(email, password)
+    if(user){
+      console.log("User is signed in");
+    }
+    }
+    catch(error){
+      Alert.alert(error.name, error.message);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Header title="Create Account" type="arrow-left-circle" navigation = {navigation}/>
@@ -20,12 +35,20 @@ export default function SignInScreen({navigation}) {
         <Text style={styles.title}>Sign In</Text>
       </View>
 
-      <View>
+      <Formik initialValues={{email: "", password: ""}}
+              onSubmit={(values) => {
+                  signIn(values);
+              }}>
+                { (props) => //return all the items below
+          <View>
+         <View>
         <View style={{ marginTop: 20 }}>
           <TextInput
             style={styles.TextInput1}
             placeholder='Email'
             ref = {textInput1}
+            onChangeText={props.handleChange('email')}
+            value={props.values.email}
           />
         </View>
 
@@ -44,6 +67,8 @@ export default function SignInScreen({navigation}) {
             ref = {textInput2}
             onFocus={() => setTextInput2Focussed(false)}
             onBlur={() => setTextInput2Focussed(true)}
+            onChangeText={props.handleChange('password')}
+            value = {props.values.password}
           />
 
           <Animatable.View animation={textInput2Focussed?"":"fadeInLeft"} duration={400}>
@@ -60,9 +85,12 @@ export default function SignInScreen({navigation}) {
         title="SIGN IN"
         buttonStyle={parameters.styledButton}
         titleStyle={parameters.buttonTitle}
-        onPress={() => navigation.navigate('DrawerNavigator')}
+        onPress={() => props.handleSubmit()}
       />
       </View>
+      </View>
+        }
+      </Formik>
 
       <View style = {{alignItems:"center", marginTop:15}}>
         <Text style = {{...styles.text1, textDecorationLine:"underline", fontSize: 17}}>Forgot password? Reset here!</Text>
