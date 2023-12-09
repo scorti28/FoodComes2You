@@ -1,11 +1,22 @@
-import { StyleSheet, Text, View} from 'react-native'
+import { StyleSheet, Text, View, Image} from 'react-native'
 import React from 'react'
 import { colors } from '../global/styles'
 
-export default function MenuCard() {
+export default function MenuCard({productName, price, image, productDetails}) {
   return (
     <View style={styles.view1}>
-      <Text>MenuCard</Text>
+      <View style={styles.view2}>
+        <View style={styles.view3}>
+          <Text style={styles.text1}>{productName}</Text>
+          <View>
+            <Text style={styles.text2}>{productDetails}</Text>
+          </View>
+          <Text style={styles.text3}>RON {price}</Text>
+          </View>
+          <View>
+              <Image style={styles.image} source={image}/>
+          </View>
+      </View>
     </View>
   )
 }
@@ -47,6 +58,8 @@ fontSize:15,
 color:colors.black,
 },
 
-image:{flex:1
+image:{
+  width: 80,
+  height: 80,
 }
 })

@@ -51,3 +51,159 @@ export const menu = [
     { key: 4, title: 'Share box' }
 ];
 
+export const menuDetailedData =[
+    { 
+      meal:"Chilli con carne",
+      price:70.20,
+      image:require("../images/ChilliConCarne.jpeg"),
+      details:"Full of layered complexity, satisfying texture and, a robust, thick sauce",
+      preferenceTitle:["Choose your 2 dips","Choose your 1st drink flavour", "Choose your 2nd drink flavour","Would you like to be spycier. Add flavors?"],
+      preferenceData: [
+
+                      [{name:"Chipotle chillies",price:8.91,checked:false,id:0},
+                      {name:"Dark chocolate",price:8.75,checked:false ,id:1},
+                      {name:'Coffe',price:11.99 ,checked:false,id:2}
+                      ],
+
+                      [{name:"Small Coke",price:8.90 ,checked:false,id:0 },
+                      {name:"Small Fanta Orange",price:8.90 ,checked:false,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+
+                      [{name:"Small Coke",price:8.90,checked:false ,id:0},
+                      {name:"Small Fanta Orange",price:8.90,checked:false ,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+                          
+                      [{name:"Hot sauce",price:8.90 ,checked:false,id:0},
+                      {name:"BBQ Sauce",price:8.90,checked:false ,id:1},
+                      {name:'Tikka Sauce',price:11.90,checked:false ,id:2},
+                      ],
+                      ],
+      minimum_quatity:[2,1,1,null,null],
+      counter:[0,0,0,0,0],
+      required: [true,true,true,false,false],              
+      id:0
+    },
+  
+    { 
+      meal:"Bulgar koftesi", 
+      price:29.30,
+      image:require("../images/BulgarKoftesi.jpeg"),
+      details:"Family recipe for Turkish-Cypriot meatballs",
+      preferenceTitle:["Choose your 2 dips","Choose your 1st drink flavour", "Choose your 2nd drink flavour","Would you like to be spycier. Add flavors?"],
+      preferenceData: [
+
+                      [{name:"Chipotle chillies",price:8.91,checked:false,id:0},
+                      {name:"Dark chocolate",price:8.75,checked:false ,id:1},
+                      {name:'Coffe',price:11.99 ,checked:false,id:2}
+                      ],
+
+                      [{name:"Small Coke",price:8.90 ,checked:false,id:0 },
+                      {name:"Small Fanta Orange",price:8.90 ,checked:false,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+
+                      [{name:"Small Coke",price:8.90,checked:false ,id:0},
+                      {name:"Small Fanta Orange",price:8.90,checked:false ,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+                          
+                      [{name:"Hot sauce",price:8.90 ,checked:false,id:0},
+                      {name:"BBQ Sauce",price:8.90,checked:false ,id:1},
+                      {name:'Tikka Sauce',price:11.90,checked:false ,id:2},
+                      ],
+        ],
+        minimum_quatity:[2,1,2,null,null],
+        counter:[0,0,0,0,0],
+        required: [true,true,true,false,false], 
+        id:1
+    },
+  
+    {
+      meal:"Blue cheese and bacon smash Burger",
+      price:45.70,
+      image:require("../images/BlueCheeseBurger.jpeg"),
+      details:"Two caramelised beef patties – each topped with a rich blue cheese sauce – on a bed of earthy beetroot and finished off with sticky, salty bacon jam",
+      preferenceTitle:["Choose your 2 dips","Choose your 1st drink flavour", "Choose your 2nd drink flavour","Would you like to be spycier. Add flavors?"],
+      preferenceData: [
+
+                      [{name:"Chipotle chillies",price:8.91,checked:false,id:0},
+                      {name:"Dark chocolate",price:8.75,checked:false ,id:1},
+                      {name:'Coffe',price:11.99 ,checked:false,id:2}
+                      ],
+
+                      [{name:"Small Coke",price:8.90 ,checked:false,id:0 },
+                      {name:"Small Fanta Orange",price:8.90 ,checked:false,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+
+                      [{name:"Small Coke",price:8.90,checked:false ,id:0},
+                      {name:"Small Fanta Orange",price:8.90,checked:false ,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+                          
+                      [{name:"Hot sauce",price:8.90 ,checked:false,id:0},
+                      {name:"BBQ Sauce",price:8.90,checked:false ,id:1},
+                      {name:'Tikka Sauce',price:11.90,checked:false ,id:2},
+                      ],
+                      ],
+
+        minimum_quatity:[2,1,1,null,null],
+        counter:[0,0,0,0,0],
+        required: [true,true,true,false,false],   
+      id:2
+    },
+  
+    {
+      meal:"Macaronade Setoise",
+      price:50.80,
+      image:require("../images/Macaronade.jpeg"),
+      details:"Made with steak, pork ribs and pork sausages in a rich, espelette pepper-spiked sauce and usually served with penne pasta",
+      preferenceTitle:["Choose your 2 dips","Choose your 1st drink flavour", "Choose your 2nd drink flavour","Would you like to be spycier. Add flavors?"],
+      preferenceData: [
+
+                      [{name:"Chipotle chillies",price:8.91,checked:false,id:0},
+                      {name:"Dark chocolate",price:8.75,checked:false ,id:1},
+                      {name:'Coffe',price:11.99 ,checked:false,id:2}
+                      ],
+
+                      [{name:"Small Coke",price:8.90 ,checked:false,id:0 },
+                      {name:"Small Fanta Orange",price:8.90 ,checked:false,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+
+                      [{name:"Small Coke",price:8.90,checked:false ,id:0},
+                      {name:"Small Fanta Orange",price:8.90,checked:false ,id:1},
+                      {name:'Small Sprite',price:11.90,checked:false ,id:2},
+                      {name:'Small Coke Zero',price:3.95 ,checked:false,id:3},
+                      {name:'Small Syoney Zero',price:3.95 ,checked:false,id:4}
+                      ],
+                          
+                      [{name:"Hot sauce",price:8.90 ,checked:false,id:0},
+                      {name:"BBQ Sauce",price:8.90,checked:false ,id:1},
+                      {name:'Tikka Sauce',price:11.90,checked:false ,id:2},
+                      ],
+                      ],
+      
+        minimum_quatity:[2,1,1,null,null],
+        counter:[0,0,0,0,0],
+        required: [true,true,true,false,false],    
+      id:3
+    }
+]
+

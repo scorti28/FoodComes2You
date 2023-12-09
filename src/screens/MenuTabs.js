@@ -1,12 +1,28 @@
 import React from 'react';
 import { View, StyleSheet,FlatList,TouchableOpacity,Text} from 'react-native';
-import { menuData } from '../global/Data';
+import MenuCard from '../components/MenuCard';
+import { menuDetailedData } from '../global/Data';
 
-export function Route1({navigation}) {
+export function Route1() {
   return (
     <View style={{flex:1}}>
       <View style={styles.view2}>
-        <Text>Menu Tabs</Text>
+        <FlatList 
+          style={{backgroundColor:"white"}}
+          data={menuDetailedData}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index}) =>(
+              <TouchableOpacity>
+                <MenuCard 
+                  productName={item.meal}
+                  image={item.image}
+                  price={item.price}
+                  productDetails={item.details}
+                />
+              </TouchableOpacity>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
     </View>
   )
