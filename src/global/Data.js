@@ -84,7 +84,7 @@ export const menuDetailedData =[
                       {name:'Tikka Sauce',price:11.90,checked:false ,id:2},
                       ],
                       ],
-      minimum_quatity:[2,1,1,null,null],
+      minimum_quantity:[2,1,1,null,null],
       counter:[0,0,0,0,0],
       required: [true,true,true,false,false],              
       id:0
@@ -122,7 +122,7 @@ export const menuDetailedData =[
                       {name:'Tikka Sauce',price:11.90,checked:false ,id:2},
                       ],
         ],
-        minimum_quatity:[2,1,2,null,null],
+        minimum_quantity:[2,1,2,null,null],
         counter:[0,0,0,0,0],
         required: [true,true,true,false,false], 
         id:1
@@ -161,7 +161,7 @@ export const menuDetailedData =[
                       ],
                       ],
 
-        minimum_quatity:[2,1,1,null,null],
+        minimum_quantity:[2,1,1,null,null],
         counter:[0,0,0,0,0],
         required: [true,true,true,false,false],   
       id:2
@@ -200,7 +200,7 @@ export const menuDetailedData =[
                       ],
                       ],
       
-        minimum_quatity:[2,1,1,null,null],
+        minimum_quantity:[2,1,1,null,null],
         counter:[0,0,0,0,0],
         required: [true,true,true,false,false],    
       id:3

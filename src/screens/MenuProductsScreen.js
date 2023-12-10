@@ -27,7 +27,7 @@ export default function MenuProductsScreen({ navigation, route }) {
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 1:
-        return <Route1 name ={navigation} />
+        return <Route1 navigation ={navigation} />
       case 2:
         return <Route2 name={navigation} />
       case 3:
@@ -43,7 +43,7 @@ export default function MenuProductsScreen({ navigation, route }) {
     <View style={styles.container}>
       <View style={styles.view1}>
         <Icon
-          name="arrow-left"
+          name="arrow-left-circle"
           type="material-community"
           color= '#FFFFFF'
           size={25}
