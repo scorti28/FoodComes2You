@@ -14,6 +14,7 @@ export default function SignInScreen({ navigation }) {
   const textInput1 = useRef(1);
   const textInput2 = useRef(2);
   const { dispatchSignedIn } = useContext(SignInContext);
+  const [showPassword, setShowPassword] = useState(true);
 
   async function signIn(data) {
     try {
@@ -60,19 +61,21 @@ export default function SignInScreen({ navigation }) {
                 </Animatable.View>
 
                 <TextInput
-                  style={{ width: "85%" }}
+                  style={{ flex: 1 }}
                   placeholder='Password'
                   ref={textInput2}
                   onFocus={() => setTextInput2Focussed(false)}
                   onBlur={() => setTextInput2Focussed(true)}
                   onChangeText={props.handleChange('password')}
                   value={props.values.password}
+                  secureTextEntry={showPassword}
                 />
 
                 <Animatable.View animation={textInput2Focussed ? "" : "fadeInLeft"} duration={400}>
                   <Icon
-                    name="eye-off"
+                    name={showPassword ? 'eye-off' : 'eye'}
                     style={styles.visibilityIcon}
+                    onPress={() => setShowPassword((prev) => !prev)}
                   />
                 </Animatable.View>
               </View>

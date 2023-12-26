@@ -14,8 +14,9 @@ const initialValues = {phoneNumber:"", name:"", familyName:"", password:"", emai
 
 export default function SignUpScreen({navigation}) {
 
-    const[passwordFocussed, setPasswordFocussed] = useState(false)
-    const[passwordBlured,setPasswordBlured] = useState(false)
+    const[passwordFocussed, setPasswordFocussed] = useState(false);
+    const[passwordBlured,setPasswordBlured] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
 
     async function signUp(values){
         const {email, password, name, familyName, phoneNumber} = values;
@@ -117,12 +118,13 @@ export default function SignUpScreen({navigation}) {
                                     value={props.values.password}
                                     onFocus={() => {setPasswordFocussed(true)}}
                                     onBlur={() => {setPasswordBlured(true)}}
+                                    secureTextEntry={showPassword}
                                 />
-                                <Animatable.View animation = {passwordBlured?"":"fadeInLeft"} duration ={400}>
-                                    <Icon 
-                                        name="visibility-off"
-                                        color={colors.grey3}
-                                        style={{marginRight:10}}
+                                <Animatable.View animation={passwordBlured ? '' : 'fadeInLeft'} duration={400}>
+                                    <Icon
+                                      name={showPassword ? 'visibility-off' : 'visibility'}
+                                      style={styles.visibilityIcon}
+                                      onPress={() => setShowPassword((prev) => !prev)}
                                     />
                                 </Animatable.View>
                             </View>
