@@ -4,6 +4,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 import SignInWelcomeScreen from '../screens/authScreens/SignInWelcomeScreen';
 import SignInScreen from '../screens/authScreens/SignInScreen';;
 import SignUpScreen from '../screens/authScreens/SignUpScreen';
+import ResetPasswordScreen from '../screens/authScreens/ResetPasswordScreen';
 
 const AuthStack = createStackNavigator();
 
@@ -31,6 +32,15 @@ export default function AuthFunction() {
       <AuthStack.Screen
         name="SignUpScreen"
         component={SignUpScreen}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.RevealFromBottomAndroid
+        }}
+      />
+
+      <AuthStack.Screen
+        name="ResetPasswordScreen"
+        component={ResetPasswordScreen}
         options={{
           headerShown: false,
           ...TransitionPresets.RevealFromBottomAndroid

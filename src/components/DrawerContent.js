@@ -81,17 +81,9 @@ async function signOut(){
           </View>
                <View style={{flexDirection:"row", justifyContent:"space-evenly", paddingBottom:5}}>
                <View style={{flexDirection:"row", marginTop:0}}>
-                    <View style = {{marginLeft:10, alignItems:"center", justifyContent:"center"}}>
-                        <Text style={{fontWeight:"bold", color:colors.pageBackground, fontSize:18}}>17</Text>
-                        <Text style={{color:colors.pageBackground, fontSize:14}}>My Favorites</Text>
-                    </View>
                  </View>
          
                  <View style={{flexDirection:"row", marginTop:0}}>
-                 <View style = {{marginLeft:10, alignItems:"center", justifyContent:"center"}}>
-                        <Text style={{fontWeight:"bold", color:colors.pageBackground, fontSize:18}}>2019</Text>
-                        <Text style={{color:colors.pageBackground, fontSize:14}}>My Cart</Text>
-                    </View>
                  </View>
                </View>
             </View>
