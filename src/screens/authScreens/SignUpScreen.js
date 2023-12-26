@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import { Icon, Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
 
 
@@ -17,9 +18,16 @@ export default function SignUpScreen({navigation}) {
     const[passwordBlured,setPasswordBlured] = useState(false)
 
     async function signUp(values){
-        const {email, password} = values;
+        const {email, password, name, familyName, phoneNumber} = values;
         try{
-            await auth().createUserWithEmailAndPassword(email, password);
+            const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+            const uid = userCredential.user.uid;
+            await firestore().collection('users').doc(uid).set({
+              name,
+              familyName,
+              phoneNumber,
+            })
+
             console.log("User created successfully!");
         } catch(error){
             if(error.code === 'auth/email-already-in-use')

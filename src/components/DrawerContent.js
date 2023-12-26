@@ -5,11 +5,49 @@ import { Avatar, Button, Icon } from "react-native-elements";
 import { colors } from "../global/styles";
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
+import firestore from "@react-native-firebase/firestore";
 
 
 export default function DrawerContent(props){
 
-    const {dispatchSignedIn} = useContext(SignInContext)
+    const {dispatchSignedIn} = useContext(SignInContext);
+    const [userProfile, setUserProfile] = useState(null);
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+          const user = auth().currentUser;
+          console.log('Auth User:', user);
+          if (user) {
+            try {
+              let retries = 3;
+              let delay = 1000; // Initial delay in milliseconds
+              while (retries > 0) {
+                try {
+                  const userDoc = await firestore().collection('users').doc(user.uid).get();
+                  const userData = userDoc.data();
+                  console.log('User Data:', userData);
+                  setUserProfile({
+                    name: userData.name,
+                    familyName: userData.familyName,
+                  });
+                  break; // Break the loop on successful fetch
+                } catch (error) {
+                  console.error("Error fetching user profile:", error);
+                  // Retry after delay
+                  await new Promise((resolve) => setTimeout(resolve, delay));
+                  delay *= 2; // Exponential backoff
+                  retries -= 1;
+                }
+              }
+            } catch (error) {
+              console.error("Error fetching user profile after retries:", error);
+            }
+          }
+        };
+      
+        fetchUserProfile();
+      }, []);
+
 
 async function signOut(){
        
@@ -33,17 +71,14 @@ async function signOut(){
                  <Avatar 
                      rounded
                      avatarStyle={styles.avatarStyle}
-                     source = {require("../images/ladyAvatar.png")}
                      size={80}
                  
                  />
 
-                 <View style = {styles.textStyle}>
-                    <Text style={styles.avatarText}>Teodora Erika Cioc</Text>
-                    <Text style = {styles.avatarTextEmail}>teoeric@gmail.com</Text>
-                 </View>
-
+                 <View style={styles.textStyle}>
+                 <Text style={styles.avatarText}>{`${userProfile?.name || "Name"} ${userProfile?.familyName || "Family Name"}`}</Text>
             </View>
+          </View>
                <View style={{flexDirection:"row", justifyContent:"space-evenly", paddingBottom:5}}>
                <View style={{flexDirection:"row", marginTop:0}}>
                     <View style = {{marginLeft:10, alignItems:"center", justifyContent:"center"}}>
