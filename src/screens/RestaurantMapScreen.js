@@ -4,6 +4,9 @@ import Geolocation from 'react-native-geolocation-service';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/database';
+import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
+import Header from '../components/Header';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -46,7 +49,7 @@ const requestLocationPermission = async () => {
   }
 };
 
-const RestaurantMapScreen = () => {
+const RestaurantMapScreen = ({navigation}) => {
   // state to hold location
   const [location, setLocation] = useState(false);
 
@@ -76,16 +79,23 @@ const RestaurantMapScreen = () => {
   // Function to Store Location in Firebase
   const storeLocationInFirebase = () => {
     try {
-      if (location) {
-        // Replace 'locations' with your desired Firebase database path
-        firebase.database().ref('locations').push({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          timestamp: firebase.database.ServerValue.TIMESTAMP,
-        });
-        console.log('Location successfully sent to Firebase!');
+      const user = auth().currentUser;
+      if (user) {  // Check if user is not undefined before accessing properties
+        if (location) {
+          firestore().collection('users').doc(user.uid).update({
+            name: user.name, // Access display name instead of name
+            familyName: user.familyName,
+            phoneNumber: user.phoneNumber,
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            timestamp: firebase.database.ServerValue.TIMESTAMP,
+          })
+          console.log('Location successfully sent to Firebase!');
+        } else {
+          console.log('Location is not available');
+        }
       } else {
-        console.log('Location is not available');
+        console.log('User is not authenticated');
       }
     } catch (error) {
       console.error('Error sending location to Firebase:', error);
@@ -94,14 +104,19 @@ const RestaurantMapScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome!</Text>
-      <View style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
-        <Button title="Get Location" onPress={getLocation} />
-      </View>
-      <Text>Latitude: {location ? location.coords.latitude : null}</Text>
-      <Text>Longitude: {location ? location.coords.longitude : null}</Text>
-      <View style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
-        <Button title="Send Location" onPress={storeLocationInFirebase} />
+      <Header title="Get current location" type="arrow-left-circle" navigation={navigation} />
+      <View style={styles.content}>
+        <View style={styles.centered}>
+          <Text style={styles.welcomeText}>Welcome!</Text>
+          <View style={styles.buttonContainer}>
+            <Button title="Get Location" onPress={getLocation} />
+          </View>
+          <Text>Latitude: {location ? location.coords.latitude : null}</Text>
+          <Text>Longitude: {location ? location.coords.longitude : null}</Text>
+          <View style={styles.buttonContainer}>
+            <Button title="Send Location" onPress={storeLocationInFirebase} />
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -111,9 +126,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  content: {
+    flex: 1,
     alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20, // Use paddingTop instead of marginTop
+  },
+  centered: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 10,
+    width: '40%',
   },
 });
+
 
 export default RestaurantMapScreen;

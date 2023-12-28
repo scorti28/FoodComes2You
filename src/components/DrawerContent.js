@@ -12,41 +12,61 @@ export default function DrawerContent(props){
 
     const {dispatchSignedIn} = useContext(SignInContext);
     const [userProfile, setUserProfile] = useState(null);
+    
+    // useEffect(() => {
+    //   if(userData) {
+    //   setUserProfile({
+    //       name: userData.name, 
+    //       familyName: userData.familyName
+    //   });
+    // }
+    //   console.log("User Profile:", userProfile);
+    // }, [userData])
 
     useEffect(() => {
-        const fetchUserProfile = async () => {
-          const user = auth().currentUser;
-          console.log('Auth User:', user);
-          if (user) {
-            try {
-              let retries = 3;
-              let delay = 1000; // Initial delay in milliseconds
-              while (retries > 0) {
-                try {
-                  const userDoc = await firestore().collection('users').doc(user.uid).get();
-                  const userData = userDoc.data();
-                  console.log('User Data:', userData);
-                  setUserProfile({
-                    name: userData.name,
-                    familyName: userData.familyName,
-                  });
-                  break; // Break the loop on successful fetch
-                } catch (error) {
-                  console.error("Error fetching user profile:", error);
-                  // Retry after delay
-                  await new Promise((resolve) => setTimeout(resolve, delay));
-                  delay *= 2; // Exponential backoff
-                  retries -= 1;
-                }
+      const fetchUserProfile = async () => {
+        const user = auth().currentUser; // Corrected this line
+        console.log('Auth User:', user); // Use email for logging purposes
+        if (user) {
+          try {
+            let retries = 3;
+            let delay = 1000; // Initial delay in milliseconds
+            while (retries > 0) {
+              
+              const userDoc = await firestore().collection('users').doc(user.uid).get();
+              const userData = userDoc.data();
+              console.log('User Data:', userData);
+              console.log("User Doc", userDoc);
+
+              if(userData){
+                setUserProfile({
+                 name: userData.name, 
+                 familyName: userData.familyName
+               });
+                console.log("User Profile:", userProfile);
+
+                break; // Break the loop on successful fetch
               }
-            } catch (error) {
-              console.error("Error fetching user profile after retries:", error);
+             
+              else{
+                console.log("Retrying");
+                // Retry after delay
+                await new Promise((resolve) => setTimeout(resolve, delay));
+                delay *= 2; // Exponential backoff
+                retries -= 1;
+            
             }
           }
-        };
-      
-        fetchUserProfile();
-      }, []);
+          } catch (error) {
+            console.error("Error fetching user profile after retries:", error);
+          }
+        }
+      };
+    
+      fetchUserProfile();
+    }, []);
+
+
 
 
 async function signOut(){
@@ -76,7 +96,10 @@ async function signOut(){
                  />
 
                  <View style={styles.textStyle}>
-                 <Text style={styles.avatarText}>{`${userProfile?.name || "Name"} ${userProfile?.familyName || "Family Name"}`}</Text>
+                 <Text style={styles.avatarText}>
+                      {/* {userProfile?.name && userProfile?.familyName ? `${userProfile.name} ${userProfile.familyName}` : "Name"} */}
+                      {userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}
+                </Text>
             </View>
           </View>
                <View style={{flexDirection:"row", justifyContent:"space-evenly", paddingBottom:5}}>

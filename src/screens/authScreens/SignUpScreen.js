@@ -10,7 +10,7 @@ import firestore from "@react-native-firebase/firestore";
 
 
 
-const initialValues = {phoneNumber:"", name:"", familyName:"", password:"", email:"", username:""}
+const initialValues = {phoneNumber:"", name:"", familyName:"", password:"", email:"", username:"", latitude:"", longitude:"", timestamp:""}
 
 export default function SignUpScreen({navigation}) {
 
@@ -19,27 +19,48 @@ export default function SignUpScreen({navigation}) {
     const [showPassword, setShowPassword] = useState(true);
 
     async function signUp(values){
-        const {email, password, name, familyName, phoneNumber} = values;
-        try{
-            const userCredential = await auth().createUserWithEmailAndPassword(email, password);
-            const uid = userCredential.user.uid;
-            await firestore().collection('users').doc(uid).set({
-              name,
-              familyName,
-              phoneNumber,
-            })
-
-            console.log("User created successfully!");
-        } catch(error){
-            if(error.code === 'auth/email-already-in-use')
-                Alert.alert("Email address already exists!");
-            if(error.code === 'auth/invalid-email')
-            Alert.alert("Email address is incorrect!");
-            else{
-                Alert.alert(error.code);
-            }
+      const { email, password, name, familyName, phoneNumber, latitude, longitude, timestamp } = values;
+      try {
+        const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+        const uid = userCredential.user.uid;
+    
+        // Create an object with non-empty fields
+        const userFields = {
+          phoneNumber,
+          latitude,
+          longitude,
+          timestamp
+        };
+    
+        // Add name to the userFields object only if it's not empty
+        if (name) {
+          userFields.name = name;
         }
+    
+        // Add familyName to the userFields object only if it's not empty
+        if (familyName) {
+          userFields.familyName = familyName;
+        }
+    
+        await firestore().collection('users').doc(uid).set(userFields);
+    
+        await userCredential.user.updateProfile({
+          displayName: name && familyName ? `${name} ${familyName}` : name || familyName || '', // Set the display name here
+        });
+    
+        console.log("Creating user document in Firestore:", { ...userFields, name, familyName });
+        console.log("User created successfully!");
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use')
+          Alert.alert("Email address already exists!");
+        if (error.code === 'auth/invalid-email')
+          Alert.alert("Email address is incorrect!");
+        else {
+          Alert.alert(error.code);
+        }
+      }
     }
+
   return (
     <View style={styles.container}>
     <Header title="Create Account" type="arrow-left-circle" navigation = {navigation}/>
@@ -47,7 +68,15 @@ export default function SignUpScreen({navigation}) {
            <View style={styles.view1}>
                 <Text style={styles.text1}>Sign Up</Text>
           </View> 
-          <Formik initialValues={initialValues} onSubmit={(values) => {signUp(values)}}>
+          <Formik initialValues={initialValues} onSubmit={async (values) => {
+              try {
+                await signUp(values);
+                navigation.navigate("SignInScreen");
+              } catch (error) {
+                // Handle error if needed
+                console.error("Error during signup:", error);
+              }
+              }}>
             {
                 (props) => (
                     <View style={styles.view2}>
@@ -130,10 +159,10 @@ export default function SignUpScreen({navigation}) {
                             </View>
                             <View  style={styles.view17}>
                                 <Button 
-                                    title="Create account"
-                                    buttonStyle={styles.button1}
-                                    titleStyle={styles.title1}
-                                    onPress={props.handleSubmit}
+                                     title="Create account"
+                                     buttonStyle={styles.button1}
+                                     titleStyle={styles.title1}
+                                     onPress={props.handleSubmit}
                                 />
                             </View>
                     </View>
