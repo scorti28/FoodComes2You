@@ -53,7 +53,7 @@ const requestLocationPermission = async () => {
 
 const RestaurantMapScreen = ({navigation}) => {
   // state to hold location
-  const [location, setLocation] = useState(false);
+  const [location, setLocation] = useState(true);
 
   // function to check permissions and get Location
   const getLocation = () => {
@@ -65,6 +65,11 @@ const RestaurantMapScreen = ({navigation}) => {
           position => {
             console.log(position);
             setLocation(position);
+  
+            // Wait for 2 seconds (adjust the time as needed)
+            setTimeout(() => {
+              handleLocationUpdate();
+            }, 4000);
           },
           error => {
             // See error code charts below.
@@ -75,13 +80,16 @@ const RestaurantMapScreen = ({navigation}) => {
         );
       }
     });
+  };
+  
+  const handleLocationUpdate = () => {
     const scheme = 'geo:0,0?q=';
     const latLng = `${location.coords.latitude}, ${location.coords.longitude}`;
     const label = 'Custom Label';
-    const url =  `${scheme}${latLng}(${label})`;
+    const url = `${scheme}${latLng}(${label})`;
   
     Linking.openURL(url);
-
+  
     console.log(location);
   };
 
