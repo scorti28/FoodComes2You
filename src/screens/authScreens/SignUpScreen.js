@@ -7,16 +7,20 @@ import { Icon, Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-
+import SignInScreen from './SignInScreen';
+import { useNavigation } from '@react-navigation/native';
+import { secondaryApp } from '../RestaurantMapScreen';
 
 
 const initialValues = {phoneNumber:"", name:"", familyName:"", password:"", email:"", username:"", latitude:"", longitude:"", timestamp:""}
 
-export default function SignUpScreen({navigation}) {
+export default function SignUpScreen() {
 
     const[passwordFocussed, setPasswordFocussed] = useState(false);
     const[passwordBlured,setPasswordBlured] = useState(false);
     const [showPassword, setShowPassword] = useState(true);
+
+    const navigation = useNavigation();
 
     async function signUp(values){
       const { email, password, name, familyName, phoneNumber, latitude, longitude, timestamp } = values;
@@ -50,6 +54,7 @@ export default function SignUpScreen({navigation}) {
     
         console.log("Creating user document in Firestore:", { ...userFields, name, familyName });
         console.log("User created successfully!");
+
       } catch (error) {
         if (error.code === 'auth/email-already-in-use')
           Alert.alert("Email address already exists!");
@@ -68,14 +73,8 @@ export default function SignUpScreen({navigation}) {
            <View style={styles.view1}>
                 <Text style={styles.text1}>Sign Up</Text>
           </View> 
-          <Formik initialValues={initialValues} onSubmit={async (values) => {
-              try {
-                await signUp(values);
-                navigation.navigate("SignInScreen");
-              } catch (error) {
-                // Handle error if needed
-                console.error("Error during signup:", error);
-              }
+          <Formik initialValues={initialValues} onSubmit={(values) => {
+                 signUp(values);
               }}>
             {
                 (props) => (
@@ -162,7 +161,7 @@ export default function SignUpScreen({navigation}) {
                                      title="Create account"
                                      buttonStyle={styles.button1}
                                      titleStyle={styles.title1}
-                                     onPress={props.handleSubmit}
+                                     onPress={() => {props.handleSubmit()}}
                                 />
                             </View>
                     </View>

@@ -20,6 +20,15 @@ export default function AuthFunction() {
         }}
       />
 
+    <AuthStack.Screen
+        name="SignUpScreen"
+        component={SignUpScreen}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.RevealFromBottomAndroid
+        }}
+      />
+
       <AuthStack.Screen
         name="SignInScreen"
         component={SignInScreen}
@@ -29,14 +38,6 @@ export default function AuthFunction() {
         }}
       />
 
-      <AuthStack.Screen
-        name="SignUpScreen"
-        component={SignUpScreen}
-        options={{
-          headerShown: false,
-          ...TransitionPresets.RevealFromBottomAndroid
-        }}
-      />
 
       <AuthStack.Screen
         name="ResetPasswordScreen"

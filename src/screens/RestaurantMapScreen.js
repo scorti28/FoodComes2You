@@ -23,6 +23,8 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+//export var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+
 // Function to get permission for location
 const requestLocationPermission = async () => {
   try {
@@ -82,14 +84,19 @@ const RestaurantMapScreen = ({navigation}) => {
       const user = auth().currentUser;
       if (user) {  // Check if user is not undefined before accessing properties
         if (location) {
+          const update = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+          };
+
+          //firebase.auth().currentUser.updateProfile(update);
           firestore().collection('users').doc(user.uid).update({
-            name: user.name, // Access display name instead of name
-            familyName: user.familyName,
-            phoneNumber: user.phoneNumber,
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
             timestamp: firebase.database.ServerValue.TIMESTAMP,
           })
+
           console.log('Location successfully sent to Firebase!');
         } else {
           console.log('Location is not available');
