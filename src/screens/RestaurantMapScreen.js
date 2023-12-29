@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button, PermissionsAndroid } from 'react-native';
+import { StyleSheet, View, Text, Button, PermissionsAndroid, Linking } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
@@ -75,6 +75,13 @@ const RestaurantMapScreen = ({navigation}) => {
         );
       }
     });
+    const scheme = 'geo:0,0?q=';
+    const latLng = `${location.coords.latitude}, ${location.coords.longitude}`;
+    const label = 'Custom Label';
+    const url =  `${scheme}${latLng}(${label})`;
+  
+    Linking.openURL(url);
+
     console.log(location);
   };
 
@@ -109,6 +116,7 @@ const RestaurantMapScreen = ({navigation}) => {
     }
   };
 
+
   return (
     <View style={styles.container}>
       <Header title="Get current location" type="arrow-left-circle" navigation={navigation} />
@@ -118,13 +126,14 @@ const RestaurantMapScreen = ({navigation}) => {
           <View style={styles.buttonContainer}>
             <Button title="Get Location" onPress={getLocation} />
           </View>
-          <Text>Latitude: {location ? location.coords.latitude : null}</Text>
-          <Text>Longitude: {location ? location.coords.longitude : null}</Text>
+          {/* <Text>Latitude: {location ? location.coords.latitude : null}</Text>
+          <Text>Longitude: {location ? location.coords.longitude : null}</Text> */}
           <View style={styles.buttonContainer}>
             <Button title="Send Location" onPress={storeLocationInFirebase} />
           </View>
         </View>
       </View>
+      
     </View>
   );
 };
