@@ -67,10 +67,10 @@ const RestaurantMapScreen = ({navigation}) => {
             setLocation(position);
   
             // Wait for 2 seconds (adjust the time as needed)
-            setTimeout(() => {
-              handleLocationUpdate();
-            }, 4000);
-          },
+          //   setTimeout(() => {
+          //     handleLocationUpdate();
+          //   }, 4000);
+           },
           error => {
             // See error code charts below.
             console.log(error.code, error.message);
@@ -81,6 +81,10 @@ const RestaurantMapScreen = ({navigation}) => {
       }
     });
   };
+
+  useEffect(() => {
+    getLocation();
+  }, [])
   
   const handleLocationUpdate = () => {
     const scheme = 'geo:0,0?q=';
@@ -132,7 +136,7 @@ const RestaurantMapScreen = ({navigation}) => {
         <View style={styles.centered}>
           <Text style={styles.welcomeText}>Welcome!</Text>
           <View style={styles.buttonContainer}>
-            <Button title="Get Location" onPress={getLocation} />
+            <Button title="Get Location" onPress={handleLocationUpdate} />
           </View>
           {/* <Text>Latitude: {location ? location.coords.latitude : null}</Text>
           <Text>Longitude: {location ? location.coords.longitude : null}</Text> */}
