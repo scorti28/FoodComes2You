@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, StatusBar} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, LogBox} from 'react-native';
 import { colors } from './src/global/styles';
 import RootNavigator from './src/navigation/rootNavigator';
 import 'react-native-gesture-handler';
 import { SignInContextProvider } from './src/contexts/authContext';
+
+
+LogBox.ignoreAllLogs();
 
 export default function App(){
   return(
