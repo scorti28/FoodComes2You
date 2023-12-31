@@ -45,15 +45,6 @@ export function ClientStack({navigation, route}) {
             }
         />
 
-        <ClientSearch.Screen 
-            name="RestaurantHomeScreen"
-            component={RestaurantHomeScreen}
-            options={
-                () => ({
-                    headerShown:false
-                })
-            }
-        />
 
         <ClientSearch.Screen 
             name="MenuProductsScreen"
@@ -74,6 +65,17 @@ export function ClientStack({navigation, route}) {
                 })
             }
         />
+
+        <ClientSearch.Screen 
+            name="RestaurantHomeScreen"
+            component={RestaurantHomeScreen}
+            options={
+                () => ({
+                    headerShown:false
+                })
+            }
+        />
+        
     </ClientSearch.Navigator>
   )
 }

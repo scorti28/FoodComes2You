@@ -8,6 +8,7 @@ import MySearchScreen from '../screens/SearchScreen';
 import MyOrdersScreen from '../screens/MyOrdersScreen';
 import MyAccountScreen from '../screens/MyAccountScreen';
 import { ClientStack } from './ClientStack';
+import ScanQRCodeScreen from '../screens/ScanQRCodeScreen';
 
 const ClientTabs = createBottomTabNavigator();
 
@@ -81,6 +82,25 @@ export default function RootClientTabs(){
                         tabBarIcon: ({color, size}) => (
                             <Icon 
                                 name = "account-box-outline"
+                                type = "material-community"
+                                color = {color}
+                                size={size}
+                            />
+                        )
+                    }
+                }
+            />
+
+            <ClientTabs.Screen
+                name = "ScanQRCodeScreen"
+                component={ScanQRCodeScreen} 
+                options={
+                    {
+                        headerShown: false,
+                        tabBarLabel: "Scan QR",
+                        tabBarIcon: ({color, size}) => (
+                            <Icon 
+                                name = "qrcode-scan"
                                 type = "material-community"
                                 color = {color}
                                 size={size}
