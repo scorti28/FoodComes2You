@@ -10,7 +10,7 @@ export default function ScanQRCodeScreen({navigation}) {
         //Scan QR Code here
         console.log("Am intrat!!!" + e.data)
         //find id FROM!!!! QR Code HERE!!!
-        index=0;
+        index=e.data;
 
         //redirect to propper restaurant using id found at line 7-8, not above!
         this.scanner.reactivate()

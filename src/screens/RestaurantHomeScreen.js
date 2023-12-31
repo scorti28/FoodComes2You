@@ -7,6 +7,7 @@ import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
 import MenuScreen from './RestaurantTabs/MenuScreen';
 import { restaurantsData} from '../global/Data';
+import InfoScreen from './RestaurantTabs/InfoScreen';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -48,6 +49,7 @@ export default function RestaurantHomeScreen({navigation, route}) {
     const menuPressed = () => {
         navigation.navigate("MenuProductsScreen");
     }
+
 
 
 
@@ -116,7 +118,12 @@ export default function RestaurantHomeScreen({navigation, route}) {
               {
                 index === 0 && 
                     <MenuScreen onPress={menuPressed}/>
-              }  
+              }
+
+              {
+                index === 1 && 
+                  <InfoScreen id={id}/> 
+              }
 
         </ScrollView>
 
