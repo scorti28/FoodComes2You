@@ -11,7 +11,7 @@ export default function ScanQRCodeScreen({ navigation }) {
 
     // Redirect to proper restaurant using id found at line 7-8, not above!
     this.scanner.reactivate();
-    navigation.navigate("RestaurantHomeScreen", { id: index, restaurant: restaurantsData[index].restaurantName });
+    navigation.navigate("RestaurantHomeScreen", { id: index});
   };
 
   return (
