@@ -6,7 +6,6 @@ import HomeScreen from '../screens/HomeScreen';
 import { colors } from '../global/styles';
 import MySearchScreen from '../screens/SearchScreen';
 import MyOrdersScreen from '../screens/MyOrdersScreen';
-import MyAccountScreen from '../screens/MyAccountScreen';
 import { ClientStack } from './ClientStack';
 import ScanQRCodeScreen from '../screens/ScanQRCodeScreen';
 
@@ -63,25 +62,6 @@ export default function RootClientTabs(){
                         tabBarIcon: ({color, size}) => (
                             <Icon 
                                 name = "view-list-outline"
-                                type = "material-community"
-                                color = {color}
-                                size={size}
-                            />
-                        )
-                    }
-                }
-            />
-
-            <ClientTabs.Screen
-                name = "MyAccountScreen"
-                component={MyAccountScreen} 
-                options={
-                    {
-                        headerShown: false,
-                        tabBarLabel: "My Account",
-                        tabBarIcon: ({color, size}) => (
-                            <Icon 
-                                name = "account-box-outline"
                                 type = "material-community"
                                 color = {color}
                                 size={size}

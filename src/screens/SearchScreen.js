@@ -49,52 +49,23 @@ export default function MySearchScreen({navigation}){
 const Footer = () => {
     return(
         <View style={{marginTop:20, marginBottom:30}}>
-        <View>
-        <FlatList 
-            style = {{marginBottom:10}}
-            data={filterData}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        navigation.navigate("SearchResultScreen", {item:item.name})
-                    }}
-                >
-                    <View style={styles.imageView}>
-                        <ImageBackground
-                            style={styles.image}
-                            source={item.image}
-                        >
-                            <View style={styles.textView}>
-                                <Text style={{ color: colors.cardbackground }}>{item.name}</Text>
-                            </View>
-                        </ImageBackground>
-                    </View>
-                </TouchableWithoutFeedback>
-            )}
-            horizontal = {false}
-            showsVerticalScrollIndicator = {false}
-            numColumns={2}
-            ListHeaderComponent={<Text style={styles.listHeader}>More Categories</Text>}
-        />
-    </View>
     </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     imageView:{
         borderRadius:10,
         justifyContent:"center",
         alignItems:"center",
-        width:SCREEN_WIDTH*0.4475,
-        height:SCREEN_WIDTH*0.4475,
-        marginLeft:SCREEN_WIDTH*0.035,
-        marginBottom:SCREEN_WIDTH*0.035, 
+        width: (SCREEN_WIDTH - 3 * SCREEN_WIDTH * 0.035) / 2, 
+        height: SCREEN_WIDTH * 0.4475, 
+        marginLeft: SCREEN_WIDTH * 0.035,
+        marginBottom: SCREEN_WIDTH * 0.035, 
     },
     image:{
-        height:SCREEN_WIDTH*0.4475,
-        width:SCREEN_WIDTH*0.4475,
+        flex: 1,
         borderRadius:10
     },
     listHeader:{
@@ -105,8 +76,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     textView:{
-        height:SCREEN_WIDTH*0.4475,
-        width:SCREEN_WIDTH*0.4475,
+        height: SCREEN_WIDTH * 0.4475,
+        width: (SCREEN_WIDTH - 3 * SCREEN_WIDTH * 0.035) / 2, 
         alignItems:"center",
         justifyContent:"center",
         backgroundColor:"rgba(52,52,52,0.3)"

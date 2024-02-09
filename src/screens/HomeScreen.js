@@ -5,12 +5,10 @@ import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import {filterData, restaurantsData} from '../global/Data';
 import FoodCard from "../components/FoodCard";
-import Countdown from 'react-native-countdown-component';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({navigation}) {
-    const [delivery, setDelivery] = useState(true);
     const [indexCheck, setIndexCheck] = useState("0");
 
     return (
@@ -20,144 +18,6 @@ export default function HomeScreen({navigation}) {
                 stickyHeaderIndices={[0]}
                 showsVerticalScrollIndicator = {true}
             >
-            <View style = {styles.tabScrolling}>
-                <View style={styles.deliveryCofiguration}>
-                    <TouchableOpacity onPress={() => setDelivery(true)}>
-                        <View style={{ ...styles.deliveryButton, backgroundColor: delivery ? colors.buttons : colors.grey5 }}>
-                            <Text style={styles.deliveryText}>Delivery</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => {setDelivery(false) 
-                                                      navigation.navigate("RestaurantMapScreen")}}>
-                        <View style={{ ...styles.deliveryButton, backgroundColor: delivery ? colors.grey5 : colors.buttons }}>
-                            <Text style={styles.deliveryText}>Pick-Up</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style = {styles.filterView}>
-                <View style={styles.lineComponent} >
-                  <View style = {styles.mapIcon}>
-                    <Icon 
-                        type = "material-community"
-                        name = "map-marker-multiple"
-                        color = {colors.grey1}
-                        size={26}
-                    />
-
-                    <Text style = {{marginLeft:5}}>19 Ioan Nistor</Text>
-                    </View> 
-
-                    <View style = {styles.nowIcon}>
-                    <Icon 
-                        type = "material-community"
-                        name = "web-clock"
-                        color = {colors.grey1}
-                        size={26}
-                    />
-
-                    <Text style = {{marginLeft:5}}>Now</Text>
-                    </View> 
-                </View>
-                <View>
-                    <Icon 
-                        type = "material-community"
-                        name = "tune-variant"
-                        color = {colors.grey1}
-                        size={26}
-                    />
-                </View>
-            </View>
-
-            <View style = {styles.categoriesTextView}>
-                <Text style = {styles.categoriesStyle}>Categories</Text>
-            </View>
-
-            <View>
-                 <FlatList
-                   horizontal={true}
-                   showsHorizontalScrollIndicator={false}
-                   data={filterData}
-                   keyExtractor={(item) => item.id.toString()} 
-                   extraData={indexCheck}
-                   renderItem={({ item, index }) => (
-                     <Pressable onPress={() => { setIndexCheck(item.id) }}>
-                       <View style={indexCheck === item.id ? { ...styles.smallCardSelected } : { ...styles.smallCard }}>
-                         <Image
-                           style={styles.imageCardStyle}
-                           source={item.image}
-                         />
-                         <View>
-                           <Text style={indexCheck === item.id ? { ...styles.textCardSelectedStyle } : { ...styles.textCardNotSelectedStyle }}>{item.name}</Text>
-                         </View>
-                       </View>
-                     </Pressable>
-                   )}
-  />
-        </View>
-            <View style = {styles.categoriesTextView}>
-                <Text style = {styles.categoriesStyle}>Free Delivery Now</Text>
-            </View>
-        <View>
-            <View style={styles.countDown}>
-                    <Text style={styles.countDownText}>Options for free delivery will be updated in</Text>
-                    <Countdown 
-                        until = {1800}
-                        size = {14}
-                        digitStyle = {{backgroundColor:colors.buttons}}
-                        digitTextStyle = {{color: colors.cardbackground}}
-                        timeToShow = {['M','S']}
-                        timeLabels = {{m:'Min', s:'Sec'}}
-                    />
-            </View>
-          <FlatList
-            style={styles.restaurantList}
-            horizontal={true}
-            data={restaurantsData}
-            keyExtractor={(item, index) => index.toString()} 
-            showsHorizontalScrollIndicator = {false}
-            renderItem={({ item }) => (
-              <View style = {{marginRight:5}}>
-                <FoodCard
-                  screenWidth={SCREEN_WIDTH * 0.8}
-                  images = {item.images}
-                  restaurantName={item.restaurantName}
-                  farAway={item.farAway}
-                  businessAddress={item.businessAddress}
-                  averageReview={item.averageReview}
-                  numberOfReview={item.numberOfReviews}
-                />
-              </View>
-            )}
-          />
-        </View>
-
-        <View style = {styles.categoriesTextView}>
-                <Text style = {styles.categoriesStyle}>Available promotions</Text>
-            </View>
-        <View>
-          <FlatList
-            style={styles.restaurantList}
-            horizontal={true}
-            data={restaurantsData}
-            keyExtractor={(item, index) => index.toString()} 
-            showsHorizontalScrollIndicator = {false}
-            renderItem={({ item }) => (
-              <View style = {{marginRight:5}}>
-                <FoodCard
-                  screenWidth={SCREEN_WIDTH * 0.8}
-                  images = {item.images}
-                  restaurantName={item.restaurantName}
-                  farAway={item.farAway}
-                  businessAddress={item.businessAddress}
-                  averageReview={item.averageReview}
-                  numberOfReview={item.numberOfReviews}
-                />
-              </View>
-            )}
-          />
-        </View>
 
         <View style = {styles.categoriesTextView}>
                 <Text style = {styles.categoriesStyle}>Restaurants near you</Text>
@@ -180,7 +40,7 @@ export default function HomeScreen({navigation}) {
                 }
         </View>
             </ScrollView>
-            { delivery && //delivery is true => render data
+
             <View style = {styles.floatingButton}>
                 <TouchableOpacity onPress={() => navigation.navigate("RestaurantMapScreen")}> 
                     <Icon 
@@ -192,7 +52,6 @@ export default function HomeScreen({navigation}) {
                     <Text style = {styles.mapStyle}>Map</Text>
                 </TouchableOpacity>
             </View>
-            }
         </View>
     );
 }

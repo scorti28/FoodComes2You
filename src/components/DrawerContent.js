@@ -12,25 +12,15 @@ export default function DrawerContent(props){
 
     const {dispatchSignedIn} = useContext(SignInContext);
     const [userProfile, setUserProfile] = useState(null);
-    
-    // useEffect(() => {
-    //   if(userData) {
-    //   setUserProfile({
-    //       name: userData.name, 
-    //       familyName: userData.familyName
-    //   });
-    // }
-    //   console.log("User Profile:", userProfile);
-    // }, [userData])
 
     useEffect(() => {
       const fetchUserProfile = async () => {
-        const user = auth().currentUser; // Corrected this line
-        console.log('Auth User:', user); // Use email for logging purposes
+        const user = auth().currentUser; 
+        console.log('Auth User:', user); 
         if (user) {
           try {
             let retries = 3;
-            let delay = 1000; // Initial delay in milliseconds
+            let delay = 1000; 
             while (retries > 0) {
               
               const userDoc = await firestore().collection('users').doc(user.uid).get();
@@ -112,34 +102,6 @@ async function signOut(){
             </View>
               
               <DrawerItemList {...props} />
-
-              <DrawerItem 
-                 label = "Payment"
-                 icon = {({color, size}) => (
-                    <Icon 
-                       type = "material-community"
-                       name = "credit-card-outline"
-                       color={color}
-                       size={size}
-                    
-                    />
-                 )}
-              
-              />
-
-            <DrawerItem 
-                 label = "Promotions"
-                 icon = {({color, size}) => (
-                    <Icon 
-                       type = "material-community"
-                       name = "tag-multiple"
-                       color={color}
-                       size={size}
-                    
-                    />
-                 )}
-              
-              />
 
             <DrawerItem 
                  label = "Settings"
