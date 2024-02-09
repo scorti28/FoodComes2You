@@ -1,6 +1,6 @@
 import HomeHeader from "../components/HomeHeader";
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image, Dimensions, Animated } from 'react-native'; // Animated added
 import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import {filterData, restaurantsData} from '../global/Data';
@@ -9,8 +9,6 @@ import FoodCard from "../components/FoodCard";
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({navigation}) {
-    const [indexCheck, setIndexCheck] = useState("0");
-
     return (
         <View style={styles.container}>
             <HomeHeader navigation={navigation}/>
@@ -19,7 +17,7 @@ export default function HomeScreen({navigation}) {
                 showsVerticalScrollIndicator = {true}
             >
 
-        <View style = {styles.categoriesTextView}>
+<View style = {styles.categoriesTextView}>
                 <Text style = {styles.categoriesStyle}>Restaurants near you</Text>
             </View>
         <View style = {styles.mapRenderer}>
