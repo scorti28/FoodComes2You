@@ -9,7 +9,6 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import SignInScreen from './SignInScreen';
 import { useNavigation } from '@react-navigation/native';
-import { secondaryApp } from '../RestaurantMapScreen';
 
 
 const initialValues = {phoneNumber:"", name:"", familyName:"", password:"", email:"", username:"", latitude:"", longitude:"", timestamp:""}
