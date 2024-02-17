@@ -21,6 +21,70 @@ export default function SignUpScreen() {
 
     const navigation = useNavigation();
 
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [phoneNumberError, setPhoneNumberError] = useState("")
+
+    function validateCredentials(props) {
+
+      var phoneValid = false;
+      if (props.values.phoneNumber.length === 0) {
+          setPhoneNumberError("Phone number is required");
+      } else if (props.values.phoneNumber.length !== 10) {
+          setPhoneNumberError("Phone number should be exactly 10 characters");
+      } else if (!props.values.phoneNumber.startsWith("07")) {
+          setPhoneNumberError("Phone number should start with 07");
+      } else if (props.values.phoneNumber.indexOf(' ') >= 0) {
+          setPhoneNumberError('Phone number cannot contain spaces');
+      } else {
+          setPhoneNumberError("");
+          phoneValid = true;
+      }
+  
+      var emailValid = false;
+      if (props.values.email.length === 0) {
+          setEmailError("Email is required");
+      } else if (props.values.email.length < 6) {
+          setEmailError("Email should be minimum 6 characters");
+      } else if (props.values.email.indexOf(' ') >= 0) {
+          setEmailError('Email cannot contain spaces');
+      } else if (props.values.email.indexOf('@') === -1 || props.values.email.indexOf('.') === -1) {
+          setEmailError('Email should be in the format of "something@something.something"');
+      } else {
+          setEmailError("");
+          emailValid = true;
+      }
+  
+      var passwordValid = false;
+      if (props.values.password.length === 0) {
+          setPasswordError("Password is required");
+      } else if (props.values.password.length < 6) {
+          setPasswordError("Password should be minimum 6 characters");
+      } else if (props.values.password.indexOf(' ') >= 0) {
+          setPasswordError('Password cannot contain spaces');
+      } else if (!props.values.password.match(/[A-Z]/)) {
+          setPasswordError('Password must contain at least one uppercase letter');
+      } else if (!props.values.password.match(/[a-z]/)) {
+          setPasswordError('Password must contain at least one lowercase letter');
+      } else if (!props.values.password.match(/[0-9]/)) {
+          setPasswordError('Password must contain at least one digit');
+      } else if (!props.values.password.match(/[!-\/:-@[-`{-~]/)) {
+          setPasswordError('Password must contain at least one special character');
+      } else {
+          setPasswordError("");
+          passwordValid = true;
+      }
+  
+      if (emailValid && passwordValid && phoneValid) {
+          setEmail("");
+          setPassword("");
+          setPhoneNumber("");
+          props.handleSubmit();
+      }
+  }
     async function signUp(values){
       const { email, password, name, familyName, phoneNumber, latitude, longitude, timestamp } = values;
       try {
@@ -72,8 +136,9 @@ export default function SignUpScreen() {
            <View style={styles.view1}>
                 <Text style={styles.text1}>Sign Up</Text>
           </View> 
-          <Formik initialValues={initialValues} onSubmit={(values) => {
+          <Formik initialValues={initialValues} onSubmit={(values, props) => {
                  signUp(values);
+                 validateCredentials(props);
               }}>
             {
                 (props) => (
@@ -82,14 +147,16 @@ export default function SignUpScreen() {
                             <Text style={styles.text2}>New here? Create account!</Text>
                         </View>
                             <View style={styles.view6}>
-                                <TextInput 
-                                    placeholder='Phone number'
-                                    style = {styles.input1}
-                                    keyboardType='number-pad'
-                                    autoFocus={true}
-                                    onChangeText={props.handleChange("phoneNumber")}
-                                    value={props.values.phoneNumber}
-                                />
+                            <TextInput 
+                                   placeholder='Phone number'
+                                   style={styles.input1}
+                                   keyboardType='number-pad'
+                                   autoFocus={true}
+                                   onChangeText={props.handleChange("phoneNumber")}
+                                   value={props.values.phoneNumber}
+                                   maxLength={10}
+                              />
+                                  {phoneNumberError.length > 0 && <Text style={styles.error}>{phoneNumberError}</Text>}
                             </View>
 
                             <View style={styles.view6}>
@@ -128,6 +195,7 @@ export default function SignUpScreen() {
                                     onChangeText={props.handleChange("email")}
                                     value={props.values.email}
                                 />
+                                {emailError.length > 0 && <Text style={styles.error}>{emailError}</Text>}
                             </View>
                             </View>
                             <View style={styles.view14}>
@@ -147,6 +215,7 @@ export default function SignUpScreen() {
                                     onBlur={() => {setPasswordBlured(true)}}
                                     secureTextEntry={showPassword}
                                 />
+                                {passwordError.length > 0 && <Text style={styles.error}>{passwordError}</Text>}
                                 <Animatable.View animation={passwordBlured ? '' : 'fadeInLeft'} duration={400}>
                                     <Icon
                                       name={showPassword ? 'visibility-off' : 'visibility'}
@@ -160,7 +229,7 @@ export default function SignUpScreen() {
                                      title="Create account"
                                      buttonStyle={styles.button1}
                                      titleStyle={styles.title1}
-                                     onPress={() => {props.handleSubmit()}}
+                                     onPress={() => {validateCredentials(props)}}
                                 />
                             </View>
                     </View>
@@ -189,6 +258,11 @@ export default function SignUpScreen() {
 }
 
 const styles = StyleSheet.create({
+  error: {
+    color: '#FF0000',
+    marginTop: 5,
+    marginLeft: 10
+  },
     container:{flex:1,
         backgroundColor:'white'
       },

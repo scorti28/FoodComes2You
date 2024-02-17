@@ -13,13 +13,25 @@ import FirstPage from '../screens/FirstPage';
 const Stack = createStackNavigator();
 const ClientTabs = createBottomTabNavigator();
 
-function MainScreen() {
+export default function RootClientTabs() {
   return (
     <ClientTabs.Navigator tabBarOptions={{ activeTintColor: colors.buttons }}>
+      <ClientTabs.Screen
+        name="FirstPage"
+        component={FirstPage}
+        options={{
+          headerShown: false,
+          tabBarIconStyle: { display: "none" },
+          tabBarButton: () => null,
+          tabBarVisible: false,
+          tabBarStyle: {display: "none"}
+        }}
+      />
       <ClientTabs.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
             <Icon
@@ -35,6 +47,7 @@ function MainScreen() {
         name="SearchScreen"
         component={ClientStack}
         options={{
+          headerShown: false,
           tabBarLabel: "Search",
           tabBarIcon: ({ color, size }) => (
             <Icon
@@ -50,6 +63,7 @@ function MainScreen() {
         name="MyOrdersScreen"
         component={MyOrdersScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "My Orders",
           tabBarIcon: ({ color, size }) => (
             <Icon
@@ -65,6 +79,7 @@ function MainScreen() {
         name="ScanQRCodeScreen"
         component={ScanQRCodeScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "Scan QR",
           tabBarIcon: ({ color, size }) => (
             <Icon
@@ -79,19 +94,3 @@ function MainScreen() {
     </ClientTabs.Navigator>
   );
 }
-
-export default function RootClientTabs() {
-    const [firstPageShown, setFirstPageShown] = useState(true);
-  
-    return (
-      <Stack.Navigator headerMode="none">
-        {firstPageShown ? (
-          <Stack.Screen name="FirstPage">
-            {props => <FirstPage {...props} setFirstPageShown={setFirstPageShown} navigation={props.navigation} />}
-          </Stack.Screen>
-        ) : (
-          <Stack.Screen name="MainScreen" component={MainScreen} />
-        )}
-      </Stack.Navigator>
-    );
-  }
