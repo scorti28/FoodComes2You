@@ -138,8 +138,6 @@ const RestaurantMapScreen = ({navigation}) => {
           <View style={styles.buttonContainer}>
             <Button title="Get Location" onPress={handleLocationUpdate} />
           </View>
-          {/* <Text>Latitude: {location ? location.coords.latitude : null}</Text>
-          <Text>Longitude: {location ? location.coords.longitude : null}</Text> */}
           <View style={styles.buttonContainer}>
             <Button title="Send Location" onPress={storeLocationInFirebase} />
           </View>

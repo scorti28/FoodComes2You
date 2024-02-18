@@ -39,7 +39,7 @@ export default function HomeScreen({navigation}) {
         </View>
             </ScrollView>
 
-            <View style = {styles.floatingButton}>
+            {/* <View style = {styles.floatingButton}>
                 <TouchableOpacity onPress={() => navigation.navigate("RestaurantMapScreen")}> 
                     <Icon 
                         name = "map-marker-outline"
@@ -49,7 +49,7 @@ export default function HomeScreen({navigation}) {
                     />
                     <Text style = {styles.mapStyle}>Map</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     );
 }
