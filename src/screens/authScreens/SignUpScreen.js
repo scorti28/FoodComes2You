@@ -39,7 +39,10 @@ export default function SignUpScreen() {
           setPhoneNumberError("Phone number should start with 07");
       } else if (props.values.phoneNumber.indexOf(' ') >= 0) {
           setPhoneNumberError('Phone number cannot contain spaces');
-      } else {
+      } else if (!props.values.phoneNumber.match(/^[0-9]+$/)) {
+          setPhoneNumberError('Phone number can only contain digits');
+      }
+       else {
           setPhoneNumberError("");
           phoneValid = true;
       }
@@ -156,9 +159,8 @@ export default function SignUpScreen() {
                                    value={props.values.phoneNumber}
                                    maxLength={10}
                               />
-                                  {phoneNumberError.length > 0 && <Text style={styles.error}>{phoneNumberError}</Text>}
                             </View>
-
+                            {phoneNumberError.length > 0 && <Text style={styles.error}>{phoneNumberError}</Text>}
                             <View style={styles.view6}>
                                 <TextInput 
                                     placeholder='First Name'
@@ -168,7 +170,6 @@ export default function SignUpScreen() {
                                     value={props.values.name}
                                 />
                             </View>
-
                             <View style={styles.view6}>
                                 <TextInput 
                                     placeholder='Last Name'
@@ -195,9 +196,9 @@ export default function SignUpScreen() {
                                     onChangeText={props.handleChange("email")}
                                     value={props.values.email}
                                 />
-                                {emailError.length > 0 && <Text style={styles.error}>{emailError}</Text>}
                             </View>
                             </View>
+                            {emailError.length > 0 && <Text style={styles.error}>{emailError}</Text>}
                             <View style={styles.view14}>
                                 <Animatable.View animation = {passwordFocussed? "":"fadeInLeft"} duration = {400}>
                                     <Icon 
@@ -215,8 +216,7 @@ export default function SignUpScreen() {
                                     onBlur={() => {setPasswordBlured(true)}}
                                     secureTextEntry={showPassword}
                                 />
-                                {passwordError.length > 0 && <Text style={styles.error}>{passwordError}</Text>}
-                                <Animatable.View animation={passwordBlured ? '' : 'fadeInLeft'} duration={400}>
+                                <Animatable.View>
                                     <Icon
                                       name={showPassword ? 'visibility-off' : 'visibility'}
                                       style={styles.visibilityIcon}
@@ -224,6 +224,7 @@ export default function SignUpScreen() {
                                     />
                                 </Animatable.View>
                             </View>
+                            {passwordError.length > 0 && <Text style={styles.error}>{passwordError}</Text>}
                             <View  style={styles.view17}>
                                 <Button 
                                      title="Create account"
@@ -259,9 +260,11 @@ export default function SignUpScreen() {
 
 const styles = StyleSheet.create({
   error: {
+    flex: 1,
     color: '#FF0000',
-    marginTop: 5,
-    marginLeft: 10
+    // marginTop: 5,
+    // marginLeft: 10,
+    flexDirection: 'column'
   },
     container:{flex:1,
         backgroundColor:'white'
@@ -381,7 +384,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         paddingLeft:5,
         marginTop:20,
-        marginBottom: 20
     },       
       
     view15:{alignItems:'center',
