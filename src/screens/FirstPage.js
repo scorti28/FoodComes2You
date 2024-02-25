@@ -181,7 +181,7 @@ const sortDistance = () => {
                 <Text style={styles.buttonText}>Near you</Text>
             </TouchableOpacity>
             <View style={{ width: 10 }} /> 
-            <TouchableOpacity style={styles.button} onPress={() => console.log("Button 2 pressed")}>
+            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("TagsScreen")}}>
                 <Text style={styles.buttonText}>Tags</Text>
             </TouchableOpacity>
             </View>

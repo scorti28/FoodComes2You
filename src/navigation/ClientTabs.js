@@ -9,6 +9,7 @@ import MyOrdersScreen from '../screens/MyOrdersScreen';
 import { ClientStack } from './ClientStack';
 import ScanQRCodeScreen from '../screens/ScanQRCodeScreen';
 import FirstPage from '../screens/FirstPage';
+import TagsScreen from '../screens/TagsScreen';
 
 const Stack = createStackNavigator();
 const ClientTabs = createBottomTabNavigator();
@@ -19,6 +20,17 @@ export default function RootClientTabs() {
       <ClientTabs.Screen
         name="FirstPage"
         component={FirstPage}
+        options={{
+          headerShown: false,
+          tabBarIconStyle: { display: "none" },
+          tabBarButton: () => null,
+          tabBarVisible: false,
+          tabBarStyle: {display: "none"}
+        }}
+      />
+      <ClientTabs.Screen
+        name="TagsScreen"
+        component={TagsScreen}
         options={{
           headerShown: false,
           tabBarIconStyle: { display: "none" },
