@@ -8,51 +8,40 @@ import FoodCard from "../components/FoodCard";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({ navigation, route }) {
     return (
         <View style={styles.container}>
-            <HomeHeader navigation={navigation}/>
+            {/* Your existing code */}
             <ScrollView
                 stickyHeaderIndices={[0]}
-                showsVerticalScrollIndicator = {true}
+                showsVerticalScrollIndicator={true}
             >
-
-<View style = {styles.categoriesTextView}>
-                <Text style = {styles.categoriesStyle}>Restaurants near you</Text>
-            </View>
-        <View style = {styles.mapRenderer}>
-                {
-                    restaurantsData.map(item => (
-                        <View key={item.id} style={styles.viewRestaurant}>
-                            <FoodCard
-                                screenWidth={SCREEN_WIDTH * 0.95}
-                                images = {item.images}
-                                restaurantName={item.restaurantName}
-                                farAway={item.farAway}
-                                businessAddress={item.businessAddress}
-                                averageReview={item.averageReview}
-                                numberOfReview={item.numberOfReviews}
-                            />
-                        </View>
-                    ))
-                }
-        </View>
+                <View style={styles.categoriesTextView}>
+                    <Text style={styles.categoriesStyle}>Restaurants near you</Text>
+                </View>
+                <View style={styles.mapRenderer}>
+                    {
+                        restaurantsData.map((item, index) => (
+                            <View key={index} style={styles.viewRestaurant}>
+                                <FoodCard
+                                    screenWidth={SCREEN_WIDTH * 0.95}
+                                    images={item.images}
+                                    restaurantName={item.restaurantName}
+                                    farAway={item.farAway}
+                                    businessAddress={item.businessAddress}
+                                    averageReview={item.averageReview}
+                                    numberOfReview={item.numberOfReviews}
+                                    OnPressFoodCard={() => navigation.navigate("RestaurantHomeScreen", { id: index, restaurant: item.restaurantName })}
+                                />
+                            </View>
+                        ))
+                    }
+                </View>
             </ScrollView>
-
-            {/* <View style = {styles.floatingButton}>
-                <TouchableOpacity onPress={() => navigation.navigate("RestaurantMapScreen")}> 
-                    <Icon 
-                        name = "map-marker-outline"
-                        type = "material-community"
-                        size = {32}
-                        color={colors.buttons}
-                    />
-                    <Text style = {styles.mapStyle}>Map</Text>
-                </TouchableOpacity>
-            </View> */}
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
