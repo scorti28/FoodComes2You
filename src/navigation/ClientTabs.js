@@ -10,7 +10,6 @@ import { ClientStack } from './ClientStack';
 import ScanQRCodeScreen from '../screens/ScanQRCodeScreen';
 import FirstPage from '../screens/FirstPage';
 import TagsScreen from '../screens/TagsScreen';
-import RestaurantHomeScreen from '../screens/RestaurantHomeScreen';
 
 const Stack = createStackNavigator();
 const ClientTabs = createBottomTabNavigator();
@@ -54,17 +53,6 @@ export default function RootClientTabs() {
               size={size}
             />
           )
-        }}
-      />
-      <ClientTabs.Screen
-        name="RestaurantHomeScreen"
-        component={RestaurantHomeScreen}
-        options={{
-          headerShown: false,
-          tabBarIconStyle: { display: "none" },
-          tabBarButton: () => null,
-          tabBarVisible: false,
-          tabBarStyle: {display: "none"}
         }}
       />
       <ClientTabs.Screen

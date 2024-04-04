@@ -6,6 +6,8 @@ import { colors, parameters } from '../global/styles';
 export default function FoodCard({
     OnPressFoodCard,
     restaurantName,
+    deliveryAvailable,
+    discountAvailable,
     numberOfReview,
     businessAddress,
     farAway,
@@ -14,7 +16,7 @@ export default function FoodCard({
     screenWidth
 }){
     return(
-        <TouchableOpacity onPress={OnPressFoodCard}>
+        <TouchableOpacity>
             <View style = {{...styles.cardView, width:screenWidth}}>
                 <Image 
                     style = {{...styles.image, width:screenWidth}}
