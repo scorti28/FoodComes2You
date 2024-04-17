@@ -55,49 +55,53 @@ const requestLocationPermission = async () => {
 const FirstPage = ({navigation}) => {
     // state to hold location
   const [location, setLocation] = useState(true);
+  const [locationReady, setLocationReady] = useState(false);
 
   // function to check permissions and get Location
-  const getLocation = () => {
-    const result = requestLocationPermission();
-    result.then(res => {
-      console.log('res is:', res);
-      if (res) {
-        Geolocation.getCurrentPosition(
-          position => {
-            console.log(position);
-            setLocation(position);
-  
-            // Wait for 2 seconds (adjust the time as needed)
-          //   setTimeout(() => {
-          //     handleLocationUpdate();
-          //   }, 4000);
-           },
-          error => {
-            // See error code charts below.
-            console.log(error.code, error.message);
-            setLocation(false);
-          },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-        );
-      }
-    });
+const getLocation = () => {
+  const result = requestLocationPermission();
+  result.then(res => {
+    console.log('res is:', res);
+    if (res) {
+      Geolocation.getCurrentPosition(
+        position => {
+          console.log(position);
+          setLocation(position);
+          setLocationReady(true); // Location is ready
+          
+          //Wait for 2 seconds (adjust the time as needed)
+          setTimeout(() => {
+            handleLocationUpdate();
+          }, 4000);
+        },
+        error => {
+          // See error code charts below.
+          console.log(error.code, error.message);
+          setLocation(false);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+      );
+    }
+  });
 };
 
-  useEffect(() => {
-    getLocation();
-  }, [])
-  
-  const handleLocationUpdate = () => {
-    const scheme = 'geo:0,0?q=';
-    const latLng = `${location.coords.latitude}, ${location.coords.longitude}`;
-    const label = 'Custom Label';
-    const url = `${scheme}${latLng}(${label})`;
-  
-    //Linking.openURL(url);
-    sortDistance();
-  
-    console.log(location);
-  };
+useEffect(() => {
+  getLocation();
+}, []);
+
+const handleLocationUpdate = () => {
+  if (!locationReady) return; // Exit if location is not ready yet
+
+  const scheme = 'geo:0,0?q=';
+  const latLng = `${location.coords.latitude}, ${location.coords.longitude}`;
+  const label = 'Custom Label';
+  const url = `${scheme}${latLng}(${label})`;
+
+  //Linking.openURL(url);
+  sortDistance();
+
+  console.log(location);
+};
 
   // Function to Store Location in Firebase
   const storeLocationInFirebase = () => {

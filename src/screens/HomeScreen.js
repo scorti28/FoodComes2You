@@ -5,10 +5,12 @@ import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import {filterData, restaurantsData} from '../global/Data';
 import FoodCard from "../components/FoodCard";
+import { connect } from "formik";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({navigation}) {
+    console.log("@@@HomeScreen.navigation:", navigation)
     return (
         <View style={styles.container}>
             <HomeHeader navigation={navigation}/>
@@ -32,24 +34,15 @@ export default function HomeScreen({navigation}) {
                                 businessAddress={item.businessAddress}
                                 averageReview={item.averageReview}
                                 numberOfReview={item.numberOfReviews}
+                                OnPressFoodCard={() => {
+                                    console.log("@@@navigation.navigate", {id:item.id, restaurant:item.restaurantName})
+                                    navigation.navigate("RestaurantHomeScreen", {id:item.id, restaurant:item.restaurantName, previousScreen: "HomeScreen"})}}
                             />
                         </View>
                     ))
                 }
         </View>
             </ScrollView>
-
-            {/* <View style = {styles.floatingButton}>
-                <TouchableOpacity onPress={() => navigation.navigate("RestaurantMapScreen")}> 
-                    <Icon 
-                        name = "map-marker-outline"
-                        type = "material-community"
-                        size = {32}
-                        color={colors.buttons}
-                    />
-                    <Text style = {styles.mapStyle}>Map</Text>
-                </TouchableOpacity>
-            </View> */}
         </View>
     );
 }

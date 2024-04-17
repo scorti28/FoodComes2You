@@ -13,7 +13,6 @@ const ProductCard = ({productName, price, image}) => {
         </View>
         <View style={styles.view4}>
             <Image style={styles.image} source={image}/>
-
         </View>
       </View>
     </View>

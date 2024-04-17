@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { Icon } from 'react-native-elements';
 import { colors, parameters } from '../global/styles';
 
 export default function FoodCard({
     OnPressFoodCard,
     restaurantName,
-    deliveryAvailable,
-    discountAvailable,
     numberOfReview,
     businessAddress,
     farAway,
@@ -15,8 +13,9 @@ export default function FoodCard({
     images,
     screenWidth
 }){
+    console.log("@@@FoodCard", [restaurantName, OnPressFoodCard])
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={OnPressFoodCard}>
             <View style = {{...styles.cardView, width:screenWidth}}>
                 <Image 
                     style = {{...styles.image, width:screenWidth}}
@@ -36,7 +35,7 @@ export default function FoodCard({
                             size={18}
                             iconStyle={{marginTop:3}}
                         />
-                        <Text style={styles.textIcon}>{farAway} min</Text>
+                        <Text style={styles.textIcon}>{farAway} km</Text>
                     </View>
                     <View style={styles.address}>
                         <Text style={styles.addressText}>{businessAddress}</Text>

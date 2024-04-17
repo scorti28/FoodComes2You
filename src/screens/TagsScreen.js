@@ -7,13 +7,6 @@ import { filterData } from '../global/Data';
 
 const TagsScreen = ({navigation}) => {
   
-  const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
-  const [check3, setCheck3] = useState(false);
-  const [check4, setCheck4] = useState(false);
-  const [check5, setCheck5] = useState(false);
-  const [check6, setCheck6] = useState(false);
-
   const [checkedFacilities, setCheckedFacilities] = useState({});
   const [checkedFoodTypes, setCheckedFoodTypes] = useState({});
 
@@ -38,6 +31,8 @@ const TagsScreen = ({navigation}) => {
     const chosenFacilities = Object.entries(checkedFacilities)
       .filter(([key, value]) => value)
       .map(([key]) => key);
+      console.log("@@@1")
+      console.log(chosenFacilities)
   
     const chosenFoodTypes = Object.entries(checkedFoodTypes)
       .filter(([key, value]) => value)

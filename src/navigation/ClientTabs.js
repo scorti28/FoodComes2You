@@ -1,20 +1,79 @@
 import React, { useState } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import HomeScreen from '../screens/HomeScreen';
-import MySearchScreen from '../screens/SearchScreen';
 import MyOrdersScreen from '../screens/MyOrdersScreen';
-import { ClientStack } from './ClientStack';
 import ScanQRCodeScreen from '../screens/ScanQRCodeScreen';
 import FirstPage from '../screens/FirstPage';
 import TagsScreen from '../screens/TagsScreen';
+import { createStackNavigator } from '@react-navigation/stack';
+import MySearchScreen from '../screens/SearchScreen';
+import SearchResultScreen from '../screens/SearchResultScreen';
+import RestaurantHomeScreen from '../screens/RestaurantHomeScreen';
+import MenuProductsScreen from '../screens/MenuProductsScreen';
+import PreferenceScreen from '../screens/PreferenceScreen';
 
-const Stack = createStackNavigator();
 const ClientTabs = createBottomTabNavigator();
+const ClientSearch = createStackNavigator();
 
-export default function RootClientTabs() {
+function ClientStack() {
+console.log("@@@ClientStack")
+return (
+  <ClientSearch.Navigator>
+      <ClientSearch.Screen 
+          name="SearchScreen"
+          component={MySearchScreen}
+          options={
+              () => ({
+                  headerShown:false
+              })
+          }
+      />
+
+      <ClientSearch.Screen 
+          name="SearchResultScreen"
+          component={SearchResultScreen}
+          options={
+              () => ({
+                  headerShown:false
+              })
+          }
+      />
+      <ClientSearch.Screen 
+          name="RestaurantHomeScreen"
+          component={RestaurantHomeScreen}
+          options={
+              () => ({
+                  headerShown:false
+              })
+          }
+      />
+      <ClientSearch.Screen 
+          name="MenuProductsScreen"
+          component={MenuProductsScreen}
+          options={
+              () => ({
+                  headerShown:false
+              })
+          }
+      />
+      <ClientSearch.Screen 
+          name="PreferenceScreen"
+          component={PreferenceScreen}
+          options={
+              () => ({
+                  headerShown:false
+              })
+          }
+      />
+      
+  </ClientSearch.Navigator>
+)
+}
+
+function RootClientTabs (){
+  console.log("@@@RootClientTabs")
   return (
     <ClientTabs.Navigator tabBarOptions={{ activeTintColor: colors.buttons }}>
       <ClientTabs.Screen
@@ -56,7 +115,7 @@ export default function RootClientTabs() {
         }}
       />
       <ClientTabs.Screen
-        name="SearchScreen"
+        name="SearchScreenButton"
         component={ClientStack}
         options={{
           headerShown: false,
@@ -104,5 +163,7 @@ export default function RootClientTabs() {
         }}
       />
     </ClientTabs.Navigator>
-  );
+      );
 }
+
+export default RootClientTabs;

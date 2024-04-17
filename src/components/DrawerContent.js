@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from "react";
 import { View, Text, Alert, Switch, StyleSheet, TouchableOpacity  } from "react-native";
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
-import { Avatar, Button, Icon } from "react-native-elements";
+import { Avatar, Icon } from "react-native-elements";
 import { colors } from "../global/styles";
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
@@ -44,7 +44,6 @@ export default function DrawerContent(props){
                 await new Promise((resolve) => setTimeout(resolve, delay));
                 delay *= 2; // Exponential backoff
                 retries -= 1;
-            
             }
           }
           } catch (error) {
@@ -55,9 +54,6 @@ export default function DrawerContent(props){
     
       fetchUserProfile();
     }, []);
-
-
-
 
 async function signOut(){
        
@@ -82,27 +78,16 @@ async function signOut(){
                      rounded
                      avatarStyle={styles.avatarStyle}
                      size={80}
-                 
                  />
-
                  <View style={styles.textStyle}>
                  <Text style={styles.avatarText}>
-                      {/* {userProfile?.name && userProfile?.familyName ? `${userProfile.name} ${userProfile.familyName}` : "Name"} */}
                       {userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}
                 </Text>
             </View>
           </View>
-               <View style={{flexDirection:"row", justifyContent:"space-evenly", paddingBottom:5}}>
-               <View style={{flexDirection:"row", marginTop:0}}>
-                 </View>
-         
-                 <View style={{flexDirection:"row", marginTop:0}}>
-                 </View>
-               </View>
             </View>
               
-              <DrawerItemList {...props} />
-
+          <DrawerItemList {...props} />
             <DrawerItem 
                  label = "Settings"
                  icon = {({color, size}) => (
@@ -111,10 +96,8 @@ async function signOut(){
                        name = "cogs"
                        color={color}
                        size={size}
-                    
                     />
                  )}
-              
               />
 
             <DrawerItem 
@@ -125,30 +108,9 @@ async function signOut(){
                        name = "help-box"
                        color={color}
                        size={size}
-                    
                     />
                  )}
-              
               />
-
-
-              <View style={styles.stylePreferencies}>
-                   <Text style = {styles.stylePreferenciesText}>Preferencies</Text>
-
-                   <View style = {styles.stylePreferenciesView}>
-                      <Text style = {styles.darkText}>Dark theme</Text>
-                       <View style= {{paddingRight:10}}>
-                            <Switch 
-                               trackColor={{false: "#767577", true: "#81b0ff"}}
-                               thumbColor= "#f4f3f4"
-                            
-                            />
-                       </View>
-                   </View>
-              </View>
-
-              
-
             </DrawerContentScrollView>
 
             <DrawerItem 

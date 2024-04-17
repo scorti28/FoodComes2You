@@ -1,27 +1,29 @@
 import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RestaurantHeader from '../components/RestaurantHeader';
 import { colors, fonts } from '../global/styles';
 import { ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
 import MenuScreen from './RestaurantTabs/MenuScreen';
-import { restaurantsData} from '../global/Data';
+import {restaurantsData} from '../global/Data';
 import InfoScreen from './RestaurantTabs/InfoScreen';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const initialLayout = SCREEN_WIDTH;
 
-export default function RestaurantHomeScreen({navigation, route}) {
-  
-  const {id, restaurant} = route.params;
+export default function RestaurantHomeScreen({navigation, route, previousScreen}) {
+    console.log("@@@RestaurantHomeScreen", [route])
+  const { id, routeName } = route.params;
+
   const [routes] = useState([
         {key:'first', title:"Menu"},
         {key:'second', title:"Info"},
         {key:'third', title:"Reviews"},
         {key:'forth', title:"Gallery"}
   ]);
+
 
   const [index, setIndex] = useState(0);
 
@@ -50,15 +52,11 @@ export default function RestaurantHomeScreen({navigation, route}) {
         navigation.navigate("MenuProductsScreen");
     }
 
-
-
-
-
   return (
     <View style={styles.container}>
         <ScrollView>
             <View>
-            <RestaurantHeader id={id} navigation={navigation}/>
+            <RestaurantHeader id={id} navigation={navigation} routeName={route} previousScreen={previousScreen}/>
             { restaurantsData[id].discount && 
             <View style={styles.view1}>
                 <Text style={styles.text1}>You can get {restaurantsData[id].discount}% off on food</Text>
@@ -67,7 +65,6 @@ export default function RestaurantHomeScreen({navigation, route}) {
             <View style={styles.view2}>
                 <View style={styles.view3}>
                     <Text style={styles.text2}>{restaurantsData[id].restaurantName}</Text>
-                    <Text style={styles.text3}>{restaurantsData[id].foodType}</Text>
                     <View style={styles.view4}>
                         <Icon 
                             name = "star"

@@ -8,6 +8,7 @@ import DrawerContent from '../components/DrawerContent';
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
+  console.log("@@@DrawerNavigator")
   return (
     <Drawer.Navigator  drawerContent={props => <DrawerContent {...props} /> } >
       <Drawer.Screen
@@ -15,15 +16,6 @@ export default function DrawerNavigator() {
         component={RootClientTabs}
         options={{
           headerShown: false,
-          title: "Client",
-          drawerIcon: ({ focused, size }) => (
-            <Icon
-              type="material-community"
-              name="home-account"
-              color={focused ? '#7cc' : colors.grey2}
-              size={size}
-            />
-          )
         }}
       />
 

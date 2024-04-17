@@ -1,8 +1,10 @@
 import React, {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DrawerActions, NavigationContainer} from '@react-navigation/native';
 import AuthFunction from './authNavigators';
 import AppFunction from './appStack';
 import { SignInContext } from '../contexts/authContext';
+import { setNavigator } from './NavigationService';
+import DrawerNavigator from './DrawerNavigator';
 
 export default function RootNavigator(){
     const {signedIn} = useContext(SignInContext);
@@ -12,7 +14,7 @@ export default function RootNavigator(){
                 signedIn.userToken !== 'signed-in' ? ( //user is logged out => don't have access to the app
                     <AuthFunction />
                 ) : (
-                    <AppFunction />
+                    <DrawerNavigator />
                 )
             }
         </NavigationContainer>

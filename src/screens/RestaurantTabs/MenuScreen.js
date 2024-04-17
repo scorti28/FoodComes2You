@@ -40,7 +40,6 @@ export default function MenuScreen({navigation, restaurant, onPress}) {
             )
         }
       </View>
-
     </View>
   )
 }

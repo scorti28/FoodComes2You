@@ -10,9 +10,6 @@ import ProductCard from './ProductCard';
 const SearchResultCard = ({
     OnPressRestaurantCard,
     restaurantName,
-    deliveryAvailable,
-    discountAvailable,
-    discountPercent,
     numberOfReviews,
     businessAddress,
     farAway,
@@ -53,7 +50,7 @@ const SearchResultCard = ({
                     
                     />
 
-                    <Text style={styles.view5}>{farAway} min</Text>
+                    <Text style={styles.view5}>{farAway} km</Text>
                 </View>
                 <View style={{flex:9}}>
                     <Text style={styles.text6}>{businessAddress}</Text>

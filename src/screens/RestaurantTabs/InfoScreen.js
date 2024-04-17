@@ -1,24 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import QRCode from 'react-native-qrcode-svg';
-import {useState, useEffect} from 'react';
-
-import {
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {SafeAreaView} from 'react-native';
 
 export default function InfoScreen({id}) {
-    //const [inputText, setInputText] = useState('');
-    //const [qrvalue, setQrvalue] = useState('');
-    //const {id, restaurant} = routes.params;
-    
-
-    // useEffect(() => {
-    //     setQrvalue(id)
-    //   }, [])
-
+  
     return (
         <SafeAreaView style={{flex: 1}}>
           <View style={styles.container}>
