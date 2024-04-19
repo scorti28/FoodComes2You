@@ -13,7 +13,7 @@ export default function HomeHeader({navigation}) {
       </View>
 
       <View style={styles.titleContainer}>
-        <Text style={{ color: colors.cardbackground, fontSize: 25, fontWeight: 'bold' }}>FoodComes2You</Text>
+        <Text style={{ color: colors.cardbackground, fontSize: 25, fontWeight: 'bold' }}>FeastFinder</Text>
       </View>
 
       <View style={styles.cartIconContainer}>
