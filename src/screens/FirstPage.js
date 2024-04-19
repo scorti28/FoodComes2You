@@ -159,8 +159,8 @@ const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
       Math.cos(toRadian(lat1)) * Math.cos(toRadian(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     let d = R * c
-    console.log("distance==?",d)
-    return d 
+    
+    return d.toFixed(1);
 }
 
 const sortDistance = () => {
@@ -168,7 +168,7 @@ const sortDistance = () => {
     //var restaurantDataCopy = restaurantsData;
     restaurantsData.forEach((item) => {
         const distance = getDistance(location.coords.latitude, location.coords.longitude, item.coordinates.lat, item.coordinates.lng);
-        item.farAway = distance;
+        item.farAway = parseFloat(distance);
     });
     //Sort the restaurantsData by distance ascending
     restaurantsData.sort((a, b) => a.farAway - b.farAway);

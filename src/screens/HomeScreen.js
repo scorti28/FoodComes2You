@@ -34,9 +34,6 @@ export default function HomeScreen({navigation}) {
                                 businessAddress={item.businessAddress}
                                 averageReview={item.averageReview}
                                 numberOfReview={item.numberOfReviews}
-                                OnPressFoodCard={() => {
-                                    console.log("@@@navigation.navigate", {id:item.id, restaurant:item.restaurantName})
-                                    navigation.navigate("RestaurantHomeScreen", {id:item.id, restaurant:item.restaurantName, previousScreen: "HomeScreen"})}}
                             />
                         </View>
                     ))
