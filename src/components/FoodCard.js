@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { Icon } from 'react-native-elements';
-import { colors, parameters } from '../global/styles';
+import { colors} from '../global/styles';
 
 export default function FoodCard({
     OnPressFoodCard,

@@ -4,13 +4,15 @@ import { colors } from '../global/styles';
 import { Icon } from 'react-native-elements';
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from '@react-navigation/native';
-import { filterData } from '../global/Data';
+import { globalData } from '../global/Data';
 import { filter } from 'lodash';
 
 export default function SearchComponent() {
 
+  const filterData = globalData();
+
   const [modalVisible, setModalVisible] = useState(false);
-  const [textInputFocussed, setTextInputFocussed] = useState(true); //text input is focusses as soon as I land to it
+  const [textInputFocussed, setTextInputFocussed] = useState(true); 
   const textInput = useRef(0);
   const [data, setData] = useState([...filterData]);
   const navigation = useNavigation();
@@ -86,7 +88,6 @@ export default function SearchComponent() {
                         style={{marginRight:-10}}
                         onPress = {() => {
                             textInput.current.clear()
-                            //handleSearch()
                         }}
                     />
                     </Animatable.View>

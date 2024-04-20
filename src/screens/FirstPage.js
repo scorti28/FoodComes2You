@@ -1,12 +1,13 @@
-import React, { Component, useState, useEffect } from 'react';
-import { Text, View, Button, StyleSheet, TouchableOpacity,PermissionsAndroid, Linking } from 'react-native';
+import React, {useState, useEffect } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity,PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/database';
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { restaurantsData} from '../global/Data';
+import {restaurantsData} from '../global/Data';
+import { DataComponent } from '../global/firebaseHelper';
 
 
 // Initialize Firebase
@@ -57,6 +58,8 @@ const FirstPage = ({navigation}) => {
   const [location, setLocation] = useState(true);
   const [locationReady, setLocationReady] = useState(false);
 
+  const { newVector_ids, newVector_images, newVector_names } = DataComponent();
+
   // function to check permissions and get Location
 const getLocation = () => {
   const result = requestLocationPermission();
@@ -97,7 +100,6 @@ const handleLocationUpdate = () => {
   const label = 'Custom Label';
   const url = `${scheme}${latLng}(${label})`;
 
-  //Linking.openURL(url);
   sortDistance();
 
   console.log(location);
@@ -115,7 +117,6 @@ const handleLocationUpdate = () => {
             timestamp: firebase.database.ServerValue.TIMESTAMP
           };
 
-          //firebase.auth().currentUser.updateProfile(update);
           firestore().collection('users').doc(user.uid).update({
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
@@ -138,6 +139,7 @@ const combineLocationHandler = () => {
     handleLocationUpdate();
     storeLocationInFirebase();
 };
+
 
 const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
 {
@@ -165,7 +167,6 @@ const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
 
 const sortDistance = () => {
     //Iterate over restaurantsData and sort by latitude and longitude to get the distance
-    //var restaurantDataCopy = restaurantsData;
     restaurantsData.forEach((item) => {
         const distance = getDistance(location.coords.latitude, location.coords.longitude, item.coordinates.lat, item.coordinates.lng);
         item.farAway = parseFloat(distance);
@@ -181,7 +182,8 @@ const sortDistance = () => {
         return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => {combineLocationHandler(); navigation.navigate("HomeScreen")}}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+              combineLocationHandler(); navigation.navigate("HomeScreen")}}>
                 <Text style={styles.buttonText}>Near you</Text>
             </TouchableOpacity>
             <View style={{ width: 10 }} /> 
@@ -201,7 +203,7 @@ container: {
     alignItems: 'center',
 },
 buttonContainer: {
-    flexDirection: 'row', // Arrange children horizontally
+    flexDirection: 'row',
     marginTop: 20,
 },
 button: {

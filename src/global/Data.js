@@ -1,16 +1,27 @@
-export const filterData = [
-         {name:"Fast Food", image: require("../images/FastFood.jpeg"), id:"0"},
-         {name:"Chinese", image: require("../images/Chinese.jpeg"), id:"1"},
-         {name:"Mexican", image: require("../images/Mexican.jpeg"), id:"2"},
-         {name:"Romanian", image: require("../images/RomanianFood.jpeg"), id:"3"},
-         {name:"Salads", image: require("../images/Salads.jpeg"), id:"4"},
-         {name:"Sea Food", image: require("../images/SeaFood.jpeg"), id:"5"}
-];
+import { DataComponent } from "./firebaseHelper";
+
+export const globalData = () => {
+  const { newVector_ids, newVector_images, newVector_names } = DataComponent();
+
+  const filterData = [
+    { name: newVector_names[0], image: { uri: newVector_images[0] }, id: newVector_ids[0] },
+    { name: newVector_names[1], image: { uri: newVector_images[1] }, id: newVector_ids[1] },
+    { name: newVector_names[2], image: { uri: newVector_images[2] }, id: newVector_ids[2] },
+    { name: newVector_names[3], image: { uri: newVector_images[3] }, id: newVector_ids[3] },
+    { name: newVector_names[4], image: { uri: newVector_images[4] }, id: newVector_ids[4] },
+    { name: newVector_names[5], image: { uri: newVector_images[5] }, id: newVector_ids[5] },
+  ];
+
+  return filterData;
+
+}
 
 export const restaurantsData = [
-         {restaurantName:"Venue", facility1:"Terasa", facility2:"Loc de joaca", facility3: "Parcare",farAway:"5.3", businessAddress:"Str. Alba Iulia, Timisoara", images: require("../images/Venue.jpeg"), averageReview: 4.8, numberOfReviews:1300, coordinates: {lat: 45.72595113265167, lng: 21.198777962569086}, discount: 20, deliveryTime: 20, collectionTime:5, foodType1:"Romania food", foodType2:"Sea food", foodType3:"Salads", productData:[{name:"Baklava", price:30, image: require("../images/Baklava.jpeg")}, {name:"Sarmale", price:15, image: require("../images/Sarmale.jpeg")}, {name:"Oyster", price:50, image: require("../images/Oyster.jpeg")}], id:0},
-         {restaurantName:"Gala", facility1:"Terasa", facility2: "Loc de joaca", facility3:"", farAway:"11.5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Gala.jpeg"), averageReview: 4.9, numberOfReviews:1259, coordinates: {lat: 45.72727679463518, lng: 21.204732466448036}, discount: 15, deliveryTime: 25, collectionTime:5, foodType1:"Chinese food", foodType2:"Mexican", foodType3:"Salads", productData:[{name:"Kung Pao chicken", price:49, image: require("../images/KungPao.jpeg")}, {name:"Taco", price:15, image: require("../images/Taco.jpeg")}, {name:"Ciser", price:50, image: require("../images/Ciser.jpeg")}], id:1},
-         {restaurantName:"KFC", facility1:"", facility2: "Loc de joaca", facility3:"Parcare", farAway:"4.5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.72868480792899, lng: 21.212886381639077}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:2}
+         {restaurantName:"Venue", facility1:"Sala de evenimente", facility2:"Loc de joaca", facility3: "Parcare", facility4:"Terasa", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Venue.jpeg"), averageReview: 4.8, numberOfReviews:1300, coordinates: {lat: 45.77198714290471, lng: 21.239940020771947}, collectionTime: 5, foodType1:"Romanian food", foodType2:"Sea food", foodType3:"Salads", productData:[{name:"Baklava", price:30, image: require("../images/Baklava.jpeg")}, {name:"Sarmale", price:15, image: require("../images/Sarmale.jpeg")}, {name:"Oyster", price:50, image: require("../images/Oyster.jpeg")}], id:0},
+         {restaurantName:"Gala", facility1:"Terasa", facility2: "", facility3:"Parcare", facility4: "Sala de evenimete", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Gala.jpeg"), averageReview: 4.9, numberOfReviews:1259, coordinates: {lat: 45.77042708682445, lng: 21.27109585252613}, discount: 15, deliveryTime: 25, collectionTime:5, foodType1:"Chinese food", foodType2:"Mexican", foodType3:"Salads", productData:[{name:"Kung Pao chicken", price:49, image: require("../images/KungPao.jpeg")}, {name:"Taco", price:15, image: require("../images/Taco.jpeg")}, {name:"Ciser", price:50, image: require("../images/Ciser.jpeg")}], id:1},
+         {restaurantName:"KFC", facility1:"Terasa", facility2: "", facility3:"Parcare", facility4: "", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.771531924280815, lng: 21.22851512756016}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:2},
+         {restaurantName:"Riyo Wok and Sushi", facility1:"Terasa", facility2: "", facility3:"", facility4:"", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.76236370737881, lng: 21.226659765733217}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:3},
+         {restaurantName:"Spartan", facility1:"Terasa", facility2: "Parcare", facility3:"", facility4:"", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.77192499856234, lng: 21.230206050126768}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:4}
 ];  
 
 export const productData = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 
 export default function MyOrdersScreen(){
     return(

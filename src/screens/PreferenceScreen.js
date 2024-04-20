@@ -181,11 +181,11 @@ header: {
   width:"100%",
   backgroundColor: colors.buttons,
   overflow: 'hidden',
-  height: 180//HEADER_MAX_HEIGHT,
+  height: 180
 },
 backgroundImage: {
-  width: "100%", //null,
-  height: 180, //HEADER_MAX_HEIGHT,
+  width: "100%", //
+  height: 180, 
   resizeMode: 'cover',
 },
 bar: {
@@ -204,11 +204,6 @@ title: {
   fontSize: 28,
   fontWeight:"bold",
   marginLeft:40
-},
-scrollViewContent: {
-  // iOS uses content inset, which acts like padding.
-  //paddingTop: Platform.OS !== 'ios' ?
-  //HEADER_MAX_HEIGHT : 0,
 },
 row: {
   height: 40,

@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
-import { View, Text, Alert, Switch, StyleSheet, TouchableOpacity  } from "react-native";
+import { View, Text, Alert, StyleSheet} from "react-native";
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
 import { Avatar, Icon } from "react-native-elements";
 import { colors } from "../global/styles";
@@ -35,14 +35,13 @@ export default function DrawerContent(props){
                });
                 console.log("User Profile:", userProfile);
 
-                break; // Break the loop on successful fetch
+                break; 
               }
              
               else{
                 console.log("Retrying");
-                // Retry after delay
                 await new Promise((resolve) => setTimeout(resolve, delay));
-                delay *= 2; // Exponential backoff
+                delay *= 2;
                 retries -= 1;
             }
           }

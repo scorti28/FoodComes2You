@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, ImageBackground, Dimensions, FlatList } from 'react-native';
 import SearchComponent from '../components/SearchComponent';
-import { filterData } from '../global/Data';
 import { colors } from '../global/styles';
+import { globalData } from '../global/Data';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}){
+    const filterData = globalData();
+
     return(
         <View style={{flex:1, marginBottom:10}}>
             <SearchComponent />

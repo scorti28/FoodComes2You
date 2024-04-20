@@ -2,10 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View,ImageBackground,TouchableOpacity,FlatList } from 'react-native'
 import {Icon} from 'react-native-elements'
 import {colors} from "../global/styles";
-import { restaurantsData } from '../global/Data';
 import ProductCard from './ProductCard';
-
-
 
 const SearchResultCard = ({
     OnPressRestaurantCard,
@@ -46,10 +43,7 @@ const SearchResultCard = ({
                         color={colors.grey2}
                         size={18}
                         iconStyle={{marginTop:3, marginLeft:-3}}
-                    
-                    
                     />
-
                     <Text style={styles.view5}>{farAway} km</Text>
                 </View>
                 <View style={{flex:9}}>
@@ -73,9 +67,7 @@ const SearchResultCard = ({
             />
             )}
             horizontal={true}
-        
-        />
-            
+        />  
         </View>
       </View>
     );

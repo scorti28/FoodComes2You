@@ -1,8 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import RootClientTabs from './ClientTabs';
-import { Icon } from 'react-native-elements';
-import { colors } from '../global/styles';
 import DrawerContent from '../components/DrawerContent';
 
 const Drawer = createDrawerNavigator();

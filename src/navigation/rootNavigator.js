@@ -1,9 +1,7 @@
 import React, {useContext} from 'react';
-import {DrawerActions, NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer} from '@react-navigation/native';
 import AuthFunction from './authNavigators';
-import AppFunction from './appStack';
 import { SignInContext } from '../contexts/authContext';
-import { setNavigator } from './NavigationService';
 import DrawerNavigator from './DrawerNavigator';
 
 export default function RootNavigator(){

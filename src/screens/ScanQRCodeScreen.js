@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 export default function ScanQRCodeScreen({ navigation }) {
@@ -9,7 +9,6 @@ export default function ScanQRCodeScreen({ navigation }) {
     // Find id FROM!!!! QR Code HERE!!!
     const index = e.data;
 
-    // Redirect to proper restaurant using id found at line 7-8, not above!
     this.scanner.reactivate();
     navigation.navigate("RestaurantHomeScreen", { id: index});
   };

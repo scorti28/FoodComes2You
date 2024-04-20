@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet,FlatList,TouchableOpacity,Text} from 'react-native';
+import { View, StyleSheet,FlatList,TouchableOpacity} from 'react-native';
 import MenuCard from '../components/MenuCard';
 import { menuDetailedData } from '../global/Data';
 

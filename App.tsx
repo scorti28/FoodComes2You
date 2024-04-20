@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, StatusBar, LogBox} from 'react-native';
+import {View, StyleSheet, StatusBar, LogBox} from 'react-native';
 import { colors } from './src/global/styles';
 import RootNavigator from './src/navigation/rootNavigator';
 import 'react-native-gesture-handler';

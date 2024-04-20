@@ -1,11 +1,9 @@
 import HomeHeader from "../components/HomeHeader";
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Pressable, Image, Dimensions, Animated } from 'react-native'; // Animated added
-import { Icon } from 'react-native-elements';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import { colors } from '../global/styles';
-import {filterData, restaurantsData} from '../global/Data';
+import { restaurantsData} from '../global/Data';
 import FoodCard from "../components/FoodCard";
-import { connect } from "formik";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 

@@ -15,40 +15,6 @@ const RestaurantHeader = ({ navigation, id, routeName, previousScreen}) => {
     setCounter(index2);
   };
 
-  const handleBack = () => {
-    // if (fromClientStack) {
-    //   // If called from ClientStack, follow the specified path
-    //   switch (routeName) {
-    //     case 'RestaurantHomeScreen':
-    //       navigation.navigate('HomeScreen');
-    //       console.log("@@@Called From ClientStack")
-    //       break;
-    //     case 'MenuProductsScreen':
-    //     case 'PreferenceScreen':
-    //       navigation.navigate('SearchResultScreen');
-    //       break;
-    //     default:
-    //       navigation.goBack();
-    //       break;
-    //   }
-    // } else {
-    //   // If called directly from ClientTabs, redirect to HomeScreen
-    //   navigation.navigate('HomeScreen');
-    //   console.log("@@@Called From ClientTabs")
-    // }
-
-    if(previousScreen == "HomeScreen")
-        navigation.navigate('HomeScreen');
-    else if(previousScreen == "SearchResultScreen")
-        navigation.navigate('SearchResultScreen');
-    else {
-      console.log("Does not work")
-      console.log("@@@RestaurantHomeScreen.previous_screen", previousScreen)
-      navigation.goBack()
-      
-    }
-  };
-
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -62,7 +28,7 @@ const RestaurantHeader = ({ navigation, id, routeName, previousScreen}) => {
               type="material-community"
               color="#000000"
               size={25}
-              onPress={handleBack}
+              onPress={() => navigation.goBack()}
             />
           </View>
 

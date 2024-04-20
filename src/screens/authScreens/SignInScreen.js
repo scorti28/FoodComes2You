@@ -30,7 +30,7 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header title="Create Account" type="arrow-left-circle" navigation={navigation} />
+      <Header title="Access account" type="arrow-left-circle" navigation={navigation} />
       <View style={{ marginLeft: 20, marginTop: 30 }}>
         <Text style={styles.title}>Sign In</Text>
       </View>

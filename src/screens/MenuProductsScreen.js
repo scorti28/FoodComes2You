@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Route1, Route2, Route3, Route4 } from './MenuTabs';
 import { menu } from '../global/Data';

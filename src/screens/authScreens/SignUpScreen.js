@@ -7,7 +7,6 @@ import { Icon, Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import SignInScreen from './SignInScreen';
 import { useNavigation } from '@react-navigation/native';
 
 

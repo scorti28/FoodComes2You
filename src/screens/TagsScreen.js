@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Button, TouchableOpacity, Text } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import { restaurantsData } from '../global/Data';
-import RestaurantHomeScreen from './RestaurantHomeScreen';
-import { filterData } from '../global/Data';
+import { globalData } from '../global/Data';
 
 const TagsScreen = ({navigation}) => {
+
+  const filterData = globalData();
   
   const [checkedFacilities, setCheckedFacilities] = useState({});
   const [checkedFoodTypes, setCheckedFoodTypes] = useState({});
