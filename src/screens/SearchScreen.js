@@ -8,6 +8,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}){
     const filterData = globalData();
+    const filteredData = filterData.slice(0,7)
 
     return(
         <View style={{flex:1, marginBottom:10}}>
@@ -16,7 +17,7 @@ export default function MySearchScreen({navigation}){
             <View>
                 <FlatList 
                     style = {{marginBottom:1}}
-                    data={filterData}
+                    data={filteredData}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => (
                         <TouchableWithoutFeedback
@@ -27,7 +28,7 @@ export default function MySearchScreen({navigation}){
                             <View style={styles.imageView}>
                                 <ImageBackground
                                     style={styles.image}
-                                    source={item.image}
+                                    source={item.image} 
                                 >
                                     <View style={styles.textView}>
                                         <Text style={{ color: colors.cardbackground }}>{item.name}</Text>

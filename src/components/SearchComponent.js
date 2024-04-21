@@ -10,11 +10,12 @@ import { filter } from 'lodash';
 export default function SearchComponent() {
 
   const filterData = globalData();
+  const filteredData = filterData.slice(0,7)
 
   const [modalVisible, setModalVisible] = useState(false);
   const [textInputFocussed, setTextInputFocussed] = useState(true); 
   const textInput = useRef(0);
-  const [data, setData] = useState([...filterData]);
+  const [data, setData] = useState([...filteredData]);
   const navigation = useNavigation();
 
   const contains = ({name}, query) => {
@@ -25,7 +26,7 @@ export default function SearchComponent() {
   }
 
   const handleSearch = (text) => {
-    const dataS = filter(filterData, userSearch => {
+    const dataS = filter(filteredData, userSearch => {
       return contains(userSearch, text);
     });
   

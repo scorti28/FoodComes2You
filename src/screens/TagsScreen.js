@@ -7,13 +7,14 @@ import { globalData } from '../global/Data';
 const TagsScreen = ({navigation}) => {
 
   const filterData = globalData();
+  const filteredData = filterData.slice(0,7)
   
   const [checkedFacilities, setCheckedFacilities] = useState({});
   const [checkedFoodTypes, setCheckedFoodTypes] = useState({});
 
   // Initialize checkbox state for food types
     useState(() => {
-    const initialState = filterData.reduce((acc, foodType) => {
+    const initialState = filteredData.reduce((acc, foodType) => {
       acc[foodType.name] = false;
       return acc;
     }, {});
@@ -96,7 +97,7 @@ const TagsScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {filterData.map(foodType => (
+      {filteredData.map(foodType => (
   <CheckBox
     key={foodType.id}
     title={`${checkedFoodTypes[foodType.name] ? 'Remove' : 'Add'} ${foodType.name}`}
