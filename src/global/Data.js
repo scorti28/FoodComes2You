@@ -37,29 +37,34 @@ export const productData = [
 
 export const menuData = [
     
-    {title:"Beef",special:false,key:0,},
-    {title:"Chicken", special:false,key:1},
-    {title:"Veggie burger",special:false ,key:2},
-    {title:"Fries",special:false ,key:3},
-    {title:"Salads",special:false,key:4},
-    {title:"Milkshakes",special:false,key:5},
-    {title:"Cold drinks",special:false,key:6},
-    {title:"Desserts",special:false,key:7},
-    {title:"Hot drinks",special:false,key:8},
-  
+    {title:"Appetizer",special:false,key:0,},
+    {title:"Burgers", special:false,key:1},
+    {title:"Cocktails",special:false ,key:2},
+    {title:"Coffee",special:false ,key:3},
+    {title:"Dessert",special:false,key:4},
+    {title:"Drinks",special:false,key:5},
+    {title:"Main dishes",special:false,key:6},
+    {title:"Pasta",special:false,key:7},
+    {title:"Pizza",special:false,key:8},
+    {title:"Salads",special:false,key:9},
+    {title:"Soups",special:false,key:10},
+    {title:"Vegetarian dishes",special:false,key:11},
 ];
-  
-  export const specialData =[
-    {key:0, title:"Limited offer"},
-    {key:1, title:"Salads offer"},
-    {key:2, title:"Fast food offer"},
-];    
-
+    
 export const menu = [
-    { key: 1, title: 'Beef' },
-    { key: 2, title: 'Chicken' },
-    { key: 3, title: 'Veggie burger' },
-    { key: 4, title: 'Share box' }
+    { key: 1, title: 'Appetizer' },
+    { key: 2, title: 'Burgers' },
+    { key: 3, title: 'Cocktails' },
+    { key: 4, title: 'Coffee' },
+    { key: 5, title: 'Dessert' },
+    { key: 6, title: 'Drinks' },
+    { key: 7, title: 'Main dishes' },
+    { key: 8, title: 'Pasta' },
+    { key: 9, title: 'Pizza' },
+    { key: 10, title: 'Salads' },
+    { key: 11, title: 'Soups' },
+    { key: 12, title: 'Vegetarian dishes' },
+
 ];
 
 export const menuDetailedData =[

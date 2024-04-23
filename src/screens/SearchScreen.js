@@ -7,8 +7,7 @@ import { globalData } from '../global/Data';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}){
-    const filterData = globalData();
-    const filteredData = filterData.slice(0,7)
+    const filteredData = globalData();
 
     return(
         <View style={{flex:1, marginBottom:10}}>

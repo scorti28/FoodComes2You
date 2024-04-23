@@ -36,3 +36,21 @@ export async function extractDataFromFirebase(){
   }
 }
 
+export async function extractMenuFromFirebase(){
+  try {
+    const filterData_1 = [];
+    
+    const querySnapshot = await firestore().collection('menu').get();
+    
+    querySnapshot.forEach((snapshot) => {
+      const { name, image, id } = snapshot.data();
+      filterData_1.push({ name, image, id });
+    });
+    return filterData_1;
+
+  } catch (error) {
+    console.error("Error extracting data from Firebase:", error);
+    return []; 
+  }
+}
+

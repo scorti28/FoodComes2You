@@ -6,8 +6,7 @@ import { globalData } from '../global/Data';
 
 const TagsScreen = ({navigation}) => {
 
-  const filterData = globalData();
-  const filteredData = filterData.slice(0,7)
+  const filteredData = globalData();
   
   const [checkedFacilities, setCheckedFacilities] = useState({});
   const [checkedFoodTypes, setCheckedFoodTypes] = useState({});
