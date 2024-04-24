@@ -9,13 +9,12 @@ import { filter } from 'lodash';
 
 export default function SearchComponent() {
 
-  const filteredData = globalData();
-  //const filteredData = filterData.slice(0,7)
+  const filterData = globalData();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [textInputFocussed, setTextInputFocussed] = useState(true); 
   const textInput = useRef(0);
-  //const [data, setData] = useState([...filteredData]);
+  const [data, setData] = useState([...filterData]);
   const navigation = useNavigation();
 
   const contains = ({name}, query) => {
@@ -33,7 +32,6 @@ export default function SearchComponent() {
     setData([...dataS]);
   }
 
-  console.log("@@@@@@@@@@@@@@@@@@@", filteredData)
   return (
     <View style={{alignItems:"center"}}>
       <TouchableWithoutFeedback onPress={() => {setModalVisible(true)}}>
@@ -95,6 +93,24 @@ export default function SearchComponent() {
                     </Animatable.View>
                 </View>
             </View>
+
+            <FlatList 
+                data={data}
+                renderItem={({item}) => (
+                    <TouchableOpacity
+                        onPress={() => {
+                            Keyboard.dismiss()
+                            navigation.navigate("SearchResultScreen", {item:item.name})
+                            setModalVisible(false)
+                            setTextInputFocussed(true)
+                        }}>
+                        <View style={styles.view2}>
+                            <Text style={{color:colors.grey2, fontSize:15}}>{item.name}</Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={filterData.id}
+            />
         </View>
       </Modal>
     </View>

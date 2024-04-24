@@ -7,7 +7,8 @@ import { globalData } from '../global/Data';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}){
-    const filteredData = globalData();
+    const filterData = globalData();
+    //const filteredData = filterData.slice(0,7)
 
     return(
         <View style={{flex:1, marginBottom:10}}>
@@ -16,8 +17,8 @@ export default function MySearchScreen({navigation}){
             <View>
                 <FlatList 
                     style = {{marginBottom:1}}
-                    data={filteredData}
-                    keyExtractor={item => item.id}
+                    data={filterData}
+                    keyExtractor={filterData.id}
                     renderItem={({item}) => (
                         <TouchableWithoutFeedback
                             onPress={() => {
@@ -26,6 +27,7 @@ export default function MySearchScreen({navigation}){
                         >
                             <View style={styles.imageView}>
                                 <ImageBackground
+                                    keyExtractor={item.id}
                                     style={styles.image}
                                     source={item.image} 
                                 >
