@@ -1,16 +1,25 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Route1, Route2, Route3, Route4 } from './MenuTabs';
-import { menu } from '../global/Data';
 import { colors } from '../global/styles';
 import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
+import { menusData } from '../global/Data';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MenuProductsScreen({ navigation, route }) {
-  const [routes] = useState(menu);
+  const menuData = menusData(); 
   const [index, setIndex] = useState(0);
+  const [routes, setRoutes] = useState([]);
+
+  // Update routes when menuData changes
+  useEffect(() => {
+    if (menuData.length > 0) {
+      setRoutes(menuData);
+    }
+  }, [menuData]);
+
 
   const renderTabBar = (props) => (
     <TabBar
@@ -26,14 +35,14 @@ export default function MenuProductsScreen({ navigation, route }) {
 
   const renderScene = ({ route }) => {
     switch (route.key) {
-      case 1:
-        return <Route1 navigation ={navigation} />
-      case 2:
-        return <Route2 name={navigation} />
-      case 3:
-        return <Route3 name={navigation} />
-      case 4:
-        return <Route4 name={navigation} />
+      case '1':
+        return <Route1 navigation={navigation} />
+      case '2':
+        return <Route2 navigation={navigation} />
+      case '3':
+        return <Route3 navigation={navigation} />
+      case '4':
+        return <Route4 navigation={navigation} />
       default:
         return null;
     }
@@ -52,14 +61,12 @@ export default function MenuProductsScreen({ navigation, route }) {
         <Text style={styles.text1}>Menu</Text>
       </View>
       <TabView
-        navigationState={{ index, routes}}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={SCREEN_WIDTH}
+        initialLayout={{ width: SCREEN_WIDTH }}
         renderTabBar={renderTabBar}
         tabBarPosition="top"
-        navigation={navigation}
-        route={route}
       />
     </View>
   );

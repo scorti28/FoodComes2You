@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { extractDataFromFirebase } from "./firebaseData";
+import { extractDataFromFirebase, extractMenuFromFirebase } from "./firebaseData";
 
 export const DataComponent = () => {
   const [data, setData] = useState([]);
@@ -26,3 +26,25 @@ export const DataComponent = () => {
   }, []);
   return { newVector_ids, newVector_images, newVector_names };
 }
+
+// export const MenuComponent = () => {
+//   const [data, setData] = useState([]);
+//   const [newVector_keys, setNewVectorKeys] = useState([]);
+//   const [newVector_titles, setNewVectorTitles] = useState([]);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const menuVector = await extractMenuFromFirebase();
+//       setData(extractedData);
+
+//       const extractedKeys = menuVector.filter(item => item.key);
+//       setNewVectorKeys(extractedKeys);
+
+//       const extractedTitles = menuVector.filter(item => item.title);
+//       setNewVectorTitles(extractedTitles);
+//     };
+
+//     fetchData();
+//   }, []);
+//   return { newVector_keys, newVector_titles };
+// }

@@ -6,8 +6,7 @@ import '@react-native-firebase/auth';
 import '@react-native-firebase/database';
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import {restaurantsData} from '../global/Data';
-import { DataComponent } from '../global/firebaseHelper';
+import {menusData, restaurantsData} from '../global/Data';
 
 
 // Initialize Firebase
@@ -57,8 +56,6 @@ const FirstPage = ({navigation}) => {
     // state to hold location
   const [location, setLocation] = useState(true);
   const [locationReady, setLocationReady] = useState(false);
-
-  const { newVector_ids, newVector_images, newVector_names } = DataComponent();
 
   // function to check permissions and get Location
 const getLocation = () => {
@@ -137,7 +134,7 @@ const handleLocationUpdate = () => {
 
 const combineLocationHandler = () => {
     handleLocationUpdate();
-    storeLocationInFirebase();
+    storeLocationInFirebase();  
 };
 
 
@@ -177,8 +174,10 @@ const sortDistance = () => {
         console.log("-------------------------------------------------");
         console.log(item);
     });
-}
 
+
+}
+  
         return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>

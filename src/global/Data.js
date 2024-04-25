@@ -1,4 +1,6 @@
+import { extractMenuFromFirebase} from "./firebaseData";
 import { DataComponent } from "./firebaseHelper";
+import { useEffect, useState } from "react";
 
 export const globalData = () => {
   const { newVector_ids, newVector_images, newVector_names } = DataComponent();
@@ -15,6 +17,40 @@ export const globalData = () => {
   return filterData;
 
 }
+
+export const menusData = () => {
+  const [menu, setMenu] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const {menuVectorKeys, menuVectorTitles} = await extractMenuFromFirebase();
+      if (menuVectorKeys.length > 0 && menuVectorTitles.length > 0) {
+        const newMenu = menuVectorKeys.map((key, index) => ({
+          key: key.toString(), 
+          title: menuVectorTitles[index]
+        }));
+        setMenu(newMenu);
+      }
+    };
+    fetchData();
+  }, []);
+
+  return menu;
+};
+
+
+export const menuData = [
+    
+  {title:"Beef",special:false,key:0,},
+  {title:"Chicken", special:false,key:1},
+  {title:"Veggie burger",special:false ,key:2},
+  {title:"Fries",special:false ,key:3},
+  {title:"Salads",special:false,key:4},
+  {title:"Milkshakes",special:false,key:5},
+  {title:"Cold drinks",special:false,key:6},
+  {title:"Desserts",special:false,key:7},
+  {title:"Hot drinks",special:false,key:8},
+];
 
 export const restaurantsData = [
          {restaurantName:"Venue", facility1:"Sala de evenimente", facility2:"Loc de joaca", facility3: "Parcare", facility4:"Terasa", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Venue.jpeg"), averageReview: 4.8, numberOfReviews:1300, coordinates: {lat: 45.77198714290471, lng: 21.239940020771947}, collectionTime: 5, foodType1:"Romanian food", foodType2:"Sea food", foodType3:"Salads", productData:[{name:"Baklava", price:30, image: require("../images/Baklava.jpeg")}, {name:"Sarmale", price:15, image: require("../images/Sarmale.jpeg")}, {name:"Oyster", price:50, image: require("../images/Oyster.jpeg")}], id:0},
@@ -35,19 +71,6 @@ export const productData = [
     {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg"), details:"Bucket for every Christmas", id:7}
 ];
 
-export const menuData = [
-    
-    {title:"Beef",special:false,key:0,},
-    {title:"Chicken", special:false,key:1},
-    {title:"Veggie burger",special:false ,key:2},
-    {title:"Fries",special:false ,key:3},
-    {title:"Salads",special:false,key:4},
-    {title:"Milkshakes",special:false,key:5},
-    {title:"Cold drinks",special:false,key:6},
-    {title:"Desserts",special:false,key:7},
-    {title:"Hot drinks",special:false,key:8},
-  
-];
   
   export const specialData =[
     {key:0, title:"Limited offer"},
@@ -55,12 +78,7 @@ export const menuData = [
     {key:2, title:"Fast food offer"},
 ];    
 
-export const menu = [
-    { key: 1, title: 'Beef' },
-    { key: 2, title: 'Chicken' },
-    { key: 3, title: 'Veggie burger' },
-    { key: 4, title: 'Share box' }
-];
+
 
 export const menuDetailedData =[
     { 

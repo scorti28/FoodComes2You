@@ -25,7 +25,7 @@ export default function SearchComponent() {
   }
 
   const handleSearch = (text) => {
-    const dataS = filter(filteredData, userSearch => {
+    const dataS = filter(filterData, userSearch => {
       return contains(userSearch, text);
     });
   

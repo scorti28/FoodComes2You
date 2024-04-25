@@ -36,3 +36,29 @@ export async function extractDataFromFirebase(){
   }
 }
 
+ export async function extractMenuFromFirebase(){
+   try {
+     const menuVector = [];  
+
+     let menuVectorTitles = [];
+     let menuVectorKeys = [];
+
+     const querySnapshot = await firestore().collection('menu').get();  
+     querySnapshot.forEach((snapshot) => {
+      const  {key, title}  = snapshot.data();
+      menuVector.push( {key, title} );
+     });
+
+     menuVectorKeys = menuVector.map(item => item.key)
+     menuVectorTitles = menuVector.map(item => item.title)
+
+     return {menuVectorKeys, menuVectorTitles}
+
+   } catch (error) {
+        console.error("Error extracting data from Firebase:", error);
+        return []; 
+   }
+ }
+
+ 
+
