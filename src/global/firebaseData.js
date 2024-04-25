@@ -60,5 +60,32 @@ export async function extractDataFromFirebase(){
    }
  }
 
+ export async function extractMenuDataFromFirebase(){
+  try {
+    const menuDataVector = [];
+
+    const querySnapshot = await firestore().collection('menuData').get();
+    querySnapshot.forEach((snapshot) => {
+      const { key, title, special } = snapshot.data();
+      menuDataVector.push({ key, title, special });
+    });
+
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@menuDataVector:",menuDataVector); 
+
+    const menuDataVectorKeys = menuDataVector.map(item => item.key);
+    const menuDataVectorTitles = menuDataVector.map(item => item.title);
+    const menuDataVectorSpecial = menuDataVector.map(item => item.special);
+
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@menuDataVectorKeys:",menuDataVectorKeys, menuDataVectorTitles, menuDataVectorSpecial); 
+
+    return { menuDataVectorKeys, menuDataVectorTitles, menuDataVectorSpecial };
+
+  } catch (error) {
+    console.error("Error extracting data from Firebase:", error);
+    return { menuDataVectorKeys: [], menuDataVectorTitles: [], menuDataVectorSpecial: [] };
+  }
+}
+
+
  
 

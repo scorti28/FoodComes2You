@@ -1,47 +1,24 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { colors } from '../../global/styles';
-import { Icon } from 'react-native-elements';
-import { specialData, menuData } from '../../global/Data';
+import { menusVectorData } from '../../global/Data';
 
 export default function MenuScreen({navigation, restaurant, onPress}) {
+    const menuVectorData = menusVectorData();
 
   return (
     <View style={styles.container}>
-      <View>
-        {
-            specialData && specialData.map((items) => 
-                <View key={items.key} style={styles.view1}>
-                    <TouchableOpacity onPress={onPress}>
-                        <View style={styles.view2}>
-                            <Icon 
-                               name = "star-check"
-                               type= "material-community"
-                               color="gold"
-                            />
-                            <Text style={styles.text1}>{items.title}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )
-        }
-      </View>
-
-      <View>
-        {
-            menuData && menuData.map((items) => 
-                <View key={items.key} style={styles.view1}>
-                    <TouchableOpacity onPress={onPress}>
-                        <View style={styles.view2}>
-                            <Text style={styles.text1}>{items.title}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )
-        }
-      </View>
+      {menuVectorData.map((item) => (
+        <View key={item.key} style={styles.view1}>
+          <TouchableOpacity onPress={() => onPress(item)}>
+            <View style={styles.view2}>
+              <Text style={styles.text1}>{item.title}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ))}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
