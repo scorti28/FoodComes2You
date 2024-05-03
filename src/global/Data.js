@@ -1,4 +1,4 @@
-import { extractMenuDataFromFirebase, extractMenuFromFirebase} from "./firebaseData";
+import { extractMenuDataFromFirebase, extractMenuFromFirebase, extractRestaurantDataFromFirebase} from "./firebaseData";
 import { DataComponent } from "./firebaseHelper";
 import { useEffect, useState } from "react";
 
@@ -63,13 +63,45 @@ export const menusVectorData = () => {
 };
 
 
-export const restaurantsData = [
-         {restaurantName:"Venue", facility1:"Sala de evenimente", facility2:"Loc de joaca", facility3: "Parcare", facility4:"Terasa", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Venue.jpeg"), averageReview: 4.8, numberOfReviews:1300, coordinates: {lat: 45.77198714290471, lng: 21.239940020771947}, collectionTime: 5, foodType1:"Romanian food", foodType2:"Sea food", foodType3:"Salads", productData:[{name:"Baklava", price:30, image: require("../images/Baklava.jpeg")}, {name:"Sarmale", price:15, image: require("../images/Sarmale.jpeg")}, {name:"Oyster", price:50, image: require("../images/Oyster.jpeg")}], id:0},
-         {restaurantName:"Gala", facility1:"Terasa", facility2: "", facility3:"Parcare", facility4: "Sala de evenimete", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Gala.jpeg"), averageReview: 4.9, numberOfReviews:1259, coordinates: {lat: 45.77042708682445, lng: 21.27109585252613}, discount: 15, deliveryTime: 25, collectionTime:5, foodType1:"Chinese food", foodType2:"Mexican", foodType3:"Salads", productData:[{name:"Kung Pao chicken", price:49, image: require("../images/KungPao.jpeg")}, {name:"Taco", price:15, image: require("../images/Taco.jpeg")}, {name:"Ciser", price:50, image: require("../images/Ciser.jpeg")}], id:1},
-         {restaurantName:"KFC", facility1:"Terasa", facility2: "", facility3:"Parcare", facility4: "", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.771531924280815, lng: 21.22851512756016}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:2},
-         {restaurantName:"Riyo Wok and Sushi", facility1:"Terasa", facility2: "", facility3:"", facility4:"", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.76236370737881, lng: 21.226659765733217}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:3},
-         {restaurantName:"Spartan", facility1:"Terasa", facility2: "Parcare", facility3:"", facility4:"", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.77192499856234, lng: 21.230206050126768}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:4}
-];  
+export const restaurantVectorData = () => {
+  const [restaurantData, setMenuData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { addresses, averageReviews, coordinatesVector, facilitiesVector, 
+        foodCategoriesVector, foodTypesVector, ids, images, names, nrReviewsVector } = await extractRestaurantDataFromFirebase();
+      if (addresses.length > 0 && averageReviews.length > 0 && coordinatesVector.length > 0 && facilitiesVector.length > 0 && foodCategoriesVector.length > 0 && foodTypesVector.length > 0 && ids.length > 0 && images.length > 0 && names.length > 0 && nrReviewsVector.length > 0) {
+        const newRestaurantData = ids.map((id, index) => ({
+          id: id.toString(),
+          facilities: facilitiesVector[index],
+          address: addresses[index],
+          image: images[index],
+          averageReview: averageReviews[index],
+          nrReviews: nrReviewsVector[index],
+          coordinates: coordinatesVector[index],
+          foodTypes: foodTypesVector[index],
+          foodCategories: foodCategoriesVector[index]
+        }));
+        
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@newMenuData:", newRestaurantData); // Verifică datele înainte de a actualiza starea
+
+        setMenuData(newRestaurantData);
+      }
+    };
+    fetchData();
+  }, []);
+
+  return restaurantData;
+};
+
+
+// export const restaurantsData = [
+//          {restaurantName:"Venue", facility1:"Sala de evenimente", facility2:"Loc de joaca", facility3: "Parcare", facility4:"Terasa", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Venue.jpeg"), averageReview: 4.8, numberOfReviews:1300, coordinates: {lat: 45.77198714290471, lng: 21.239940020771947}, collectionTime: 5, foodType1:"Romanian food", foodType2:"Sea food", foodType3:"Salads", productData:[{name:"Baklava", price:30, image: require("../images/Baklava.jpeg")}, {name:"Sarmale", price:15, image: require("../images/Sarmale.jpeg")}, {name:"Oyster", price:50, image: require("../images/Oyster.jpeg")}], id:0},
+//          {restaurantName:"Gala", facility1:"Terasa", facility2: "", facility3:"Parcare", facility4: "Sala de evenimete", farAway:"5", businessAddress:"Str. Carol Davilla, Timisoara", images: require("../images/Gala.jpeg"), averageReview: 4.9, numberOfReviews:1259, coordinates: {lat: 45.77042708682445, lng: 21.27109585252613}, discount: 15, deliveryTime: 25, collectionTime:5, foodType1:"Chinese food", foodType2:"Mexican", foodType3:"Salads", productData:[{name:"Kung Pao chicken", price:49, image: require("../images/KungPao.jpeg")}, {name:"Taco", price:15, image: require("../images/Taco.jpeg")}, {name:"Ciser", price:50, image: require("../images/Ciser.jpeg")}], id:1},
+//          {restaurantName:"KFC", facility1:"Terasa", facility2: "", facility3:"Parcare", facility4: "", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.771531924280815, lng: 21.22851512756016}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:2},
+//          {restaurantName:"Riyo Wok and Sushi", facility1:"Terasa", facility2: "", facility3:"", facility4:"", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.76236370737881, lng: 21.226659765733217}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:3},
+//          {restaurantName:"Spartan", facility1:"Terasa", facility2: "Parcare", facility3:"", facility4:"", farAway:"5", businessAddress:"Str. Libertatii, Timisoara", images: require("../images/KFC.jpeg"), averageReview: 4.3, numberOfReviews:14000, coordinates: {lat: 45.77192499856234, lng: 21.230206050126768}, discount: 17, deliveryTime: 35, collectionTime:5, foodType1:"Fast Food", foodType2:"", foodType3:"", productData:[{name:"American bucket", price:60, image: require("../images/American.jpeg")}, {name:"Christmas bucket", price:40, image: require("../images/Christmas.jpeg")}], id:4}
+// ];  
 
 export const productData = [
     {name:"Baklava", price:30, image: require("../images/Baklava.jpeg"), details:"100% home made using the original recipe", id:0}, 

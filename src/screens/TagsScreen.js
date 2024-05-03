@@ -1,139 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Button, TouchableOpacity, Text } from 'react-native';
 import { CheckBox } from '@rneui/themed';
-import { restaurantsData } from '../global/Data';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { globalData } from '../global/Data';
 
 const TagsScreen = ({navigation}) => {
 
-  const filterData = globalData();
-  const filteredData = filterData.slice(0,7)
-  
   const [checkedFacilities, setCheckedFacilities] = useState({});
   const [checkedFoodTypes, setCheckedFoodTypes] = useState({});
+  const [restaurantData, setRestaurantData] = useState([]);
+  const filterData = globalData();
 
-  // Initialize checkbox state for food types
-    useState(() => {
-    const initialState = filteredData.reduce((acc, foodType) => {
-      acc[foodType.name] = false;
-      return acc;
-    }, {});
-    setCheckedFoodTypes(initialState);
-  }, []);
-  
-  // Handler for toggling checkbox state for food types
-  const handleFoodTypeToggle = foodType => {
-    setCheckedFoodTypes({
-      ...checkedFoodTypes,
-      [foodType]: !checkedFoodTypes[foodType]
-    });
-  };
+useEffect(() => {
+  const fetchData = async () => {
+    const data = await restaurantMenuExtractor();
+    setRestaurantData(data);
+    initializeCheckboxStates(data);
+  }
+  fetchData();
+}, []);
 
-  const filterAndSortRestaurants = () => {
-    const chosenFacilities = Object.entries(checkedFacilities)
-      .filter(([key, value]) => value)
-      .map(([key]) => key);
-      console.log("@@@1")
-      console.log(chosenFacilities)
-  
-    const chosenFoodTypes = Object.entries(checkedFoodTypes)
-      .filter(([key, value]) => value)
-      .map(([key]) => key);
-  
-    // Sort restaurants based on the number of matched facilities and food types
-      restaurantsData.sort((a, b) => {
-      const countA = chosenFacilities.reduce((acc, facility) => acc + (a.facility1 === facility || a.facility2 === facility || a.facility3 === facility), 0);
-      const countB = chosenFacilities.reduce((acc, facility) => acc + (b.facility1 === facility || b.facility2 === facility || b.facility3 === facility), 0);
-  
-      const foodCountA = chosenFoodTypes.reduce((acc, foodType) => acc + (a.foodType1 === foodType || a.foodType2 === foodType || a.foodType3 === foodType), 0);
-      const foodCountB = chosenFoodTypes.reduce((acc, foodType) => acc + (b.foodType1 === foodType || b.foodType2 === foodType || b.foodType3 === foodType), 0);
-  
-      // Sort by facilities first, then by food types
-      if (countB !== countA) {
-        return countB - countA;
-      } else {
-        return foodCountB - foodCountA;
-      }
-    });
-  
-    return restaurantsData;
-  };
+const initializeCheckboxStates = (restaurants) => {
+  const facilities = new Set();
+  const foodTypes = new Set();
 
-  // Extract all facilities from restaurantsData
-  const facilities = restaurantsData.flatMap(restaurant => [
-    restaurant.facility1,
-    restaurant.facility2,
-    restaurant.facility3
-  ]);
+  restaurants.forEach(restaurant => {
+    restaurant.facilities && Object.values(restaurant.facilities).forEach(f => facilities.add(f));
+    restaurant.foodCategories && restaurant.foodCategories.forEach(f => foodTypes.add(f));
+  });
 
-  // Filter out duplicates and remove empty values
-  const uniqueFacilities = [...new Set(facilities)].filter(Boolean);
-
-  // Initialize checkbox state
-  useState(() => {
-    const initialState = uniqueFacilities.reduce((acc, facility) => {
-      acc[facility] = false;
-      return acc;
-    }, {});
-    setCheckedFacilities(initialState);
-  }, []);
-
-  // Handler for toggling checkbox state
-  const handleCheckboxToggle = facility => {
-    setCheckedFacilities({
-      ...checkedFacilities,
-      [facility]: !checkedFacilities[facility]
-    });
-  };
-
-  const handleSearch = () => {
-    filterAndSortRestaurants();
-    console.log("--------------------------------");
-    console.log("Filtered and Sorted Restaurants:");
-    console.log(restaurantsData);
-    navigation.navigate("HomeScreen");
-  };
-
-
-  return (
-    <View style={styles.container}>
-      {filteredData.map(foodType => (
-  <CheckBox
-    key={foodType.id}
-    title={`${checkedFoodTypes[foodType.name] ? 'Remove' : 'Add'} ${foodType.name}`}
-    iconRight
-    iconType="material"
-    checkedIcon="clear"
-    uncheckedIcon="add"
-    checkedColor="red"
-    checked={checkedFoodTypes[foodType.name]}
-    onPress={() => handleFoodTypeToggle(foodType.name)}
-  />
-))}
-
-    {restaurantsData.flatMap(restaurant => [restaurant.facility1, restaurant.facility2, restaurant.facility3])
-        .filter((facility, index, self) => facility && self.indexOf(facility) === index) // Remove duplicates and empty values
-        .map(facility => (
-          <CheckBox
-            key={facility}
-            title={`${checkedFacilities[facility] ? 'Remove' : 'Add'} ${facility}`}
-            iconRight
-            iconType="material"
-            checkedIcon="clear"
-            uncheckedIcon="add"
-            checkedColor="red"
-            checked={checkedFacilities[facility]}
-            onPress={() => handleCheckboxToggle(facility)}
-          />
-        ))}
-
-      
-      <TouchableOpacity style={styles.button} onPress={handleSearch}>
-        <Text style={styles.buttonText}>Search</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  setCheckedFacilities(Object.fromEntries([...facilities].map(f => [f, false])));
+  setCheckedFoodTypes(Object.fromEntries([...foodTypes].map(f => [f, false])));
 };
+
+const handleCheckboxToggle = (stateUpdater, key) => {
+  stateUpdater(prevState => ({
+    ...prevState,
+    [key]: !prevState[key]
+  }));
+};
+
+const filterAndSortRestaurants = () => {
+  const chosenFacilities = Object.entries(checkedFacilities).filter(([_, value]) => value).map(([key]) => key);
+  const chosenFoodTypes = Object.entries(checkedFoodTypes).filter(([_, value]) => value).map(([key]) => key);
+
+  // Scoring and sorting restaurants
+  const scoredRestaurants = restaurantData.map(restaurant => {
+    const facilityScore = chosenFacilities.reduce((acc, facility) => 
+      acc + (Object.values(restaurant.facilities || {}).includes(facility) ? 1 : 0), 0);
+    const foodTypeScore = chosenFoodTypes.reduce((acc, type) => 
+      acc + (restaurant.foodCategories.includes(type) ? 1 : 0), 0);
+    const totalScore = facilityScore + foodTypeScore;  // Total score based on both categories
+
+    return {...restaurant, score: totalScore};
+  });
+
+  const sortedRestaurants = scoredRestaurants.sort((a, b) => b.score - a.score); // Sorting by total score descending
+
+  // Detailed console logging to show the scores and sorted results
+  console.log("Detailed Scores and Sorted Restaurants:");
+  sortedRestaurants.forEach((restaurant, index) => {
+    console.log(`Rank ${index + 1}: ${restaurant.name} (Score: ${restaurant.score})`);
+    console.log(`   Facilities: ${Object.values(restaurant.facilities || {}).join(', ')}`);
+    console.log(`   Food Types: ${restaurant.foodCategories.join(', ')}`);
+  });
+
+  return sortedRestaurants; 
+};
+
+return (
+  <View style={styles.container}>
+    {Object.keys(checkedFoodTypes).map(foodType => (
+      <CheckBox
+        key={foodType}
+        title={`${checkedFoodTypes[foodType] ? 'Remove' : 'Add'} ${foodType}`}
+        checked={checkedFoodTypes[foodType]}
+        onPress={() => handleCheckboxToggle(setCheckedFoodTypes, foodType)}
+      />
+    ))}
+
+    {Object.keys(checkedFacilities).map(facility => (
+      <CheckBox
+        key={facility}
+        title={`${checkedFacilities[facility] ? 'Remove' : 'Add'} ${facility}`}
+        checked={checkedFacilities[facility]}
+        onPress={() => handleCheckboxToggle(setCheckedFacilities, facility)}
+      />
+    ))}
+
+    <TouchableOpacity style={styles.button} onPress={() => {
+      const sortedRestaurants = filterAndSortRestaurants();
+      console.log("Sorted Restaurants:", sortedRestaurants);
+      navigation.navigate("HomeScreen", { sortedRestaurants });
+    }}>
+      <Text style={styles.buttonText}>Search</Text>
+    </TouchableOpacity>
+  </View>
+);
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

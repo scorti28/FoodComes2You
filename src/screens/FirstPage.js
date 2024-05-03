@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, createContext } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity,PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import firebase from '@react-native-firebase/app';
@@ -6,25 +6,23 @@ import '@react-native-firebase/auth';
 import '@react-native-firebase/database';
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import {menusData, restaurantsData} from '../global/Data';
-
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyB0PUMChSqEQc2VsU1RbEB5FuUxxGsu5h8",
-    authDomain: "foodcomes2you.firebaseapp.com",
-    databaseURL: "https://foodcomes2you.firebaseio.com",
-    projectId: "foodcomes2you",
-    storageBucket: "foodcomes2you.appspot.com",
-    messagingSenderId: "541404345413",
-    appId: "1:541404345413:android:520d66e06a7e23afcd5f2c",
+  apiKey: "AIzaSyB0PUMChSqEQc2VsU1RbEB5FuUxxGsu5h8",
+  authDomain: "foodcomes2you.firebaseapp.com",
+  databaseURL: "https://foodcomes2you.firebaseio.com",
+  projectId: "foodcomes2you",
+  storageBucket: "foodcomes2you.appspot.com",
+  messagingSenderId: "541404345413",
+  appId: "1:541404345413:android:520d66e06a7e23afcd5f2c",
   };
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-//export var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
 
 // Function to get permission for location
 const requestLocationPermission = async () => {
@@ -39,7 +37,6 @@ const requestLocationPermission = async () => {
         buttonPositive: 'OK',
       },
     );
-    console.log('granted', granted);
     if (granted === 'granted') {
       console.log('You can use Geolocation');
       return true;
@@ -53,44 +50,50 @@ const requestLocationPermission = async () => {
 };
 
 const FirstPage = ({navigation}) => {
-    // state to hold location
+
   const [location, setLocation] = useState(true);
   const [locationReady, setLocationReady] = useState(false);
+  const [restaurantData, setRestaurantData] = useState([]);
 
-  // function to check permissions and get Location
-const getLocation = () => {
-  const result = requestLocationPermission();
-  result.then(res => {
-    console.log('res is:', res);
-    if (res) {
-      Geolocation.getCurrentPosition(
-        position => {
-          console.log(position);
-          setLocation(position);
-          setLocationReady(true); // Location is ready
-          
-          //Wait for 2 seconds (adjust the time as needed)
-          setTimeout(() => {
-            handleLocationUpdate();
-          }, 4000);
-        },
-        error => {
-          // See error code charts below.
-          console.log(error.code, error.message);
-          setLocation(false);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-      );
-    }
-  });
+useEffect(() => {
+  const fetchDataAndLocation = async () => {
+    const data = await restaurantMenuExtractor();
+    setRestaurantData(data);
+    getLocation();
+  }
+  fetchDataAndLocation();
+}, []);
+
+useEffect(() => {
+  if (location && restaurantData.length) {
+    sortDistance();  // Call sort only when both are ready
+  }
+}, [location, restaurantData]);
+
+  
+const getLocation = async () => {
+  if (await requestLocationPermission()) {
+    Geolocation.getCurrentPosition(
+      position => {
+        setLocation(position);
+      },
+      error => {
+        console.log('Geolocation error:', error);
+        setLocation(null);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+  }
 };
+
 
 useEffect(() => {
   getLocation();
 }, []);
 
 const handleLocationUpdate = () => {
-  if (!locationReady) return; // Exit if location is not ready yet
+  if (!locationReady) 
+    return; 
 
   const scheme = 'geo:0,0?q=';
   const latLng = `${location.coords.latitude}, ${location.coords.longitude}`;
@@ -106,7 +109,7 @@ const handleLocationUpdate = () => {
   const storeLocationInFirebase = () => {
     try {
       const user = auth().currentUser;
-      if (user) {  // Check if user is not undefined before accessing properties
+      if (user) {  
         if (location) {
           const update = {
             latitude: location.coords.latitude,
@@ -163,25 +166,33 @@ const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
 }
 
 const sortDistance = () => {
-    //Iterate over restaurantsData and sort by latitude and longitude to get the distance
-    restaurantsData.forEach((item) => {
-        const distance = getDistance(location.coords.latitude, location.coords.longitude, item.coordinates.lat, item.coordinates.lng);
-        item.farAway = parseFloat(distance);
-    });
-    //Sort the restaurantsData by distance ascending
-    restaurantsData.sort((a, b) => a.farAway - b.farAway);
-    restaurantsData.forEach((item) => {
-        console.log("-------------------------------------------------");
-        console.log(item);
-    });
+  if (!location || !location.coords || !restaurantData.length) {
+    console.log("Location or restaurant data not available");
+    return [];
+  }
 
+  const sortedData = restaurantData.map(restaurant => ({
+    ...restaurant,
+    distance: getDistance(
+      location.coords.latitude,
+      location.coords.longitude,
+      restaurant.coordinates.latitude,
+      restaurant.coordinates.longitude
+    )
+  })).sort((a, b) => a.distance - b.distance);
 
-}
+  sortedData.forEach(restaurant => {
+    console.log(`${restaurant.name}: ${restaurant.distance} km`);
+  });
+
+  return sortedData;
+};
   
         return (
         <View style={styles.container}>
             <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={() => {
+              console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@", sortDistance());
               combineLocationHandler(); navigation.navigate("HomeScreen")}}>
                 <Text style={styles.buttonText}>Near you</Text>
             </TouchableOpacity>
@@ -192,7 +203,7 @@ const sortDistance = () => {
             </View>
         </View>
         );
-    }
+} 
 
 const styles = StyleSheet.create({
 

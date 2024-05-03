@@ -1,13 +1,21 @@
 import HomeHeader from "../components/HomeHeader";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import { colors } from '../global/styles';
-import { restaurantsData} from '../global/Data';
 import FoodCard from "../components/FoodCard";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({navigation}) {
+    const [restaurantData, setRestaurantData] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await restaurantMenuExtractor();
+        setRestaurantData(data);
+      }
+      fetchData();
+    }, []);
     console.log("@@@HomeScreen.navigation:", navigation)
     return (
         <View style={styles.container}>
@@ -22,7 +30,7 @@ export default function HomeScreen({navigation}) {
             </View>
         <View style = {styles.mapRenderer}>
                 {
-                    restaurantsData.map(item => (
+                    restaurantData.map(item => (
                         <View key={item.id} style={styles.viewRestaurant}>
                             <FoodCard
                                 screenWidth={SCREEN_WIDTH * 0.95}

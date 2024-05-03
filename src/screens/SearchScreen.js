@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, ImageBackground, Dimensions, FlatList } from 'react-native';
 import SearchComponent from '../components/SearchComponent';
 import { colors } from '../global/styles';
-import { globalData } from '../global/Data';
+import { globalData, restaurantVectorData, restaurantsData } from '../global/Data';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}){
-    const filterData = globalData();
-    //const filteredData = filterData.slice(0,7)
+    const filterData = restaurantVectorData();
+    let filteredRestaurants = useState([]);
+
+    const handleCategorySelection = (category) => {
+        // Navighează către ecranul de rezultate, filtrând restaurantele după categorie
+          filteredRestaurants = filterData.filter(restaurant =>
+          restaurant.foodCategories.includes(category)
+        );
+        navigation.navigate("SearchResultScreen", { restaurants: filteredRestaurants });
+      };
 
     return(
         <View style={{flex:1, marginBottom:10}}>
@@ -17,7 +25,7 @@ export default function MySearchScreen({navigation}){
             <View>
                 <FlatList 
                     style = {{marginBottom:1}}
-                    data={filterData}
+                    data={filteredRestaurants}
                     keyExtractor={filterData.id}
                     renderItem={({item}) => (
                         <TouchableWithoutFeedback
