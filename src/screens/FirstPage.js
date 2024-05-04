@@ -7,6 +7,7 @@ import '@react-native-firebase/database';
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
+import { colors } from '../global/styles';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -188,33 +189,46 @@ const sortDistance = () => {
   return sortedData;
 };
   
-        return (
-        <View style={styles.container}>
-            <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => {
-              console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@", sortDistance());
-              combineLocationHandler(); navigation.navigate("HomeScreen")}}>
-                <Text style={styles.buttonText}>Near you</Text>
-            </TouchableOpacity>
-            <View style={{ width: 10 }} /> 
-            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("TagsScreen")}}>
-                <Text style={styles.buttonText}>Tags</Text>
-            </TouchableOpacity>
-            </View>
-        </View>
-        );
+return (
+  <View style={styles.container}>
+    <View style={styles.textContainer}>
+      <Text style={styles.containerText}>Welcome to FoodComes2You!{"\n"}Please choose the preferred option.</Text>
+    </View>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.button} onPress={() => {
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@", sortDistance());
+        combineLocationHandler(); navigation.navigate("HomeScreen")}}>
+        <Text style={styles.buttonText}>Near you</Text>
+      </TouchableOpacity>
+      <View style={{ width: 10 }} /> 
+      <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("TagsScreen")}}>
+        <Text style={styles.buttonText}>Tags</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+);
 } 
 
 const styles = StyleSheet.create({
-
 container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
 },
+textContainer: {
+  marginBottom: 20,
+},
+containerText: {
+    textAlign: 'center',
+    marginBottom: 20,
+    color: colors.buttons,
+    marginBottom: 20,
+    fontSize: 20,
+},
 buttonContainer: {
-    flexDirection: 'row',
-    marginTop: 20,
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
 },
 button: {
     backgroundColor: '#48dba3',
