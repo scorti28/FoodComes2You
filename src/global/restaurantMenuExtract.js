@@ -17,20 +17,33 @@ if (!firebase.apps.length) {
 firebase.initializeApp(firebaseConfig);
 }
 
-export async function restaurantMenuExtractor (){
-    const restaurantData = [];
+export async function restaurantMenuExtractor() {
+  const restaurantData = [];
+  const querySnapshot = await firestore().collection('restaurantData').get();
 
-    const querySnapshot = await firestore().collection('restaurantData').get();
+  const docNames = querySnapshot.docs.map((doc) => doc.id);
 
-    querySnapshot.forEach((doc) => {
-        const { address, averageReview, coordinates, facilities, foodCategories, id, restaurantMenu, name, image, nrReviews} = doc.data();
-        restaurantData.push({ id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews});
-    });
+  querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const { id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway} = data;
+      restaurantData.push({
+          id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway
+      });
+  });
 
-    // restaurantData.forEach((restaurant, index) => {
-    //     console.log(`Restaurant #${index + 1}:`, restaurant);
-    //     console.log('---------------------------------------------------'); // Delimitator
-    // });
+    //  restaurantData.forEach((restaurant, index) => {
+    //      console.log(`Restaurant #${index + 1}:`, restaurant);
+    //      console.log('---------------------------------------------------'); // Delimitator
+    //  });
 
   return restaurantData;
+}
+
+export async function restaurantDataDocumentsExtractor() {
+  const restaurantData = [];
+  const querySnapshot = await firestore().collection('restaurantData').get();
+
+  const docNames = querySnapshot.docs.map((doc) => doc.id);
+
+  return docNames;
 }

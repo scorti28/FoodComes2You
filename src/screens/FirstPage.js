@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext } from 'react';
+import React, {useState, useEffect} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity,PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import firebase from '@react-native-firebase/app';
@@ -6,7 +6,7 @@ import '@react-native-firebase/auth';
 import '@react-native-firebase/database';
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
+import { restaurantDataDocumentsExtractor, restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors } from '../global/styles';
 
 // Initialize Firebase
@@ -55,6 +55,7 @@ const FirstPage = ({navigation}) => {
   const [location, setLocation] = useState(true);
   const [locationReady, setLocationReady] = useState(false);
   const [restaurantData, setRestaurantData] = useState([]);
+  const [docsNames, setDocsName] = useState([]);
 
 useEffect(() => {
   const fetchDataAndLocation = async () => {
@@ -63,6 +64,14 @@ useEffect(() => {
     getLocation();
   }
   fetchDataAndLocation();
+}, []);
+
+useEffect(() => {
+  const fetchData = async () => {
+    const docNames = await restaurantDataDocumentsExtractor();
+    setDocsName(docNames);
+  }
+  fetchData();
 }, []);
 
 useEffect(() => {
@@ -92,7 +101,7 @@ useEffect(() => {
   getLocation();
 }, []);
 
-const handleLocationUpdate = () => {
+const handleLocationUpdate = async () => {
   if (!locationReady) 
     return; 
 
@@ -166,25 +175,46 @@ const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
     return d.toFixed(1);
 }
 
-const sortDistance = () => {
-  if (!location || !location.coords || !restaurantData.length) {
-    console.log("Location or restaurant data not available");
-    return [];
-  }
+const updateFarAway = async () => {
+  for (const restaurant of restaurantData) {
+      const distance = getDistance(
+          location.coords.latitude,
+          location.coords.longitude,
+          restaurant.coordinates.latitude,
+          restaurant.coordinates.longitude
+      );
 
-  const sortedData = restaurantData.map(restaurant => ({
-    ...restaurant,
-    distance: getDistance(
-      location.coords.latitude,
-      location.coords.longitude,
-      restaurant.coordinates.latitude,
-      restaurant.coordinates.longitude
-    )
-  })).sort((a, b) => a.distance - b.distance);
+      try {
+        for(const documents of docsNames){
+          await firestore().collection('restaurantData').doc(documents).update({ farAway: distance });
+          console.log('FarAway field successfully updated.');
+        }
+      } catch (error) {
+          console.error('Error updating farAway field:', error);
+      }
+  }
+}
+
+
+const sortDistance = () => {
+  updateFarAway();
+   if (!restaurantData.length) {
+     console.log("Restaurant data not available");
+     return [];
+   }
+
+  const sortedData = restaurantData.sort((a, b) => {
+    const distanceA = parseFloat(a.farAway || Infinity); // Treat undefined as infinitely far away
+    const distanceB = parseFloat(b.farAway || Infinity);
+    return distanceA - distanceB;
+  });
 
   sortedData.forEach(restaurant => {
-    console.log(`${restaurant.name}: ${restaurant.distance} km`);
+    console.log(`${restaurant.name}: ${restaurant.farAway || 'Distance not available'} km`);
   });
+
+  
+//console.log("Sorted data:", sortedData);
 
   return sortedData;
 };
@@ -195,8 +225,7 @@ return (
       <Text style={styles.containerText}>Welcome to FoodComes2You!{"\n"}Please choose the preferred option.</Text>
     </View>
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button} onPress={() => {
-        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@", sortDistance());
+      <TouchableOpacity style={styles.button} onPress={async () => {
         combineLocationHandler(); navigation.navigate("HomeScreen")}}>
         <Text style={styles.buttonText}>Near you</Text>
       </TouchableOpacity>
