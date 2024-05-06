@@ -9,17 +9,20 @@ import auth from "@react-native-firebase/auth";
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors } from '../global/styles';
 
-// Initialize Firebase
 const firebaseConfig = {
-  
+  apiKey: "AIzaSyB0PUMChSqEQc2VsU1RbEB5FuUxxGsu5h8",
+  authDomain: "foodcomes2you.firebaseapp.com",
+  databaseURL: "https://foodcomes2you.firebaseio.com",
+  projectId: "foodcomes2you",
+  storageBucket: "foodcomes2you.appspot.com",
+  messagingSenderId: "541404345413",
+  appId: "1:541404345413:android:520d66e06a7e23afcd5f2c",
   };
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-
-// Function to get permission for location
 const requestLocationPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(
@@ -49,7 +52,6 @@ const FirstPage = ({navigation}) => {
   const [location, setLocation] = useState(true);
   const [locationReady, setLocationReady] = useState(false);
   const [restaurantData, setRestaurantData] = useState([]);
-  const [docsNames, setDocsName] = useState([]);
 
 useEffect(() => {
   const fetchDataAndLocation = async () => {
@@ -60,17 +62,10 @@ useEffect(() => {
   fetchDataAndLocation();
 }, []);
 
-// useEffect(() => {
-//   const fetchData = async () => {
-//     const docNames = await restaurantDataDocumentsExtractor();
-//     setDocsName(docNames);
-//   }
-//   fetchData();
-// }, []);
 
 useEffect(() => {
   if (location && restaurantData.length) {
-    sortDistance();  // Call sort only when both are ready
+    sortDistance();  
   }
 }, [location, restaurantData]);
 
@@ -206,7 +201,10 @@ const sortDistance = () => {
     console.log(`${restaurant.name}: ${restaurant.farAway || 'Distance not available'} km`);
   });
 
-  
+  sortedData.forEach(restaurant => {
+    console.log("@@@@@@@@@@@@@@@@@@@@@", restaurant);
+    console.log("------------------------------------------------")
+  })
 //console.log("Sorted data:", sortedData);
 
   return sortedData;

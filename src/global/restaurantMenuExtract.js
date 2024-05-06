@@ -33,11 +33,3 @@ export async function restaurantMenuExtractor() {
   return restaurantData;
 }
 
-
-// export async function restaurantDataDocumentsExtractor() {
-//   const querySnapshot = await firestore().collection('restaurantData').get();
-
-//   const docNames = querySnapshot.docs.map((doc) => doc.id);
-
-//   return docNames;
-// }
