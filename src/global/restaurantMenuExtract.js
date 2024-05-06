@@ -21,29 +21,23 @@ export async function restaurantMenuExtractor() {
   const restaurantData = [];
   const querySnapshot = await firestore().collection('restaurantData').get();
 
-  const docNames = querySnapshot.docs.map((doc) => doc.id);
-
   querySnapshot.forEach((doc) => {
       const data = doc.data();
       const { id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway} = data;
       restaurantData.push({
+          docId: doc.id, 
           id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway
       });
   });
 
-    //  restaurantData.forEach((restaurant, index) => {
-    //      console.log(`Restaurant #${index + 1}:`, restaurant);
-    //      console.log('---------------------------------------------------'); // Delimitator
-    //  });
-
   return restaurantData;
 }
 
-export async function restaurantDataDocumentsExtractor() {
-  const restaurantData = [];
-  const querySnapshot = await firestore().collection('restaurantData').get();
 
-  const docNames = querySnapshot.docs.map((doc) => doc.id);
+// export async function restaurantDataDocumentsExtractor() {
+//   const querySnapshot = await firestore().collection('restaurantData').get();
 
-  return docNames;
-}
+//   const docNames = querySnapshot.docs.map((doc) => doc.id);
+
+//   return docNames;
+// }

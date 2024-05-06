@@ -6,18 +6,12 @@ import '@react-native-firebase/auth';
 import '@react-native-firebase/database';
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import { restaurantDataDocumentsExtractor, restaurantMenuExtractor } from '../global/restaurantMenuExtract';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors } from '../global/styles';
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyB0PUMChSqEQc2VsU1RbEB5FuUxxGsu5h8",
-  authDomain: "foodcomes2you.firebaseapp.com",
-  databaseURL: "https://foodcomes2you.firebaseio.com",
-  projectId: "foodcomes2you",
-  storageBucket: "foodcomes2you.appspot.com",
-  messagingSenderId: "541404345413",
-  appId: "1:541404345413:android:520d66e06a7e23afcd5f2c",
+  
   };
 
 if (!firebase.apps.length) {
@@ -66,13 +60,13 @@ useEffect(() => {
   fetchDataAndLocation();
 }, []);
 
-useEffect(() => {
-  const fetchData = async () => {
-    const docNames = await restaurantDataDocumentsExtractor();
-    setDocsName(docNames);
-  }
-  fetchData();
-}, []);
+// useEffect(() => {
+//   const fetchData = async () => {
+//     const docNames = await restaurantDataDocumentsExtractor();
+//     setDocsName(docNames);
+//   }
+//   fetchData();
+// }, []);
 
 useEffect(() => {
   if (location && restaurantData.length) {
@@ -185,15 +179,14 @@ const updateFarAway = async () => {
       );
 
       try {
-        for(const documents of docsNames){
-          await firestore().collection('restaurantData').doc(documents).update({ farAway: distance });
-          console.log('FarAway field successfully updated.');
-        }
+          await firestore().collection('restaurantData').doc(restaurant.docId).update({ farAway: distance });
+          console.log(`${restaurant.name} FarAway field successfully updated.`);
       } catch (error) {
-          console.error('Error updating farAway field:', error);
+          console.error(`Error updating farAway field for ${restaurant.name}:`, error);
       }
   }
 }
+
 
 
 const sortDistance = () => {
