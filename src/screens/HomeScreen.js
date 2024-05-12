@@ -2,21 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import FoodCard from "../components/FoodCard";
 import HomeHeader from "../components/HomeHeader";
-import { restaurantMenuExtractor } from '../global/restaurantMenuExtract'; // Assuming this is the correct import path
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors } from '../global/styles';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
     const [restaurantData, setRestaurantData] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await restaurantMenuExtractor();
-            setRestaurantData(data);
-        };
-        fetchData();
-    }, []);
+        if (route.params?.sortedRestaurants) {
+            setRestaurantData(route.params.sortedRestaurants);
+        } else {
+            const fetchData = async () => {
+                const data = await restaurantMenuExtractor();
+                setRestaurantData(data);
+            };
+            fetchData();
+        }
+    }, [route.params?.sortedRestaurants]);
+
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         const fetchData = async () => {
+    //             const data = await restaurantMenuExtractor();
+    //             setRestaurantData(data);
+    //         };
+    //         fetchData();
+    //     });
+
+    //     return unsubscribe;
+    // }, [navigation]);
 
     return (
         <View style={styles.container}>
@@ -31,7 +47,7 @@ export default function HomeScreen({ navigation }) {
                             <FoodCard
                                 OnPressFoodCard={() => console.log("Pressed", restaurant.name)}
                                 screenWidth={SCREEN_WIDTH * 0.95}
-                                images={{ uri: restaurant.image }} // Assuming `restaurant.image` is a URL
+                                images={{ uri: restaurant.image }}
                                 restaurantName={restaurant.name}
                                 farAway={restaurant.farAway}
                                 businessAddress={restaurant.address}

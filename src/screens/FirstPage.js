@@ -139,6 +139,12 @@ const combineLocationHandler = () => {
     storeLocationInFirebase();  
 };
 
+const handleNearYouPressed = () => {
+  combineLocationHandler();
+  const sortedRestaurants = sortDistance(); 
+  console.log("*******************************************", sortedRestaurants);
+  navigation.navigate("HomeScreen", { sortedRestaurants });
+};
 
 const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
 {
@@ -216,8 +222,7 @@ return (
       <Text style={styles.containerText}>Welcome to FoodComes2You!{"\n"}Please choose the preferred option.</Text>
     </View>
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button} onPress={async () => {
-        combineLocationHandler(); navigation.navigate("HomeScreen")}}>
+      <TouchableOpacity style={styles.button} onPress={handleNearYouPressed}>
         <Text style={styles.buttonText}>Near you</Text>
       </TouchableOpacity>
       <View style={{ width: 10 }} /> 
