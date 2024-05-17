@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import FoodCard from "../components/FoodCard";
 import HomeHeader from "../components/HomeHeader";
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
-import { colors } from '../global/styles';
+import { colors, darkColors } from '../global/styles'; // Import darkColors
+import { ThemeContext } from '../global/themeContext';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({ navigation, route }) {
+    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
+    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
     const [restaurantData, setRestaurantData] = useState([]);
 
     useEffect(() => {
@@ -22,13 +25,12 @@ export default function HomeScreen({ navigation, route }) {
         }
     }, [route.params?.sortedRestaurants]);
 
-
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: currentColors.pageBackground }]}>
             <HomeHeader navigation={navigation} />
             <ScrollView showsVerticalScrollIndicator={true}>
-                <View style={styles.categoriesTextView}>
-                    <Text style={styles.categoriesStyle}>Restaurantele din apropirea ta</Text>
+                <View style={[styles.categoriesTextView, { backgroundColor: currentColors.grey5 }]}>
+                    <Text style={[styles.categoriesStyle, { color: currentColors.grey1 }]}>Restaurantele din apropirea ta</Text>
                 </View>
                 <View style={styles.mapRenderer}>
                     {restaurantData.map(restaurant => (
@@ -56,12 +58,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     categoriesTextView: {
-        backgroundColor: colors.grey5,
         paddingVertical: 3,
         paddingHorizontal: 20
     },
     categoriesStyle: {
-        color: colors.grey1,
         fontSize: 24,
         fontWeight: "bold"
     },

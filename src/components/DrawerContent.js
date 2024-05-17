@@ -1,20 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, Alert, StyleSheet } from "react-native";
+import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
 import { colors } from "../global/styles";
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
 import firestore from "@react-native-firebase/firestore";
+import { ThemeContext } from "../global/themeContext";
 
 export default function DrawerContent(props) {
   const { dispatchSignedIn } = useContext(SignInContext);
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext); // Use ThemeContext
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       const user = auth().currentUser;
-      console.log('Auth User:', user);
       if (user) {
         try {
           let retries = 3;
@@ -22,18 +23,13 @@ export default function DrawerContent(props) {
           while (retries > 0) {
             const userDoc = await firestore().collection('users').doc(user.uid).get();
             const userData = userDoc.data();
-            console.log('User Data:', userData);
-            console.log("User Doc", userDoc);
-
             if (userData) {
               setUserProfile({
                 name: userData.name,
                 familyName: userData.familyName
               });
-              console.log("User Profile:", userProfile);
               break;
             } else {
-              console.log("Retrying");
               await new Promise((resolve) => setTimeout(resolve, delay));
               delay *= 2;
               retries -= 1;
@@ -52,12 +48,9 @@ export default function DrawerContent(props) {
     try {
       auth()
         .signOut()
-        .then(
-          () => {
-            console.log("USER SUCCESSFULLY SIGNED OUT");
-            dispatchSignedIn({ type: "UPDATE_SIGN_IN", payload: { userToken: null } });
-          })
-
+        .then(() => {
+          dispatchSignedIn({ type: "UPDATE_SIGN_IN", payload: { userToken: null } });
+        });
     } catch (error) {
       Alert.alert(error.code);
     }
@@ -89,8 +82,14 @@ export default function DrawerContent(props) {
         )}
         onPress={signOut}
       />
+
+      <TouchableOpacity style={styles.globalDarkModeButton} onPress={toggleTheme}>
+        <Text style={styles.globalDarkModeButtonText}>
+          {isDarkMode ? 'Switch to Light Mode for All App' : 'Switch to Dark Mode for All App'}
+        </Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -119,38 +118,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000",
   },
-
-    avatarTextEmail:{
-        color:colors.pageBackground,
-        fontSize:14
-    },
-    textStyle:{
-        marginLeft:10
-    },
-    stylePreferencies:{
-        borderTopWidth:1,
-        borderTopColor: colors.grey5
-    },
-    stylePreferenciesText:{
-        fontSize:16,
-        color:colors.grey2,
-        paddingTop:10,
-        paddingLeft:20
-    },
-    stylePreferenciesView:{
-        flexDirection:"row",
-        alignItems:"center",
-        justifyContent:"space-between",
-        paddingLeft:20,
-        paddingVertical:5,
-        paddingRight:10
-    },
-    darkText:{
-        fontSize:16,
-        color:colors.grey2,
-        paddingTop:10,
-        paddingLeft:0,
-        fontWeight:"bold"
-    }
-
-})
+  globalDarkModeButton: {
+    padding: 10,
+    backgroundColor: colors.buttons,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    borderRadius: 5,
+  },
+  globalDarkModeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
