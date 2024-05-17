@@ -16,9 +16,9 @@ export default function HomeHeader({navigation}) {
         <Text style={{ color: colors.cardbackground, fontSize: 25, fontWeight: 'bold' }}>FoodComes2You</Text>
       </View>
 
-      <View style={styles.cartIconContainer}>
+      {/* <View style={styles.cartIconContainer}>
         <BadgeIcon type="material-community" name="shopping" size={35} color={colors.cardbackground} />
-      </View>
+      </View> */}
     </View>
   );
 }

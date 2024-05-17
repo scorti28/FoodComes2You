@@ -124,7 +124,7 @@ export default function RestaurantHomeScreen({navigation, route}) {
 
         </ScrollView>
 
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
             <View style={styles.view11}>
                 <View style={styles.view12}>
                     <Text style={styles.text13}>View Shopping Cart</Text>
@@ -134,7 +134,7 @@ export default function RestaurantHomeScreen({navigation, route}) {
                 </View>
 
             </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
     </View>
   )
 }

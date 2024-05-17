@@ -1,153 +1,125 @@
-import React, {useEffect, useState, useContext} from "react";
-import { View, Text, Alert, StyleSheet} from "react-native";
-import { DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navigation/drawer";
-import { Avatar, Icon } from "react-native-elements";
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, Alert, StyleSheet } from "react-native";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { Icon } from "react-native-elements";
 import { colors } from "../global/styles";
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
 import firestore from "@react-native-firebase/firestore";
 
+export default function DrawerContent(props) {
+  const { dispatchSignedIn } = useContext(SignInContext);
+  const [userProfile, setUserProfile] = useState(null);
 
-export default function DrawerContent(props){
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const user = auth().currentUser;
+      console.log('Auth User:', user);
+      if (user) {
+        try {
+          let retries = 3;
+          let delay = 1000;
+          while (retries > 0) {
+            const userDoc = await firestore().collection('users').doc(user.uid).get();
+            const userData = userDoc.data();
+            console.log('User Data:', userData);
+            console.log("User Doc", userDoc);
 
-    const {dispatchSignedIn} = useContext(SignInContext);
-    const [userProfile, setUserProfile] = useState(null);
-
-    useEffect(() => {
-      const fetchUserProfile = async () => {
-        const user = auth().currentUser; 
-        console.log('Auth User:', user); 
-        if (user) {
-          try {
-            let retries = 3;
-            let delay = 1000; 
-            while (retries > 0) {
-              
-              const userDoc = await firestore().collection('users').doc(user.uid).get();
-              const userData = userDoc.data();
-              console.log('User Data:', userData);
-              console.log("User Doc", userDoc);
-
-              if(userData){
-                setUserProfile({
-                 name: userData.name, 
-                 familyName: userData.familyName
-               });
-                console.log("User Profile:", userProfile);
-
-                break; 
-              }
-             
-              else{
-                console.log("Retrying");
-                await new Promise((resolve) => setTimeout(resolve, delay));
-                delay *= 2;
-                retries -= 1;
+            if (userData) {
+              setUserProfile({
+                name: userData.name,
+                familyName: userData.familyName
+              });
+              console.log("User Profile:", userProfile);
+              break;
+            } else {
+              console.log("Retrying");
+              await new Promise((resolve) => setTimeout(resolve, delay));
+              delay *= 2;
+              retries -= 1;
             }
           }
-          } catch (error) {
-            console.error("Error fetching user profile after retries:", error);
-          }
+        } catch (error) {
+          console.error("Error fetching user profile after retries:", error);
         }
-      };
-    
-      fetchUserProfile();
-    }, []);
+      }
+    };
 
-async function signOut(){
-       
-    try{
-        auth()
+    fetchUserProfile();
+  }, []);
+
+  async function signOut() {
+    try {
+      auth()
         .signOut()
         .then(
-            ()=>{console.log("USER SUCCESSFULLY SIGNED OUT")
-            dispatchSignedIn({type:"UPDATE_SIGN_IN",payload:{userToken:null}})
-        })
+          () => {
+            console.log("USER SUCCESSFULLY SIGNED OUT");
+            dispatchSignedIn({ type: "UPDATE_SIGN_IN", payload: { userToken: null } });
+          })
 
-    }catch(error){
-        Alert.alert(error.code)
+    } catch (error) {
+      Alert.alert(error.code);
     }
-}
-    return(
-        <View style={styles.container}>
-            <DrawerContentScrollView {...props}>
-                <View style={{backgroundColor:colors.buttons}}>
-            <View style={styles.centerAvatar}>
-                 <Avatar 
-                     rounded
-                     avatarStyle={styles.avatarStyle}
-                     size={80}
-                 />
-                 <View style={styles.textStyle}>
-                 <Text style={styles.avatarText}>
-                      {userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}
-                </Text>
-            </View>
+  }
+
+  return (
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props}>
+        <View style={styles.userContainer}>
+          <View style={styles.avatarContainer}>
+            <Text style={styles.avatarText}>👤</Text>
           </View>
-            </View>
-              
-          <DrawerItemList {...props} />
-            <DrawerItem 
-                 label = "Settings"
-                 icon = {({color, size}) => (
-                    <Icon 
-                       type = "material-community"
-                       name = "cogs"
-                       color={color}
-                       size={size}
-                    />
-                 )}
-              />
-
-            <DrawerItem 
-                 label = "Help"
-                 icon = {({color, size}) => (
-                    <Icon 
-                       type = "material-community"
-                       name = "help-box"
-                       color={color}
-                       size={size}
-                    />
-                 )}
-              />
-            </DrawerContentScrollView>
-
-            <DrawerItem 
-                 label = "Sign out"
-                 icon = {({color, size}) => (
-                    <Icon 
-                       type = "material-community"
-                       name = "logout-variant"
-                       color={color}
-                       size={size}
-                       
-                    />
-                 )}
-                 onPress={signOut}
-              />
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameText}>Bine ai venit,</Text>
+            <Text style={styles.nameText}>{userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}!</Text>
+          </View>
         </View>
-    )
+      </DrawerContentScrollView>
+
+      <DrawerItem
+        label="Sign out"
+        icon={({ color, size }) => (
+          <Icon
+            type="material-community"
+            name="logout-variant"
+            color={color}
+            size={size}
+          />
+        )}
+        onPress={signOut}
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-    },
-    avatarStyle:{
-        borderWidth:4,
-        borderColor:colors.pageBackground,
-    },
-    centerAvatar:{
-        flexDirection:"row",
-        alignItems:"center",
-        paddingLeft: 20,
-        paddingVertical:10
-    },
-    avatarText:{
-        fontWeight:'bold',
-        color:colors.pageBackground,
-        fontSize:18
-    },
+  container: {
+    flex: 1,
+  },
+  userContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.grey5,
+  },
+  avatarContainer: {
+    marginRight: 20,
+  },
+  avatarText: {
+    fontSize: 24,
+  },
+  nameContainer: {
+    flex: 1,
+  },
+  nameText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#000",
+  },
+
     avatarTextEmail:{
         color:colors.pageBackground,
         fontSize:14
