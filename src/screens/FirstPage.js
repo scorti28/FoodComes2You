@@ -219,15 +219,15 @@ const sortDistance = () => {
 return (
   <View style={styles.container}>
     <View style={styles.textContainer}>
-      <Text style={styles.containerText}>Welcome to FoodComes2You!{"\n"}Please choose the preferred option.</Text>
+      <Text style={styles.containerText}>Bine ai venit în FoodComes2You!{"\n"}Te rog alege opțiunea dorită!</Text>
     </View>
     <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.button} onPress={handleNearYouPressed}>
-        <Text style={styles.buttonText}>Near you</Text>
+        <Text style={styles.buttonText}>În apropiere</Text>
       </TouchableOpacity>
       <View style={{ width: 10 }} /> 
       <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("TagsScreen")}}>
-        <Text style={styles.buttonText}>Tags</Text>
+        <Text style={styles.buttonText}>Etichete</Text>
       </TouchableOpacity>
     </View>
   </View>

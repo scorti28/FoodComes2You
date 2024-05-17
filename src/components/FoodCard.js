@@ -46,7 +46,7 @@ export default function FoodCard({
 
             <View style={styles.review}>
                 <Text style={styles.averageReview}>{averageReview}</Text>
-                <Text style={styles.numberOfReview}>{numberOfReview} reviews</Text>
+                <Text style={styles.numberOfReview}>{numberOfReview} review-uri</Text>
             </View>
         </TouchableOpacity>
     )

@@ -1,175 +1,148 @@
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Modal, TextInput, FlatList, TouchableOpacity, Keyboard } from 'react-native';
-import React, {useState, useRef} from 'react';
-import { colors } from '../global/styles';
 import { Icon } from 'react-native-elements';
-import * as Animatable from "react-native-animatable";
+import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
-import { globalData } from '../global/Data';
-import { filter } from 'lodash';
+import { extractDataFromFirebase } from '../global/firebaseData';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
+import { colors } from '../global/styles';
 
 export default function SearchComponent() {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [textInputFocussed, setTextInputFocussed] = useState(true);
+    const textInput = useRef(null);
+    const [filterData, setFilterData] = useState([]); 
+    const [data, setData] = useState([]);
+    const navigation = useNavigation();
 
-  const filterData = globalData();
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await extractDataFromFirebase();
+            setFilterData(data);
+            setData(data);  
+        };
+        fetchData();
+    }, []);
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [textInputFocussed, setTextInputFocussed] = useState(true); 
-  const textInput = useRef(0);
-  const [data, setData] = useState([...filterData]);
-  const navigation = useNavigation();
+    const contains = ({ name }, query) => name.toLowerCase().includes(query.toLowerCase());
 
-  const contains = ({name}, query) => {
-    if(name.includes(query)){
-        return true;
-    }
-    return false;
-  }
+    const handleSearch = (text) => {
+        const formattedQuery = text.toLowerCase();
+        const filteredData = filterData.filter(item => contains(item, formattedQuery));
+        setData(filteredData);
+    };
 
-  const handleSearch = (text) => {
-    const dataS = filter(filterData, userSearch => {
-      return contains(userSearch, text);
-    });
-  
-    setData([...dataS]);
-  }
+    const handleSelectCategory = async (category) => {
+        const restaurantData = await restaurantMenuExtractor(); // Fetch all restaurant data
+        const filteredRestaurants = restaurantData.filter(restaurant =>
+            restaurant.foodCategories.includes(category)
 
-  return (
-    <View style={{alignItems:"center"}}>
-      <TouchableWithoutFeedback onPress={() => {setModalVisible(true)}}>
-        <View style={styles.searchArea}>
-            <Icon 
-                name = "magnify"
-                type = "material-community"
-                style={styles.searchIcon}
-                iconStyle={{marginLeft:5}}
-                size={32}
-            />
-            <Text style={{fontSize:15}}>Search for restaurants</Text>
-        </View>
-      </TouchableWithoutFeedback>
+        );
+        navigation.navigate("SearchResultScreen", { filteredRestaurants });
+        setModalVisible(false);
+    };
 
-      <Modal animationType='fade' transparent = {false} visible = {modalVisible}>
-        <View style={styles.modal}>
-            <View style={styles.view1}>
-                <View style={styles.textInput}>
-                    <Animatable.View
-                        animation={textInputFocussed ? "fadeInRight" : "fadeInLeft"}
-                        duration={400}
-                    >
-                        <Icon name={textInputFocussed ? "arrow-back" : "search"}
-                            onPress={() => {
-                                if(textInputFocussed)
-                                setModalVisible(false)
-                                setTextInputFocussed(true)
-                            }}
-                            style = {styles.icon2}
-                            type='material'
-                            iconStyle={{marginRight:5}}
-                        />
-
-                    </Animatable.View>
-                    <TextInput 
-                        style={{width:"90%"}}
-                        placeholder=''
-                        autoFocus = {false}
-                        ref = {textInput}
-                        onFocus={() => setTextInputFocussed(true)}
-                        onBlur={() => setTextInputFocussed(false)}
-                        onChangeText={handleSearch}
+    return (
+        <View style={{ alignItems: "center" }}>
+            <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
+                <View style={styles.searchArea}>
+                    <Icon
+                        name="magnify"
+                        type="material-community"
+                        iconStyle={{ marginLeft: 5 }}
+                        size={32}
                     />
-
-                    <Animatable.View
-                        animation={textInputFocussed ? "fadeInLeft" : ""}
-                        duration={400}
-                    >
-                      <Icon
-                        name = {textInputFocussed ? "window-close" : null}
-                        iconStyle = {{color:colors.grey3}}
-                        type = "material-community"
-                        style={{marginRight:-10}}
-                        onPress = {() => {
-                            textInput.current.clear()
-                        }}
-                    />
-                    </Animatable.View>
+                    <Text style={{ fontSize: 15 }}>Caută după tipul de mâncare</Text>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
 
-            <FlatList 
-                data={data}
-                renderItem={({item}) => (
-                    <TouchableOpacity
-                        onPress={() => {
-                            Keyboard.dismiss()
-                            navigation.navigate("SearchResultScreen", {item:item.name})
-                            setModalVisible(false)
-                            setTextInputFocussed(true)
-                        }}>
-                        <View style={styles.view2}>
-                            <Text style={{color:colors.grey2, fontSize:15}}>{item.name}</Text>
+            <Modal animationType='fade' transparent={false} visible={modalVisible}>
+                <View style={styles.modal}>
+                    <View style={styles.view1}>
+                        <View style={styles.textInput}>
+                            <Animatable.View animation={textInputFocussed ? "fadeInRight" : "fadeInLeft"} duration={400}>
+                                <Icon
+                                    name="arrow-back"
+                                    type='material'
+                                    onPress={() => setModalVisible(false)}
+                                    iconStyle={{ marginRight: 5 }}
+                                />
+                            </Animatable.View>
+                            <TextInput
+                                style={{ width: "90%" }}
+                                placeholder="Search..."
+                                autoFocus={true}
+                                ref={textInput}
+                                onFocus={() => setTextInputFocussed(true)}
+                                onBlur={() => setTextInputFocussed(false)}
+                                onChangeText={handleSearch}
+                            />
+                            <Animatable.View animation={textInputFocussed ? "fadeInLeft" : ""} duration={400}>
+                                <Icon
+                                    name="window-close"
+                                    type="material-community"
+                                    iconStyle={{ color: colors.grey3, marginRight: -10 }}
+                                    onPress={() => {
+                                        textInput.current.clear();
+                                        handleSearch('');  
+                                    }}
+                                />
+                            </Animatable.View>
                         </View>
-                    </TouchableOpacity>
-                )}
-                keyExtractor={filterData.id}
-            />
+                    </View>
+
+                    <FlatList
+                        data={data}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => handleSelectCategory(item.name)}>
+                                <View style={styles.view2}>
+                                    <Text style={{ color: colors.grey2, fontSize: 15 }}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                </View>
+            </Modal>
         </View>
-      </Modal>
-    </View>
-  )
+    );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1
+    textInput: {
+        borderWidth: 1,
+        borderRadius: 12,
+        marginHorizontal: 0,
+        borderColor: "#86939e",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignContent: "center",
+        alignItems: "center",
+        paddingLeft: 10,
+        paddingRight: 10
     },
-    text1:{
-        color:colors.grey3,
-        fontSize:16
+    searchArea: {
+        marginTop: 10,
+        width: "94%",
+        height: 50,
+        backgroundColor: colors.grey5,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: colors.grey4,
+        flexDirection: "row",
+        alignItems: "center"
     },
-    textInput:{
-        borderWidth:1,
-        borderRadius:12,
-        marginHorizontal:0,
-        borderColor:"#86939e",
-        flexDirection:"row",
-        justifyContent:"space-evenly",
-        alignContent:"center",
-        alignItems:"center",
-        paddingLeft:10,
-        paddingRight:10
+    modal: {
+        flex: 1
     },
-    searchArea:{
-        marginTop:10,
-        width:"94%",
-        height:50,
-        backgroundColor:colors.grey5,
-        borderRadius:12,
-        borderWidth:1,
-        borderColor:colors.grey4,
-        flexDirection:"row",
-        alignItems:"center"
+    view1: {
+        height: 70,
+        justifyContent: "center",
+        paddingHorizontal: 10
     },
-    searchIcon:{
-        fontSize:24,
-        padding:5,
-        color:colors.grey2
-    },
-    view1:{
-        height:70,
-        justifyContent:"center",
-        paddingHorizontal:10
-    },
-    view2:{
-        flexDirection:"row",
-        padding:15,
-        alignItems:"center"
-    },
-    icon2:{
-        fontSize:24,
-        padding:5,
-        color:colors.grey2
-    }, 
-    modal:{
-        flex:1
+    view2: {
+        flexDirection: "row",
+        padding: 15,
+        alignItems: "center"
     }
-
-})
+});

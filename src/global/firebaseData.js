@@ -19,22 +19,17 @@ firebase.initializeApp(firebaseConfig);
 }
 
 export async function extractDataFromFirebase(){
-  try {
-    const filterData_1 = [];
-    
+    const filterData = [];
     const querySnapshot = await firestore().collection('filterData').get();
     
     querySnapshot.forEach((snapshot) => {
-      const { name, image, id } = snapshot.data();
-      filterData_1.push({ name, image, id });
+      const data = snapshot.data();
+      const { name, image, id } = data;
+      filterData.push({ name, image, id });
     });
-    return filterData_1;
 
-  } catch (error) {
-    console.error("Error extracting data from Firebase:", error);
-    return []; 
+    return filterData;
   }
-}
 
  export async function extractMenuFromFirebase(){
    try {

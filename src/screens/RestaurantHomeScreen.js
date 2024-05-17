@@ -13,7 +13,7 @@ import InfoScreen from './RestaurantTabs/InfoScreen';
 const SCREEN_WIDTH = Dimensions.get('window').width
 const initialLayout = SCREEN_WIDTH;
 
-export default function RestaurantHomeScreen({navigation, route, previousScreen}) {
+export default function RestaurantHomeScreen({navigation, route}) {
     console.log("@@@RestaurantHomeScreen", [route])
   const { id, routeName } = route.params;
 

@@ -103,7 +103,7 @@ function RootClientTabs (){
         component={HomeScreen}
         options={{
           headerShown: false,
-          tabBarLabel: "Home",
+          tabBarLabel: "Acasă",
           tabBarIcon: ({ color, size }) => (
             <Icon
               name="home-circle"
@@ -119,7 +119,7 @@ function RootClientTabs (){
         component={ClientStack}
         options={{
           headerShown: false,
-          tabBarLabel: "Search",
+          tabBarLabel: "Caută",
           tabBarIcon: ({ color, size }) => (
             <Icon
               name="search-web"
@@ -135,10 +135,10 @@ function RootClientTabs (){
         component={MyOrdersScreen}
         options={{
           headerShown: false,
-          tabBarLabel: "My Orders",
+          tabBarLabel: "Despre noi",
           tabBarIcon: ({ color, size }) => (
             <Icon
-              name="view-list-outline"
+              name="information-variant"
               type="material-community"
               color={color}
               size={size}
@@ -146,7 +146,7 @@ function RootClientTabs (){
           )
         }}
       />
-      <ClientTabs.Screen
+      {/* <ClientTabs.Screen
         name="ScanQRCodeScreen"
         component={ScanQRCodeScreen}
         options={{
@@ -161,7 +161,7 @@ function RootClientTabs (){
             />
           )
         }}
-      />
+      /> */}
     </ClientTabs.Navigator>
       );
 }

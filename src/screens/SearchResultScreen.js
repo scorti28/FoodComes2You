@@ -1,49 +1,43 @@
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native';
-import React from 'react';
 import SearchResultCard from '../components/SearchResultCard';
-import { restaurantsData } from '../global/Data';
 import { colors } from '../global/styles';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const SearchResultScreen = ({ navigation, route }) => {
-  return (
-    <View style={styles.container}>
-      <View>
+  const SearchResultScreen = ({ route }) => {
+    const { filteredRestaurants } = route.params; // Ensure this line is correctly fetching the passed data
+  
+    return (
+      <View style={styles.container}>
         <FlatList 
-            style={{backgroundColor:colors.cardbackground}}
-            data = {restaurantsData}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item, index}) => (
-              <SearchResultCard
+          data={filteredRestaurants} // Use directly the filtered data
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <SearchResultCard
               screenWidth={SCREEN_WIDTH}
-              images={item.images}
+              image={{uri: item.image}}
               averageReview={item.averageReview}
-              numberOfReviews={item.numberOfReviews}
-              restaurantName={item.restaurantName}
+              nrReviews={item.nrReviews}
+              name={item.name}
               farAway={item.farAway}
-              businessAddress={item.businessAddress}
-              productData={item.productData}
-              OnPressRestaurantCard={() => navigation.navigate("RestaurantHomeScreen", {id:index, restaurant:item.restaurantName, previousScreen: "SearchResultScreen"})}
+              address={item.address}
+              OnPressRestaurantCard={() => navigation.navigate("RestaurantHomeScreen", {id: item.id, restaurant: item.name})}
             />
-            )}
-
-            ListHeaderComponent={
-              <View style={styles.listHeader}>
-                <Text style={styles.listHeaderText}>
-                  {restaurantsData.length} results for {route.params.item}
-                </Text>
-              </View>
-            } 
-
-            showsVerticalScrollIndicator = {false}
-        
+          )}
+          ListHeaderComponent={
+            <View style={styles.listHeader}>
+              <Text style={styles.listHeaderText}>
+                {filteredRestaurants.length} results for {route.params.foodType}
+              </Text>
+            </View>
+          }
+          showsVerticalScrollIndicator={false}
         />
       </View>
-      
-    </View>
-  );
-};
+    );
+  };
 
 export default SearchResultScreen;
 

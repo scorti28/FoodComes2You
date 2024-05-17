@@ -22,24 +22,13 @@ export default function HomeScreen({ navigation, route }) {
         }
     }, [route.params?.sortedRestaurants]);
 
-    // useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //         const fetchData = async () => {
-    //             const data = await restaurantMenuExtractor();
-    //             setRestaurantData(data);
-    //         };
-    //         fetchData();
-    //     });
-
-    //     return unsubscribe;
-    // }, [navigation]);
 
     return (
         <View style={styles.container}>
             <HomeHeader navigation={navigation} />
             <ScrollView showsVerticalScrollIndicator={true}>
                 <View style={styles.categoriesTextView}>
-                    <Text style={styles.categoriesStyle}>Restaurants near you</Text>
+                    <Text style={styles.categoriesStyle}>Restaurantele din apropirea ta</Text>
                 </View>
                 <View style={styles.mapRenderer}>
                     {restaurantData.map(restaurant => (

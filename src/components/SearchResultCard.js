@@ -1,77 +1,77 @@
-import React from 'react'
-import { StyleSheet, Text, View,ImageBackground,TouchableOpacity,FlatList } from 'react-native'
-import {Icon} from 'react-native-elements'
-import {colors} from "../global/styles";
+import React from 'react';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { colors } from "../global/styles";
 import ProductCard from './ProductCard';
 
 const SearchResultCard = ({
     OnPressRestaurantCard,
-    restaurantName,
-    numberOfReviews,
-    businessAddress,
+    name,
+    nrReviews,
+    address,
     farAway,
     averageReview,
-    images,
-    productData
-  }) => {
+    image, 
+    productData = [] 
+}) => {
     return (
-      <View>
-        <TouchableOpacity onPress={OnPressRestaurantCard}>
-        <View style={styles.view1}>
-          <View style={{ height: 150 }}>
-            <ImageBackground
-              style={{ height: 160 }}
-              source={images}
-              imageStyle={styles.imageStyle}
-            />
-  
-            <View style={styles.image}>
-              <Text style={styles.text1}>{averageReview}</Text>
-              <Text style={styles.text2}>{numberOfReviews} reviews</Text>
-            </View>
-          </View>
-          <View style={styles.view3}>
-            <View style = {{paddingTop:5}}>
-                <Text style={styles.text5}>{restaurantName}</Text>
-            </View>
+        <View>
+            <TouchableOpacity onPress={OnPressRestaurantCard}>
+                <View style={styles.view1}>
+                    <View style={{ height: 150 }}>
+                        <ImageBackground
+                            style={{ height: 160 }}
+                            source={{ image }} 
+                            imageStyle={styles.imageStyle}
+                        >
+                            <View style={styles.image}>
+                                <Text style={styles.text1}>{averageReview}</Text>
+                                <Text style={styles.text2}>{nrReviews} review-uri</Text>
+                            </View>
+                        </ImageBackground>
+                    </View>
+                    <View style={styles.view3}>
+                        <View style={{ paddingTop: 5 }}>
+                            <Text style={styles.text5}>{name}</Text>
+                        </View>
 
-            <View style={{flexDirection:"row"}}>
-                <View style={styles.view4}>
-                    <Icon 
-                        name = "push-pin"
-                        type= "material"
-                        color={colors.grey2}
-                        size={18}
-                        iconStyle={{marginTop:3, marginLeft:-3}}
-                    />
-                    <Text style={styles.view5}>{farAway} km</Text>
+                        <View style={{ flexDirection: "row" }}>
+                            <View style={styles.view4}>
+                                <Icon
+                                    name="push-pin"
+                                    type="material"
+                                    color={colors.grey2}
+                                    size={18}
+                                    iconStyle={{ marginTop: 3, marginLeft: -3 }}
+                                />
+                                <Text style={styles.view5}>{farAway} km</Text>
+                            </View>
+                            <View style={{ flex: 9 }}>
+                                <Text style={styles.text6}>{address}</Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
-                <View style={{flex:9}}>
-                    <Text style={styles.text6}>{businessAddress}</Text>
-                </View>
-            </View>
-          </View>
-        </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
 
-        <View style = {{marginTop:5, paddingBottom:20}}>
-        <FlatList 
-            style={{backgroundColor:colors.cardbackground}}
-            data = {productData}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item, index}) => (
-                <ProductCard 
-                image={item.image}
-                productName={item.name}
-                price={item.price}
-            />
-            )}
-            horizontal={true}
-        />  
+            <View style={{ marginTop: 5, paddingBottom: 20 }}>
+                <FlatList
+                    style={{ backgroundColor: colors.cardbackground }}
+                    data={productData}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                        <ProductCard
+                            image={item.image}
+                            productName={item.name}
+                            price={item.price}
+                        />
+                    )}
+                    horizontal={true}
+                />
+            </View>
         </View>
-      </View>
     );
-  };
+};
 
 export default SearchResultCard;
 

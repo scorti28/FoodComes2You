@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, ImageBackground, Dimensions, FlatList } from 'react-native';
 import SearchComponent from '../components/SearchComponent';
 import { colors } from '../global/styles';
-import { globalData, restaurantVectorData, restaurantsData } from '../global/Data';
+import { restaurantMenuExtractor} from '../global/restaurantMenuExtract'; 
+import { extractDataFromFirebase } from '../global/firebaseData';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function MySearchScreen({navigation}){
-    const filterData = restaurantVectorData();
-    let filteredRestaurants = useState([]);
+export default function MySearchScreen({navigation}) {
+    const [filterData, setFilterData] = useState([]);
 
-    const handleCategorySelection = (category) => {
-        // Navighează către ecranul de rezultate, filtrând restaurantele după categorie
-          filteredRestaurants = filterData.filter(restaurant =>
-          restaurant.foodCategories.includes(category)
+    useEffect(() => {
+        const fetchDataAndLocation = async () => {
+          const data = await extractDataFromFirebase();
+          setFilterData(data);
+        }
+        fetchDataAndLocation();
+      }, []);
+
+    const handlePress = async (foodType) => {
+        const restaurantData = await restaurantMenuExtractor(); 
+        const filteredRestaurants = restaurantData.filter(restaurant => 
+            restaurant.foodCategories.includes(foodType)
         );
-        navigation.navigate("SearchResultScreen", { restaurants: filteredRestaurants });
-      };
+        navigation.navigate("SearchResultScreen", { filteredRestaurants });
+    };
 
-    return(
-        <View style={{flex:1, marginBottom:10}}>
+    if (!filterData.length) return <View style={styles.container}><Text>No Categories Available</Text></View>;
+
+    return (
+        <View style={{ flex: 1, marginBottom: 10 }}>
             <SearchComponent />
-            <View style={{marginTop:10}}>
-            <View>
+            <View style={{ marginTop: 10 }}>
+                <View>
                 <FlatList 
-                    style = {{marginBottom:1}}
-                    data={filteredRestaurants}
-                    keyExtractor={filterData.id}
-                    renderItem={({item}) => (
-                        <TouchableWithoutFeedback
-                            onPress={() => {
-                                navigation.navigate("SearchResultScreen", {item:item.name})
-                            }}
-                        >
+                    data={filterData}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <TouchableWithoutFeedback onPress={() => handlePress(item.name)}>
                             <View style={styles.imageView}>
                                 <ImageBackground
-                                    keyExtractor={item.id}
                                     style={styles.image}
-                                    source={item.image} 
+                                    source={{ uri: item.image }}
                                 >
                                     <View style={styles.textView}>
                                         <Text style={{ color: colors.cardbackground }}>{item.name}</Text>
@@ -46,16 +50,16 @@ export default function MySearchScreen({navigation}){
                             </View>
                         </TouchableWithoutFeedback>
                     )}
-                    horizontal = {false}
-                    showsVerticalScrollIndicator = {false}
+                    horizontal={false}
+                    showsVerticalScrollIndicator={false}
                     numColumns={2}
                     ListHeaderComponent={<Text style={styles.listHeader}>Top Categories</Text>}
                     ListFooterComponent={<Footer />}
                 />
             </View>
-            </View>
         </View>
-    )
+        </View>
+    );
 }
 
 const Footer = () => {
