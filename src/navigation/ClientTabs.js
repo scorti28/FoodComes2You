@@ -4,15 +4,13 @@ import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import HomeScreen from '../screens/HomeScreen';
 import MyOrdersScreen from '../screens/MyOrdersScreen';
-import ScanQRCodeScreen from '../screens/ScanQRCodeScreen';
 import FirstPage from '../screens/FirstPage';
-import TagsScreen from '../screens/TagsScreen';
+//import TagsScreen from '../screens/TagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import MySearchScreen from '../screens/SearchScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import RestaurantHomeScreen from '../screens/RestaurantHomeScreen';
 import MenuProductsScreen from '../screens/MenuProductsScreen';
-import PreferenceScreen from '../screens/PreferenceScreen';
 
 const ClientTabs = createBottomTabNavigator();
 const ClientSearch = createStackNavigator();
@@ -58,7 +56,7 @@ return (
               })
           }
       />
-      <ClientSearch.Screen 
+      {/* <ClientSearch.Screen 
           name="PreferenceScreen"
           component={PreferenceScreen}
           options={
@@ -66,7 +64,7 @@ return (
                   headerShown:false
               })
           }
-      />
+      /> */}
       
   </ClientSearch.Navigator>
 )
@@ -87,7 +85,7 @@ function RootClientTabs (){
           tabBarStyle: {display: "none"}
         }}
       />
-      <ClientTabs.Screen
+      {/* <ClientTabs.Screen
         name="TagsScreen"
         component={TagsScreen}
         options={{
@@ -97,7 +95,7 @@ function RootClientTabs (){
           tabBarVisible: false,
           tabBarStyle: {display: "none"}
         }}
-      />
+      /> */}
       <ClientTabs.Screen
         name="HomeScreen"
         component={HomeScreen}

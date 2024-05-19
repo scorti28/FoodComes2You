@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet,FlatList,TouchableOpacity} from 'react-native';
 import MenuCard from '../components/MenuCard';
-import { menuDetailedData } from '../global/Data';
 
 export function Route1({navigation}) {
   return (
