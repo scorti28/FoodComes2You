@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet,FlatList,TouchableOpacity} from 'react-native';
-import MenuCard from '../components/MenuCard';
+import MenuCard from '../cards/MenuCard';
 
 export function Route1({navigation}) {
   return (

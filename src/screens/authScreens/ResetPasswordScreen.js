@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import auth from "@react-native-firebase/auth";
 import { colors, parameters } from '../../global/styles';
-import Header from '../../components/Header';
+import Header from '../../headers/Header';
 
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('');

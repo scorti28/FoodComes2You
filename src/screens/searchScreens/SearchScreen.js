@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, ImageBackground, Dimensions, FlatList } from 'react-native';
-import SearchComponent from '../components/SearchComponent';
-import { colors } from '../global/styles';
-import { restaurantMenuExtractor} from '../global/restaurantMenuExtract'; 
-import { extractDataFromFirebase } from '../global/firebaseData';
+import SearchComponent from '../../components/SearchComponent';
+import { colors } from '../../global/styles';
+import { restaurantMenuExtractor} from '../../global/restaurantMenuExtract'; 
+import { extractDataFromFirebase } from '../../global/firebaseData';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 

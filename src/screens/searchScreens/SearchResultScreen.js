@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native';
-import SearchResultCard from '../components/SearchResultCard';
-import { colors } from '../global/styles';
+import SearchResultCard from '../../cards/SearchResultCard';
+import { colors } from '../../global/styles';
 import { useNavigation } from '@react-navigation/native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;

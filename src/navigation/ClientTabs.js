@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import HomeScreen from '../screens/HomeScreen';
-import MyOrdersScreen from '../screens/MyOrdersScreen';
+import MyOrdersScreen from '../screens/AboutUsScreen';
 import FirstPage from '../screens/FirstPage';
 //import TagsScreen from '../screens/TagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import MySearchScreen from '../screens/SearchScreen';
-import SearchResultScreen from '../screens/SearchResultScreen';
+import MySearchScreen from '../screens/searchScreens/SearchScreen';
+import SearchResultScreen from '../screens/searchScreens/SearchResultScreen';
 import RestaurantHomeScreen from '../screens/RestaurantHomeScreen';
 import MenuProductsScreen from '../screens/MenuProductsScreen';
 
@@ -56,15 +56,6 @@ return (
               })
           }
       />
-      {/* <ClientSearch.Screen 
-          name="PreferenceScreen"
-          component={PreferenceScreen}
-          options={
-              () => ({
-                  headerShown:false
-              })
-          }
-      /> */}
       
   </ClientSearch.Navigator>
 )
@@ -85,17 +76,6 @@ function RootClientTabs (){
           tabBarStyle: {display: "none"}
         }}
       />
-      {/* <ClientTabs.Screen
-        name="TagsScreen"
-        component={TagsScreen}
-        options={{
-          headerShown: false,
-          tabBarIconStyle: { display: "none" },
-          tabBarButton: () => null,
-          tabBarVisible: false,
-          tabBarStyle: {display: "none"}
-        }}
-      /> */}
       <ClientTabs.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -144,22 +124,6 @@ function RootClientTabs (){
           )
         }}
       />
-      {/* <ClientTabs.Screen
-        name="ScanQRCodeScreen"
-        component={ScanQRCodeScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: "Scan QR",
-          tabBarIcon: ({ color, size }) => (
-            <Icon
-              name="qrcode-scan"
-              type="material-community"
-              color={color}
-              size={size}
-            />
-          )
-        }}
-      /> */}
     </ClientTabs.Navigator>
       );
 }

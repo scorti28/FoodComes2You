@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import RestaurantHeader from '../components/RestaurantHeader';
+import RestaurantHeader from '../headers/RestaurantHeader';
 import { colors, fonts } from '../global/styles';
 import { ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
