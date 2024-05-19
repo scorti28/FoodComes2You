@@ -21,7 +21,7 @@ const SearchResultCard = ({
                     <View style={{ height: 150 }}>
                         <ImageBackground
                             style={{ height: 160 }}
-                            source={{ image }} 
+                            source={{ uri: image }} 
                             imageStyle={styles.imageStyle}
                         >
                             <View style={styles.image}>

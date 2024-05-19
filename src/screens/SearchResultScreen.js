@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native';
 import SearchResultCard from '../components/SearchResultCard';
 import { colors } from '../global/styles';
-import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -17,7 +16,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
           renderItem={({ item }) => (
             <SearchResultCard
               screenWidth={SCREEN_WIDTH}
-              image={{uri: item.image}}
+              image={item.image}
               averageReview={item.averageReview}
               nrReviews={item.nrReviews}
               name={item.name}
