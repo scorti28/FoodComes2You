@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native';
 import SearchResultCard from '../components/SearchResultCard';
 import { colors } from '../global/styles';
+import { useNavigation } from '@react-navigation/native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
   const SearchResultScreen = ({ route }) => {
     const { filteredRestaurants } = route.params; // Ensure this line is correctly fetching the passed data
+    const navigation = useNavigation();
   
     return (
       <View style={styles.container}>
@@ -27,11 +29,11 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
           )}
           ListHeaderComponent={
             <View style={styles.listHeader}>
-              <Text style={styles.listHeaderText}>
-                {filteredRestaurants.length} results for {route.params.foodType}
-              </Text>
+                <Text style={styles.listHeaderText}>
+                    {filteredRestaurants.length} results for {route.params.foodType}
+                </Text>
             </View>
-          }
+        }        
           showsVerticalScrollIndicator={false}
         />
       </View>

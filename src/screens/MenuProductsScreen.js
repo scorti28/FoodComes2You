@@ -9,16 +9,24 @@ import { menusData } from '../global/Data';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MenuProductsScreen({ navigation, route }) {
-  const menuData = menusData(); 
   const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
+  const [restaurantData, setRestaurantData] = useState([]);
+
+useEffect(() => {
+  const fetchDataAndLocation = async () => {
+    const data = await restaurantMenuExtractor();
+    setRestaurantData(data);
+  }
+  fetchDataAndLocation();
+}, []);
 
   // Update routes when menuData changes
   useEffect(() => {
-    if (menuData.length > 0) {
-      setRoutes(menuData);
+    if (restaurantData.length > 0) {
+      setRoutes(restaurantData.restaurantMenu);
     }
-  }, [menuData]);
+  }, [restaurantData.restaurantMenu]);
 
 
   const renderTabBar = (props) => (

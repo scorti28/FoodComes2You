@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
-import { restaurantsData } from '../global/Data';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 
-const RestaurantHeader = ({ navigation, id, routeName, previousScreen}) => {
+const RestaurantHeader = ({ navigation, id, routeName}) => {
   const [liked, setLiked] = useState(false);
   const [counter, setCounter] = useState(-2);
   const index2 = 10;
+
+  const [restaurantData, setRestaurantData] = useState([]);
+
+useEffect(() => {
+  const fetchDataAndLocation = async () => {
+    const data = await restaurantMenuExtractor();
+    setRestaurantData(data);
+  }
+  fetchDataAndLocation();
+}, []);
 
 
   const likeHandler = () => {
@@ -19,7 +29,7 @@ const RestaurantHeader = ({ navigation, id, routeName, previousScreen}) => {
     <View style={styles.container}>
       <ImageBackground
         style={styles.container}
-        source={restaurantsData[id].images}
+        source={{uri: restaurantData.image}}
       >
         <View style={styles.view1}>
           <View style={styles.view2}>

@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RestaurantHeader from '../components/RestaurantHeader';
 import { colors, fonts } from '../global/styles';
 import { ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
 import MenuScreen from './RestaurantTabs/MenuScreen';
-import {restaurantsData} from '../global/Data';
 import InfoScreen from './RestaurantTabs/InfoScreen';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -16,6 +16,15 @@ const initialLayout = SCREEN_WIDTH;
 export default function RestaurantHomeScreen({navigation, route}) {
     console.log("@@@RestaurantHomeScreen", [route])
   const { id, routeName } = route.params;
+  const [restaurantData, setRestaurantData] = useState([]);
+
+useEffect(() => {
+  const fetchDataAndLocation = async () => {
+    const data = await restaurantMenuExtractor();
+    setRestaurantData(data);
+  }
+  fetchDataAndLocation();
+}, []);
 
   const [routes] = useState([
         {key:'first', title:"Menu"},
@@ -56,15 +65,10 @@ export default function RestaurantHomeScreen({navigation, route}) {
     <View style={styles.container}>
         <ScrollView>
             <View>
-            <RestaurantHeader id={id} navigation={navigation} routeName={route} previousScreen={previousScreen}/>
-            { restaurantsData[id].discount && 
-            <View style={styles.view1}>
-                <Text style={styles.text1}>You can get {restaurantsData[id].discount}% off on food</Text>
-            </View>
-            }
+            <RestaurantHeader id={id} navigation={navigation} routeName={route}/>
             <View style={styles.view2}>
                 <View style={styles.view3}>
-                    <Text style={styles.text2}>{restaurantsData[id].restaurantName}</Text>
+                    <Text style={styles.text2}>{restaurantData.name}</Text>
                     <View style={styles.view4}>
                         <Icon 
                             name = "star"
@@ -72,30 +76,15 @@ export default function RestaurantHomeScreen({navigation, route}) {
                             color={colors.grey2}
                             size={15}
                         />
-                        <Text style={styles.text4}>{restaurantsData[id].averageReview}</Text>
-                        <Text style={styles.text5}>({restaurantsData[id].numberOfReviews})</Text>
+                        <Text style={styles.text4}>{restaurantData.averageReview}</Text>
+                        <Text style={styles.text5}>({restaurantData.nrReviews})</Text>
                         <Icon 
                             name = "push-pin"
                             type= "material"
                             color={colors.grey2}
                             size={15}
                         />
-                        <Text style={styles.text6}>{restaurantsData[id].farAway} km</Text>
-                    </View>
-                </View>
-                <View style={styles.view5}>
-                    <Text style={styles.text6}>Collect</Text>
-                    <View style={styles.view7}>
-                        <Text style={styles.text7}>{restaurantsData[id].collectionTime}</Text>
-                        <Text style={styles.text8}>min</Text>
-                    </View>
-                </View>
-
-                <View style={styles.view8}>
-                    <Text style={styles.text6}>Delivery</Text>
-                    <View style={styles.view9}>
-                        <Text style={styles.text9}>{restaurantsData[id].deliveryTime}</Text>
-                        <Text style={styles.text11}>min</Text>
+                        <Text style={styles.text6}>{restaurantData.farAway} km</Text>
                     </View>
                 </View>
 

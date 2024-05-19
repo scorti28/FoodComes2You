@@ -1,18 +1,28 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { colors } from '../../global/styles';
-import { menusVectorData } from '../../global/Data';
+import { restaurantMenuExtractor } from '../../global/restaurantMenuExtract';
+import { useEffect, useState } from 'react';
 
 export default function MenuScreen({navigation, restaurant, onPress}) {
-    const menuVectorData = menusVectorData();
+
+    const [restaurantData, setRestaurantData] = useState([]);
+
+    useEffect(() => {
+      const fetchDataAndLocation = async () => {
+        const data = await restaurantMenuExtractor();
+        setRestaurantData(data);
+      }
+      fetchDataAndLocation();
+    }, []);
 
   return (
     <View style={styles.container}>
-      {menuVectorData.map((item) => (
+      {restaurantData.map((item) => (
         <View key={item.key} style={styles.view1}>
           <TouchableOpacity onPress={() => onPress(item)}>
             <View style={styles.view2}>
-              <Text style={styles.text1}>{item.title}</Text>
+              <Text style={styles.text1}>{item.name}</Text>
             </View>
           </TouchableOpacity>
         </View>

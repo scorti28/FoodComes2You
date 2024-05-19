@@ -9,7 +9,6 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}) {
     const [filterData, setFilterData] = useState([]);
-
     useEffect(() => {
         const fetchDataAndLocation = async () => {
           const data = await extractDataFromFirebase();
@@ -25,8 +24,6 @@ export default function MySearchScreen({navigation}) {
         );
         navigation.navigate("SearchResultScreen", { filteredRestaurants, foodType  });
     };
-
-    if (!filterData.length) return <View style={styles.container}><Text>No Categories Available</Text></View>;
 
     return (
         <View style={{ flex: 1, marginBottom: 10 }}>

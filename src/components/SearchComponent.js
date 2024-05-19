@@ -33,14 +33,14 @@ export default function SearchComponent() {
     };
 
     const handleSelectCategory = async (category) => {
-        const restaurantData = await restaurantMenuExtractor(); // Fetch all restaurant data
+        const restaurantData = await restaurantMenuExtractor();
         const filteredRestaurants = restaurantData.filter(restaurant =>
             restaurant.foodCategories.includes(category)
-
         );
-        navigation.navigate("SearchResultScreen", { filteredRestaurants });
+        navigation.navigate("SearchResultScreen", { filteredRestaurants, foodType: category });
         setModalVisible(false);
     };
+    
 
     return (
         <View style={{ alignItems: "center" }}>
