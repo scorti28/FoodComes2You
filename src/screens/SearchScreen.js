@@ -23,7 +23,7 @@ export default function MySearchScreen({navigation}) {
         const filteredRestaurants = restaurantData.filter(restaurant => 
             restaurant.foodCategories.includes(foodType)
         );
-        navigation.navigate("SearchResultScreen", { filteredRestaurants });
+        navigation.navigate("SearchResultScreen", { filteredRestaurants, foodType  });
     };
 
     if (!filterData.length) return <View style={styles.container}><Text>No Categories Available</Text></View>;
