@@ -1,40 +1,45 @@
 import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import RestaurantHeader from '../headers/RestaurantHeader';
-import { colors, fonts } from '../global/styles';
+import RestaurantHeader from '../../components/RestaurantHeader';
+import { colors, fonts } from '../../global/styles';
 import { ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
-import MenuScreen from './RestaurantTabs/MenuScreen';
-import InfoScreen from './RestaurantTabs/InfoScreen';
-import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
+import MenuScreen from './MenuScreen';
+import InfoScreen from './InfoScreen';
+import { restaurantMenuExtractor } from '../../global/restaurantMenuExtract';
+import MenuCategories from '../../components/MenuCategories';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const initialLayout = SCREEN_WIDTH;
 
-export default function RestaurantHomeScreen({navigation, route}) {
-    console.log("@@@RestaurantHomeScreen", [route])
-  const { id, routeName } = route.params;
-  const [restaurantData, setRestaurantData] = useState([]);
-
-useEffect(() => {
-  const fetchDataAndLocation = async () => {
-    const data = await restaurantMenuExtractor();
-    setRestaurantData(data);
-  }
-  fetchDataAndLocation();
-}, []);
-
-  const [routes] = useState([
-        {key:'first', title:"Menu"},
-        {key:'second', title:"Info"},
-        {key:'third', title:"Reviews"},
-        {key:'forth', title:"Gallery"}
-  ]);
-
+export default function RestaurantHomeScreen({ route, navigation }) {
+  const { restaurant } = route.params;
 
   const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    {key: 'first', title: "Menu"},
+    {key: 'second', title: "Info"},
+    {key: 'third', title: "Reviews"},
+    {key: 'forth', title: "Gallery"}
+  ]);
+
+  const renderScene = ({ route }) => {
+    console.log("Rendering scene for: ", route.key);
+    switch (route.key) {
+      case 'first':
+        return <MenuCategories menu={restaurant.restaurantMenu} />;
+      case 'second':
+        return <InfoScreen id={restaurant.id} />;
+      case 'third':
+        return <Text>Reviews</Text>;  // Ensure these components exist or are placeholders
+      case 'forth':
+        return <Text>Gallery</Text>;  // Ensure these components exist or are placeholders
+      default:
+        return null; // It's good practice to have a default return
+    }
+  };
 
   const renderTabBar = props =>(
     <TabBar 
@@ -48,84 +53,22 @@ useEffect(() => {
     />
 )
 
-
-    const updateRoute1 = () => {
-        return(
-            <View>
-
-            </View>
-        )
-    }
-
-    const menuPressed = () => {
-        navigation.navigate("MenuProductsScreen");
-    }
-
-  return (
-    <View style={styles.container}>
-        <ScrollView>
-            <View>
-            <RestaurantHeader id={id} navigation={navigation} routeName={route}/>
-            <View style={styles.view2}>
-                <View style={styles.view3}>
-                    <Text style={styles.text2}>{restaurantData.name}</Text>
-                    <View style={styles.view4}>
-                        <Icon 
-                            name = "star"
-                            type= "material-community"
-                            color={colors.grey2}
-                            size={15}
-                        />
-                        <Text style={styles.text4}>{restaurantData.averageReview}</Text>
-                        <Text style={styles.text5}>({restaurantData.nrReviews})</Text>
-                        <Icon 
-                            name = "push-pin"
-                            type= "material"
-                            color={colors.grey2}
-                            size={15}
-                        />
-                        <Text style={styles.text6}>{restaurantData.farAway} km</Text>
-                    </View>
-                </View>
-
-            </View>
-            </View>
-            <View style={styles.view10}>
-                <TabView 
-                    navigationState={{index, routes}}
-                    renderScene={updateRoute1}
-                    onIndexChange={setIndex}
-                    initialLayout={initialLayout}
-                    renderTabBar={renderTabBar}
-                    tabBarPosition='top'
-                />
-
-            </View>
-              {
-                index === 0 && 
-                    <MenuScreen onPress={menuPressed}/>
-              }
-
-              {
-                index === 1 && 
-                  <InfoScreen id={id}/> 
-              }
-
-        </ScrollView>
-
-        {/* <TouchableOpacity>
-            <View style={styles.view11}>
-                <View style={styles.view12}>
-                    <Text style={styles.text13}>View Shopping Cart</Text>
-                    <View style={styles.view13}>
-                        <Text style={styles.text13}>0</Text>
-                    </View>
-                </View>
-
-            </View>
-        </TouchableOpacity> */}
-    </View>
-  )
+return (
+  <View style={styles.container}>
+    <ScrollView>
+      <RestaurantHeader navigation={navigation} image={restaurant.image} />
+      <View style={styles.view2}>
+        <Text style={styles.text2}>{restaurant.name}</Text>
+        <View style={styles.view4}>
+          <Text style={styles.text4}>{restaurant.averageReview}</Text>
+          <Text style={styles.text5}>({restaurant.nrReviews} reviews)</Text>
+          <Text style={styles.text6}>{restaurant.farAway} km away</Text>
+        </View>
+      </View>
+      <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation}/>
+    </ScrollView>
+  </View>
+);
 }
 
 const styles = StyleSheet.create({

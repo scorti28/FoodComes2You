@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Alert } from 'react-native';
 import React, {useState} from 'react';
 import { colors } from '../../global/styles';
-import Header from '../../headers/Header';
+import Header from '../../components/Header';
 import { Formik } from 'formik';
 import { Icon, Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';

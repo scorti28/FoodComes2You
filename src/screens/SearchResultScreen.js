@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions, FlatList } from 'react-native';
-import SearchResultCard from '../../cards/SearchResultCard';
-import { colors } from '../../global/styles';
+import SearchResultCard from '../components/SearchResultCard';
+import { colors } from '../global/styles';
 import { useNavigation } from '@react-navigation/native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -24,7 +24,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
               name={item.name}
               farAway={item.farAway}
               address={item.address}
-              OnPressRestaurantCard={() => navigation.navigate("RestaurantHomeScreen", {id: item.id, restaurant: item.name})}
+              OnPressRestaurantCard={() => navigation.navigate("RestaurantHomeScreen", { restaurant: item })}
             />
           )}
           ListHeaderComponent={

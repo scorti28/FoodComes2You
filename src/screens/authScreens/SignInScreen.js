@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { colors, parameters } from '../../global/styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Header from '../../headers/Header';
+import Header from '../../components/Header';
 import * as Animatable from 'react-native-animatable';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';

@@ -3,13 +3,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { colors } from '../global/styles';
 import HomeScreen from '../screens/HomeScreen';
-import MyOrdersScreen from '../screens/AboutUsScreen';
+import MyOrdersScreen from '../screens/MyOrdersScreen';
 import FirstPage from '../screens/FirstPage';
-//import TagsScreen from '../screens/TagsScreen';
+import TagsScreen from '../screens/TagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import MySearchScreen from '../screens/searchScreens/SearchScreen';
-import SearchResultScreen from '../screens/searchScreens/SearchResultScreen';
-import RestaurantHomeScreen from '../screens/RestaurantHomeScreen';
+import MySearchScreen from '../screens/SearchScreen';
+import SearchResultScreen from '../screens/SearchResultScreen';
+import RestaurantHomeScreen from '../screens/restaurantScreens/RestaurantHomeScreen';
 import MenuProductsScreen from '../screens/MenuProductsScreen';
 
 const ClientTabs = createBottomTabNavigator();
@@ -76,6 +76,17 @@ function RootClientTabs (){
           tabBarStyle: {display: "none"}
         }}
       />
+       <ClientTabs.Screen
+        name="TagsScreen"
+        component={TagsScreen}
+        options={{
+          headerShown: false,
+          tabBarIconStyle: { display: "none" },
+          tabBarButton: () => null,
+          tabBarVisible: false,
+          tabBarStyle: {display: "none"}
+        }}
+      /> 
       <ClientTabs.Screen
         name="HomeScreen"
         component={HomeScreen}

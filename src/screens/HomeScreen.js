@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
-import FoodCard from "../cards/FoodCard";
-import HomeHeader from "../headers/HomeHeader";
+import FoodCard from "../components/FoodCard";
+import HomeHeader from "../components/HomeHeader";
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors, darkColors } from '../global/styles'; // Import darkColors
 import { ThemeContext } from '../global/themeContext';
