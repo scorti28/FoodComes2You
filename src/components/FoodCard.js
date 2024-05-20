@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { Icon } from 'react-native-elements';
-import { colors} from '../global/styles';
+import { colors, darkColors} from '../global/styles';
+import { useContext } from 'react';
+import { ThemeContext } from '../global/themeContext';
 
 export default function FoodCard({
     OnPressFoodCard,
@@ -14,9 +16,11 @@ export default function FoodCard({
     screenWidth
 }){
     console.log("@@@FoodCard", [restaurantName, OnPressFoodCard])
+    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
+    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
     return(
         <TouchableOpacity onPress={OnPressFoodCard}>
-            <View style = {{...styles.cardView, width:screenWidth}}>
+            <View style = {{...styles.cardView, width:screenWidth, borderColor:currentColors.grey4,}}>
                 <Image 
                     style = {{...styles.image, width:screenWidth}}
                     source = {images}
@@ -24,21 +28,21 @@ export default function FoodCard({
 
             <View>
                 <View>
-                    <Text style = {styles.restaurantName}>{restaurantName}</Text>
+                    <Text style = {[styles.restaurantName, {color:currentColors.grey1,}]}>{restaurantName}</Text>
                 </View>
                 <View style = {styles.detailsCard}>
-                    <View style = {styles.distance}>
+                    <View style = {[styles.distance, {borderRightColor:currentColors.grey4,}]}>
                         <Icon 
                             name = "push-pin"
                             type= "material"
-                            color={colors.grey2}
+                            color={currentColors.grey2}
                             size={18}
                             iconStyle={{marginTop:3}}
                         />
-                        <Text style={styles.textIcon}>{farAway} km</Text>
+                        <Text style={[styles.textIcon, {color:currentColors.grey3}]}>{farAway} km</Text>
                     </View>
                     <View style={styles.address}>
-                        <Text style={styles.addressText}>{businessAddress}</Text>
+                        <Text style={[styles.addressText, {color:currentColors.grey2}]}>{businessAddress}</Text>
                     </View>
                 </View>
             </View>
@@ -58,7 +62,6 @@ const styles = StyleSheet.create({
         borderTopRightRadius:5,
         borderTopLeftRadius:5,
         borderWidth:1,
-        borderColor:colors.grey4,
         borderBottomLeftRadius:5,
         borderBottomRightRadius:5
     },
@@ -70,7 +73,6 @@ const styles = StyleSheet.create({
     restaurantName:{
         fontSize:17,
         fontWeight:'bold',
-        color:colors.grey1,
         marginTop:5,
         marginLeft:10
     },
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
     distance:{
         flex:4,
         flexDirection:'row',
-        borderRightColor:colors.grey4,
         paddingHorizontal:5,
         borderRightWidth:1
     },
@@ -89,7 +90,6 @@ const styles = StyleSheet.create({
         fontSize:12,
         fontWeight:'bold',
         paddingTop:5,
-        color:colors.grey3
     },
     address:{
         flex:9,
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     addressText:{
         fontSize:12,
         paddingTop:5,
-        color:colors.grey2,
         paddingHorizontal:10
     },
     review:{

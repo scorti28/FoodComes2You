@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Modal, TextInput, FlatList, TouchableOpacity, Keyboard } from 'react-native';
 import { Icon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { extractDataFromFirebase } from '../global/firebaseData';
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
-import { colors } from '../global/styles';
+import { colors, darkColors } from '../global/styles';
+import { ThemeContext } from '../global/themeContext';
 
 export default function SearchComponent() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -14,6 +15,8 @@ export default function SearchComponent() {
     const [filterData, setFilterData] = useState([]); 
     const [data, setData] = useState([]);
     const navigation = useNavigation();
+    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
+    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,32 +48,37 @@ export default function SearchComponent() {
     return (
         <View style={{ alignItems: "center" }}>
             <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-                <View style={styles.searchArea}>
+                <View style={[styles.searchArea, {
+                    backgroundColor: currentColors.grey5, 
+                    borderColor: currentColors.grey4,
+                    }]}
+                >
                     <Icon
                         name="magnify"
                         type="material-community"
-                        iconStyle={{ marginLeft: 5 }}
+                        iconStyle={{ marginLeft: 5, color: isDarkMode ? '#FFFFFF' : '#000000' }}
                         size={32}
                     />
-                    <Text style={{ fontSize: 15 }}>Caută după tipul de mâncare</Text>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? '#FFFFFF' : '#000000' }}>Caută după tipul de mâncare</Text>
                 </View>
             </TouchableWithoutFeedback>
 
             <Modal animationType='fade' transparent={false} visible={modalVisible}>
-                <View style={styles.modal}>
+                <View style={[styles.modal, { backgroundColor: currentColors.pageBackground }]}>
                     <View style={styles.view1}>
-                        <View style={styles.textInput}>
+                        <View style={[styles.textInput, { borderColor: currentColors.grey1 }]}>
                             <Animatable.View animation={textInputFocussed ? "fadeInRight" : "fadeInLeft"} duration={400}>
                                 <Icon
                                     name="arrow-back"
                                     type='material'
                                     onPress={() => setModalVisible(false)}
-                                    iconStyle={{ marginRight: 5 }}
+                                    iconStyle={{ marginRight: 5, color: currentColors.grey3 }}
                                 />
                             </Animatable.View>
                             <TextInput
-                                style={{ width: "90%" }}
+                                style={{ width: "90%", color: currentColors.grey1 }}
                                 placeholder="Search..."
+                                placeholderTextColor={currentColors.grey2}
                                 autoFocus={true}
                                 ref={textInput}
                                 onFocus={() => setTextInputFocussed(true)}
@@ -81,7 +89,7 @@ export default function SearchComponent() {
                                 <Icon
                                     name="window-close"
                                     type="material-community"
-                                    iconStyle={{ color: colors.grey3, marginRight: -10 }}
+                                    iconStyle={{ color: currentColors.grey3, marginRight: -10 }}
                                     onPress={() => {
                                         textInput.current.clear();
                                         handleSearch('');  
@@ -96,7 +104,7 @@ export default function SearchComponent() {
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => handleSelectCategory(item.name)}>
                                 <View style={styles.view2}>
-                                    <Text style={{ color: colors.grey2, fontSize: 15 }}>{item.name}</Text>
+                                    <Text style={{ color: currentColors.grey2, fontSize: 15 }}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
@@ -113,7 +121,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         marginHorizontal: 0,
-        borderColor: "#86939e",
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignContent: "center",
@@ -125,10 +132,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: "94%",
         height: 50,
-        backgroundColor: colors.grey5,
         borderRadius: 12,
         borderWidth: 1,
-        borderColor: colors.grey4,
         flexDirection: "row",
         alignItems: "center"
     },

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { colors } from '../global/styles';
+import { colors, darkColors } from '../global/styles'; // Import colors for dark mode
 import HomeScreen from '../screens/HomeScreen';
 import MyOrdersScreen from '../screens/MyOrdersScreen';
 import FirstPage from '../screens/FirstPage';
@@ -11,60 +11,64 @@ import MySearchScreen from '../screens/SearchScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import RestaurantHomeScreen from '../screens/restaurantScreens/RestaurantHomeScreen';
 import MenuProductsScreen from '../screens/MenuProductsScreen';
+import { ThemeContext } from '../global/themeContext'; // Import ThemeContext
 
 const ClientTabs = createBottomTabNavigator();
 const ClientSearch = createStackNavigator();
 
 function ClientStack() {
-console.log("@@@ClientStack")
-return (
-  <ClientSearch.Navigator>
-      <ClientSearch.Screen 
-          name="SearchScreen"
-          component={MySearchScreen}
-          options={
-              () => ({
-                  headerShown:false
-              })
-          }
-      />
+  console.log("@@@ClientStack")
+  return (
+    <ClientSearch.Navigator>
+        <ClientSearch.Screen 
+            name="SearchScreen"
+            component={MySearchScreen}
+            options={
+                () => ({
+                    headerShown:false
+                })
+            }
+        />
 
-      <ClientSearch.Screen 
-          name="SearchResultScreen"
-          component={SearchResultScreen}
-          options={
-              () => ({
-                  headerShown:false
-              })
-          }
-      />
-      <ClientSearch.Screen 
-          name="RestaurantHomeScreen"
-          component={RestaurantHomeScreen}
-          options={
-              () => ({
-                  headerShown:false
-              })
-          }
-      />
-      <ClientSearch.Screen 
-          name="MenuProductsScreen"
-          component={MenuProductsScreen}
-          options={
-              () => ({
-                  headerShown:false
-              })
-          }
-      />
-      
-  </ClientSearch.Navigator>
-)
+        <ClientSearch.Screen 
+            name="SearchResultScreen"
+            component={SearchResultScreen}
+            options={
+                () => ({
+                    headerShown:false
+                })
+            }
+        />
+        <ClientSearch.Screen 
+            name="RestaurantHomeScreen"
+            component={RestaurantHomeScreen}
+            options={
+                () => ({
+                    headerShown:false
+                })
+            }
+        />
+        <ClientSearch.Screen 
+            name="MenuProductsScreen"
+            component={MenuProductsScreen}
+            options={
+                () => ({
+                    headerShown:false
+                })
+            }
+        />
+        
+    </ClientSearch.Navigator>
+  )
 }
 
 function RootClientTabs (){
+  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext to get dark mode state
+  const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+
   console.log("@@@RootClientTabs")
   return (
-    <ClientTabs.Navigator tabBarOptions={{ activeTintColor: colors.buttons }}>
+    <ClientTabs.Navigator tabBarOptions={{ activeTintColor: currentColors.buttons }}>
       <ClientTabs.Screen
         name="FirstPage"
         component={FirstPage}
@@ -136,7 +140,7 @@ function RootClientTabs (){
         }}
       />
     </ClientTabs.Navigator>
-      );
+  );
 }
 
 export default RootClientTabs;

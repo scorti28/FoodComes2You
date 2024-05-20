@@ -23,7 +23,11 @@ export const colors = {
     cardbackground: "#1e1e1e",
     statusbar: '#00A86B',
     headerText: "white",
-    pageBackground: "#000000"
+    pageBackground: "#000000",
+    background: '#121212', // Dark background for the main area
+    text: '#ffffff', // Light text for better readability in dark mode
+    primary: '#bb86fc', // Example primary color in dark theme
+    secondary: '#03dac6', // Example secondary color in dark theme
   };
   
   export const parameters = {

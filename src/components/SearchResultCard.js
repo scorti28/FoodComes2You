@@ -1,157 +1,87 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { colors } from "../global/styles";
-import ProductCard from './ProductCard';
+import { StyleSheet, Text, TouchableOpacity, ImageBackground, View } from 'react-native';
 
 const SearchResultCard = ({
-    OnPressRestaurantCard,
-    name,
-    nrReviews,
-    address,
-    farAway,
+    screenWidth,
+    image,
     averageReview,
-    image, 
-    productData = [] 
+    nrReviews,
+    name,
+    farAway,
+    address,
+    OnPressRestaurantCard,
+    backgroundColor
 }) => {
     return (
-        <View style={styles.cardContainer}>
-            <TouchableOpacity onPress={OnPressRestaurantCard}>
-                <View style={styles.card}>
-                    <View style={{ height: 150 }}>
-                        <ImageBackground
-                            style={{ height: 160 }}
-                            source={{ uri: image }} 
-                            imageStyle={styles.imageStyle}
-                        >
-                            <View style={styles.image}>
-                                <Text style={styles.text1}>{averageReview}</Text>
-                                <Text style={styles.text2}>{nrReviews} review-uri</Text>
-                            </View>
-                        </ImageBackground>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <View style={{ paddingTop: 5 }}>
-                            <Text style={styles.text5}>{name}</Text>
-                        </View>
-
-                        <View style={{ flexDirection: "row" }}>
-                            <View style={styles.distanceContainer}>
-                                <Icon
-                                    name="push-pin"
-                                    type="material"
-                                    color={colors.grey2}
-                                    size={18}
-                                    iconStyle={{ marginTop: 3, marginLeft: -3 }}
-                                />
-                                <Text style={styles.distanceText}>{farAway} km</Text>
-                            </View>
-                            <View style={styles.addressContainer}>
-                                <Text style={styles.addressText}>{address}</Text>
-                            </View>
-                        </View>
-                    </View>
+        <TouchableOpacity 
+            onPress={OnPressRestaurantCard} 
+            style={[styles.card, { backgroundColor, width: screenWidth }]}
+        >
+            <ImageBackground 
+                source={{ uri: image }} 
+                style={styles.image}
+                resizeMode="cover"
+            >
+                <View style={styles.textContainer}>
+                    <Text style={styles.nameText}>{name}</Text>
+                    <Text style={styles.reviewText}>
+                        {averageReview} ({nrReviews} reviews)
+                    </Text>
                 </View>
-            </TouchableOpacity>
-
-            <View style={styles.productContainer}>
-                <FlatList
-                    style={{ backgroundColor: colors.cardbackground }}
-                    data={productData}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => (
-                        <ProductCard
-                            image={item.image}
-                            productName={item.name}
-                            price={item.price}
-                        />
-                    )}
-                    horizontal={true}
-                />
+            </ImageBackground>
+            <View style={styles.infoContainer}>
+                <Text style={styles.addressText}>{address}</Text>
+                <Text style={styles.distanceText}>
+                    {farAway} km away
+                </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
-export default SearchResultCard;
-
-
 const styles = StyleSheet.create({
-    cardContainer: {
-        borderWidth: 1,
-        borderColor: colors.grey4,
-        borderRadius: 8,
-        marginBottom: 10,
-        backgroundColor: '#fff',
-        padding: 5 // Add padding to create space between the border and margins
-    },
     card: {
-        borderTopRightRadius: 5,
-        borderTopLeftRadius: 5,
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: 'gray', // Adding border for better framing
     },
     image: {
-        position: "absolute",
-        top: 0,
-        right: 0,
-        backgroundColor: 'rgba(52, 52, 52,0.4)',
-        padding: 2,
-        alignItems: "center",
-        justifyContent: "center",
-        borderTopRightRadius: 5,
-        borderBottomLeftRadius: 12
+        height: 200,
+        justifyContent: 'flex-end',
     },
-    imageStyle: {
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
+    textContainer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', // Darker overlay for better contrast
+        padding: 10,
     },
-    text1: {
-        color: "white",
-        fontSize: 20,
+    nameText: {
+        fontSize: 18,
         fontWeight: 'bold',
-        marginTop: -3
+        color: 'white', // Ensuring text is white
+        textShadowColor: 'rgba(0, 0, 0, 0.75)', // Text shadow for better visibility
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
     },
-    text2: {
-        color: "white",
-        fontSize: 13,
-        marginRight: 0,
-        marginLeft: 0
+    reviewText: {
+        fontSize: 14,
+        color: 'white',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 10
     },
     infoContainer: {
-        flexDirection: "column",
-        marginHorizontal: 5,
-        marginBottom: 10,
-        marginLeft: 0,
-        marginTop: 5
-    },
-    text5: {
-        fontSize: 17,
-        fontWeight: 'bold',
-        color: colors.grey1,
-    },
-    distanceContainer: {
-        flex: 4,
-        flexDirection: "row",
-        borderRightWidth: 1,
-        borderRightColor: colors.grey4,
-        paddingHorizontal: 5,
-    },
-    distanceText: {
-        fontSize: 12,
-        fontWeight: 'bold',
-        paddingTop: 5,
-        color: colors.grey3
-    },
-    addressContainer: {
-        flex: 9,
-        paddingHorizontal: 5,
+        padding: 10,
+        backgroundColor: 'white' // Background to ensure visibility of text
     },
     addressText: {
-        fontSize: 12,
-        paddingTop: 5,
-        color: colors.grey2,
+        fontSize: 16,
+        color: 'black', // Black text on a light background
     },
-    productContainer: {
-        marginTop: 5,
-        paddingBottom: 20
+    distanceText: {
+        fontSize: 14,
+        color: 'black'
     }
-})
+});
+
+export default SearchResultCard;

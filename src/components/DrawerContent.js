@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
-import { colors } from "../global/styles";
+import { darkColors } from "../global/styles"; // Import only darkColors for dark mode
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
 import firestore from "@react-native-firebase/firestore";
@@ -11,6 +11,7 @@ import { ThemeContext } from "../global/themeContext";
 export default function DrawerContent(props) {
   const { dispatchSignedIn } = useContext(SignInContext);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const currentColors = isDarkMode ? darkColors : null; // Use darkColors for dark mode
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
@@ -39,45 +40,47 @@ export default function DrawerContent(props) {
       Alert.alert(error.code);
     }
   }
-
   return (
-    <DrawerContentScrollView {...props}>
-      <View style={styles.userContainer}>
-        <View style={styles.avatarContainer}>
-          <Text style={styles.avatarText}>👤</Text>
+    <DrawerContentScrollView {...props} style={{ backgroundColor: isDarkMode ? darkColors.pageBackground : null }}>
+      <View style={styles.container}>
+        <View style={[styles.userContainer, { borderBottomColor: isDarkMode ? darkColors.grey1 : null }]}>
+          <View style={styles.avatarContainer}>
+            <Text style={[styles.avatarText, { color: currentColors ? currentColors.grey1 : null }]}>👤</Text>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={[styles.nameText, { color: currentColors ? currentColors.grey1 : null }]}>Bine ai venit,</Text>
+            <Text style={[styles.nameText, { color: currentColors ? currentColors.grey1 : null }]}>{userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}!</Text>
+          </View>
         </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.nameText}>Bine ai venit,</Text>
-          <Text style={styles.nameText}>{userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}!</Text>
-        </View>
+
+        <DrawerItem
+          label="Dark Mode"
+          icon={({ color, size }) => (
+            <Icon
+              name={isDarkMode ? "brightness-3" : "brightness-5"}
+              type="material"
+              color={isDarkMode ? darkColors.grey1 : color} // Set icon color to white in dark mode
+              size={size}
+            />
+          )}
+          onPress={toggleTheme}
+          labelStyle={{ color: currentColors ? currentColors.grey1 : null }}
+        />
+
+        <DrawerItem
+          label="Sign out"
+          icon={({ color, size }) => (
+            <Icon
+              name="logout-variant"
+              type="material-community"
+              color={isDarkMode ? darkColors.grey1 : color} // Set icon color to white in dark mode
+              size={size}
+            />
+          )}
+          onPress={signOut}
+          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} // Set sign out text color to white in dark mode
+        />
       </View>
-
-      <DrawerItem
-        label="Dark Mode"
-        icon={({ color, size }) => (
-          <Icon
-            name={isDarkMode ? "brightness-3" : "brightness-5"}
-            type="material"
-            color={color}
-            size={size}
-          />
-        )}
-        onPress={toggleTheme}
-        labelStyle={{ color: colors.grey1 }}
-      />
-
-      <DrawerItem
-        label="Sign out"
-        icon={({ color, size }) => (
-          <Icon
-            name="logout-variant"
-            type="material-community"
-            color={color}
-            size={size}
-          />
-        )}
-        onPress={signOut}
-      />
     </DrawerContentScrollView>
   );
 }
@@ -92,7 +95,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: colors.grey5,
   },
   avatarContainer: {
     marginRight: 20,
@@ -106,6 +108,5 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#000",
   },
 });

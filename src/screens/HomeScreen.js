@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation, route }) {
                 <View style={[styles.categoriesTextView, { backgroundColor: currentColors.grey5 }]}>
                     <Text style={[styles.categoriesStyle, { color: currentColors.grey1 }]}>Restaurantele din apropirea ta</Text>
                 </View>
-                <View style={styles.mapRenderer}>
+                <View style={[styles.mapRenderer, { color: currentColors.grey1 }]}>
                     {restaurantData.map(restaurant => (
                         <View key={restaurant.id} style={styles.viewRestaurant}>
                             <FoodCard
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     viewRestaurant: {
+        alignItems: 'center', // Center the content horizontally
         paddingBottom: 20,
         paddingHorizontal: 10
     }

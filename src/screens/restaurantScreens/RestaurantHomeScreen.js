@@ -1,47 +1,50 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native';
 import RestaurantHeader from '../../components/RestaurantHeader';
-import { colors, fonts } from '../../global/styles';
+import { colors, fonts, darkColors } from '../../global/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MenuCategories from '../../components/MenuCategories';
+import { ThemeContext } from '../../global/themeContext';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function RestaurantHomeScreen({ route, navigation }) {
   const { restaurant } = route.params;
   const [liked, setLiked] = useState(false);
+  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
+  const currentColors = isDarkMode ? darkColors : colors; // Determine current colors based on the theme
 
   const likeHandler = () => {
     setLiked(!liked);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: currentColors.background}]}>
       <ScrollView>
         <RestaurantHeader navigation={navigation} image={restaurant.image} />
         <View style={styles.restaurantInfo}>
-          <Text style={styles.restaurantName}>{restaurant.name}</Text>
+          <Text style={[styles.restaurantName, {color: isDarkMode ? 'white' : currentColors.primary}]}>{restaurant.name}</Text>
           <View style={styles.infoRow}>
             <View style={styles.iconWithText}>
               <MaterialCommunityIcons
                  name="star-check-outline"
-                 color={colors.primary}
+                 color={isDarkMode ? 'white' : currentColors.primary}
                  size={28}
               />
-              <Text style={styles.reviewText}>{restaurant.averageReview} ({restaurant.nrReviews} reviews)</Text>
+              <Text style={[styles.reviewText, {color: isDarkMode ? 'white' : currentColors.text}]}>{restaurant.averageReview} ({restaurant.nrReviews} reviews)</Text>
             </View>
           </View>
           <View style={styles.iconWithText}>
               <MaterialCommunityIcons
                  name="pin"
-                 color={colors.primary}
+                 color={isDarkMode ? 'white' : currentColors.primary}
                  size={28}
               />
-              <Text style={styles.reviewText}>{restaurant.farAway} km</Text>
+              <Text style={[styles.reviewText, {color: isDarkMode ? 'white' : currentColors.text}]}>{restaurant.farAway} km</Text>
             </View>
         </View>
-        <View style={styles.divider} />
-        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} />
+        <View style={[styles.divider, {borderColor: isDarkMode ? 'white' : currentColors.secondary}]} />
+        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} isDarkMode={isDarkMode} />
       </ScrollView>
     </View>
   );
@@ -50,38 +53,34 @@ export default function RestaurantHomeScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background, // Adds a global background color
   },
   restaurantInfo: {
     paddingHorizontal: 20,
-    paddingVertical: 15, // Increased padding for better spacing
+    paddingVertical: 15,
   },
   restaurantName: {
-    fontSize: 24, // Larger font size for emphasis
+    fontSize: 24,
     fontWeight: 'bold',
-    color: colors.primary, // Use primary color for better focus
     marginBottom: 10,
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // Distributes space evenly
+    justifyContent: 'space-between',
   },
   reviewText: {
     fontFamily: fonts.android.bold,
-    fontSize: 14, // Slightly larger font for readability
-    color: colors.text, // Adjusted for better contrast
-    marginLeft: 5, // Reduced for proximity
+    fontSize: 14,
+    marginLeft: 5,
   },
   divider: {
-    borderBottomWidth: 2, // Thicker divider for clear separation
-    borderColor: colors.secondary, // Secondary color for variety
+    borderBottomWidth: 2,
     marginHorizontal: 20,
-    marginVertical: 20, // Increased margin for visual separation
+    marginVertical: 20,
   },
   iconWithText: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 15, // Adjusted for visual balance
+    marginRight: 15,
   },
 });
