@@ -1,260 +1,87 @@
-import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import RestaurantHeader from '../../components/RestaurantHeader';
 import { colors, fonts } from '../../global/styles';
-import { ScrollView } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { TabView, TabBar } from 'react-native-tab-view';
-import MenuScreen from './MenuScreen';
-import InfoScreen from './InfoScreen';
-import { restaurantMenuExtractor } from '../../global/restaurantMenuExtract';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MenuCategories from '../../components/MenuCategories';
 
-
-const SCREEN_WIDTH = Dimensions.get('window').width
-const initialLayout = SCREEN_WIDTH;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function RestaurantHomeScreen({ route, navigation }) {
   const { restaurant } = route.params;
+  const [liked, setLiked] = useState(false);
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {key: 'first', title: "Menu"},
-    {key: 'second', title: "Info"},
-    {key: 'third', title: "Reviews"},
-    {key: 'forth', title: "Gallery"}
-  ]);
-
-  const renderScene = ({ route }) => {
-    console.log("Rendering scene for: ", route.key);
-    switch (route.key) {
-      case 'first':
-        return <MenuCategories menu={restaurant.restaurantMenu} />;
-      case 'second':
-        return <InfoScreen id={restaurant.id} />;
-      case 'third':
-        return <Text>Reviews</Text>;  // Ensure these components exist or are placeholders
-      case 'forth':
-        return <Text>Gallery</Text>;  // Ensure these components exist or are placeholders
-      default:
-        return null; // It's good practice to have a default return
-    }
+  const likeHandler = () => {
+    setLiked(!liked);
   };
 
-  const renderTabBar = props =>(
-    <TabBar 
-        {...props}
-        indicatorStyle = {{backgroundColor:colors.cardbackground}}
-        tabStyle = {styles.tabStyle}
-        scrollEnabled = {true}
-        style ={styles.tab}
-        labelStyle = {styles.tabLabel}
-        contentContainerStyle = {styles.tabContainer}
-    />
-)
-
-return (
-  <View style={styles.container}>
-    <ScrollView>
-      <RestaurantHeader navigation={navigation} image={restaurant.image} />
-      <View style={styles.view2}>
-        <Text style={styles.text2}>{restaurant.name}</Text>
-        <View style={styles.view4}>
-          <Text style={styles.text4}>{restaurant.averageReview}</Text>
-          <Text style={styles.text5}>({restaurant.nrReviews} reviews)</Text>
-          <Text style={styles.text6}>{restaurant.farAway} km away</Text>
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <RestaurantHeader navigation={navigation} image={restaurant.image} />
+        <View style={styles.restaurantInfo}>
+          <Text style={styles.restaurantName}>{restaurant.name}</Text>
+          <View style={styles.infoRow}>
+            <View style={styles.iconWithText}>
+              <MaterialCommunityIcons
+                 name="star-check-outline"
+                 color={colors.primary}
+                 size={28}
+              />
+              <Text style={styles.reviewText}>{restaurant.averageReview} ({restaurant.nrReviews} reviews)</Text>
+            </View>
+          </View>
+          <View style={styles.iconWithText}>
+              <MaterialCommunityIcons
+                 name="pin"
+                 color={colors.primary}
+                 size={28}
+              />
+              <Text style={styles.reviewText}>{restaurant.farAway} km</Text>
+            </View>
         </View>
-      </View>
-      <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation}/>
-    </ScrollView>
-  </View>
-);
+        <View style={styles.divider} />
+        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} />
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container:{flex:1,
-    },
-
-view1:{
-      padding:3,
-      alignItems:"center",
-      justifyContent:"center"
-    },
-
-text1:{color:"green",
-    fontSize:14,
-    fontWeight:"bold"
+  container: {
+    flex: 1,
+    backgroundColor: colors.background, // Adds a global background color
   },
-
-view2:{ flexDirection:"row",
-      flex:1,
-      marginBottom:5,
-      marginHorizontal:10,
-      justifyContent:"space-between",
-      },
-
-view3:{flex:8,
-        },
-
-text2:{fontSize:20,
-      fontWeight:"bold",  
-      color:colors.grey1
-    },
-
-text3:{fontSize:15,
-      color:colors.grey3
-},
-
-view4:{flexDirection:'row',
-      alignItems:"center",
-      marginTop:5
-      },
-
-text4:{fontFamily :fonts.android.bold,
-      fontSize:13,
-      color:colors.grey3,
-      marginLeft:2,
-      },
-
-text5:{fontFamily :fonts.android.bold,
-      fontSize:13,
-      color:colors.grey3,
-      marginLeft:2,
-      marginRight:5
-      },
-  text6:{fontFamily :fonts.android.bold,
-        fontSize:13,
-        color:colors.grey3,
-        marginLeft:0,
-        },
-
-  view5:{ flex:3,
-          alignItems:"center"
-        },
-
-  text6:{fontSize:15,
-        fontWeight:"bold",
-        color:colors.grey1
-      },
-
-  view7:{width:40,
-        height:40,
-        alignItems:"center",
-        borderRadius:20,
-        justifyContent:"space-around",
-        },
-
-  text7:{fontSize:16,
-         fontWeight:"bold",
-         color:colors.black,
-         marginTop:5
-        },
-
-  text8:{fontSize:13,
-        color:colors.black,
-        marginBottom:5
-      },
-
-  view8:{flex:3,
-        alignItems:"center"
-      },
-
-text9:{fontSize:15,
-      fontWeight:"bold",
-      color:colors.cardbackground
-},
-
-view9:{width:40,
-      height:40,
-      backgroundColor:colors.buttons,
-      alignItems:"center",
-      borderRadius:20,
-      justifyContent:"space-around",
-    },
-
-text10:{fontSize:16,
-      fontWeight:"bold",
-      color:colors.cardbackground,
-      marginTop:5
-      },
-
-text11:{fontSize:13,
-        color:colors.cardbackground,
-        marginBottom:5
-      },
-
-view10:{elevation:10,
-       backgroundColor:colors.pagebackground
-      },
-
-view11:{backgroundColor:colors.buttons,
-        height:50,
-        alignContent:"center",
-        marginBottom:0,
-        justifyContent:"center"
-        
-},
-
-view12:{flexDirection:"row",
-        justifyContent:"space-between",
-        alignItems:"center"
-        },
-
-text12:{padding:10,
-        fontWeight:"bold",
-        fontSize:18,
-        color:colors.cardbackground
-      },
-
-view13:{ borderWidth:1,
-        marginRight:10,
-        borderColor:colors.cardbackground,
-        borderRadius:6,
-        paddingBottom:2
-      },
-
-text13:{paddingHorizontal:3,
-        fontWeight:"bold",
-        fontSize:18,
-        color:colors.cardbackground,
-      },
-
-tab:{ paddingTop :0,
-      backgroundColor:colors.buttons,
-      justifyContent:"space-between",
-      alignItems:"center"
-      },
-
-tabContainer:{ alignItems:'center',
-      alignContent:'center',
-      justifyContent:'center',
-      },
-
-tabLabel:{fontWeight:'bold',
-      color: colors.cardbackground
-      },
-  
-tabStyle:{width:SCREEN_WIDTH/4,
-          maxHeight:45,
-        },
-
-view14:{flexDirection:"row",
-alignItems:"center",
-padding:10,
-backgroundColor:colors.buttons,
-top:0,
-left:0,
-right:0,
-paddingTop:25
-},
-
-text14:{fontWeight:"bold",
-        marginLeft:40,
-        color:"#FFFFFF",
-        fontSize:18
-    },
-
-view15:{marginTop:5,
-        paddingBottom:20
-    },         
-})
+  restaurantInfo: {
+    paddingHorizontal: 20,
+    paddingVertical: 15, // Increased padding for better spacing
+  },
+  restaurantName: {
+    fontSize: 24, // Larger font size for emphasis
+    fontWeight: 'bold',
+    color: colors.primary, // Use primary color for better focus
+    marginBottom: 10,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // Distributes space evenly
+  },
+  reviewText: {
+    fontFamily: fonts.android.bold,
+    fontSize: 14, // Slightly larger font for readability
+    color: colors.text, // Adjusted for better contrast
+    marginLeft: 5, // Reduced for proximity
+  },
+  divider: {
+    borderBottomWidth: 2, // Thicker divider for clear separation
+    borderColor: colors.secondary, // Secondary color for variety
+    marginHorizontal: 20,
+    marginVertical: 20, // Increased margin for visual separation
+  },
+  iconWithText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 15, // Adjusted for visual balance
+  },
+});

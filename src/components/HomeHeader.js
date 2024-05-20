@@ -1,31 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon, withBadge } from 'react-native-elements';
-import { colors, parameters } from '../global/styles';
+import { colors, parameters, darkColors } from '../global/styles';
+import { ThemeContext } from '../global/themeContext';
 
 export default function HomeHeader({navigation}) {
   const BadgeIcon = withBadge(0)(Icon);
 
+  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
+    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, {backgroundColor: currentColors.statusbar}]}>
       <View style={styles.iconContainer}>
-        <Icon name="menu-open" color={colors.cardbackground} size={32} onPress={() => {navigation.toggleDrawer()}}/>
+        <Icon name="menu-open" color={currentColors.cardbackground} size={32} onPress={() => {navigation.toggleDrawer()}}/>
       </View>
 
       <View style={styles.titleContainer}>
-        <Text style={{ color: colors.cardbackground, fontSize: 25, fontWeight: 'bold' }}>FoodComes2You</Text>
+        <Text style={{ color: currentColors.cardbackground, fontSize: 25, fontWeight: 'bold' }}>FoodComes2You</Text>
       </View>
-
-      {/* <View style={styles.cartIconContainer}>
-        <BadgeIcon type="material-community" name="shopping" size={35} color={colors.cardbackground} />
-      </View> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: colors.buttons,
     height: parameters.headerHeight,
     flexDirection: 'row',
     alignItems: 'center',

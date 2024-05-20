@@ -50,7 +50,7 @@ export default function MySearchScreen({navigation}) {
                     horizontal={false}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
-                    ListHeaderComponent={<Text style={styles.listHeader}>Top Categories</Text>}
+                    ListHeaderComponent={<Text style={styles.listHeader}>Categorii de mâncare</Text>}
                     ListFooterComponent={<Footer />}
                 />
             </View>

@@ -21,7 +21,7 @@ export const colors = {
     grey5: '#141414',
     CardComment: '#2e2e2e',
     cardbackground: "#1e1e1e",
-    statusbar: '#1b9e70',
+    statusbar: '#00A86B',
     headerText: "white",
     pageBackground: "#000000"
   };

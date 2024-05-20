@@ -15,9 +15,9 @@ const SearchResultCard = ({
     productData = [] 
 }) => {
     return (
-        <View>
+        <View style={styles.cardContainer}>
             <TouchableOpacity onPress={OnPressRestaurantCard}>
-                <View style={styles.view1}>
+                <View style={styles.card}>
                     <View style={{ height: 150 }}>
                         <ImageBackground
                             style={{ height: 160 }}
@@ -30,13 +30,13 @@ const SearchResultCard = ({
                             </View>
                         </ImageBackground>
                     </View>
-                    <View style={styles.view3}>
+                    <View style={styles.infoContainer}>
                         <View style={{ paddingTop: 5 }}>
                             <Text style={styles.text5}>{name}</Text>
                         </View>
 
                         <View style={{ flexDirection: "row" }}>
-                            <View style={styles.view4}>
+                            <View style={styles.distanceContainer}>
                                 <Icon
                                     name="push-pin"
                                     type="material"
@@ -44,17 +44,17 @@ const SearchResultCard = ({
                                     size={18}
                                     iconStyle={{ marginTop: 3, marginLeft: -3 }}
                                 />
-                                <Text style={styles.view5}>{farAway} km</Text>
+                                <Text style={styles.distanceText}>{farAway} km</Text>
                             </View>
-                            <View style={{ flex: 9 }}>
-                                <Text style={styles.text6}>{address}</Text>
+                            <View style={styles.addressContainer}>
+                                <Text style={styles.addressText}>{address}</Text>
                             </View>
                         </View>
                     </View>
                 </View>
             </TouchableOpacity>
 
-            <View style={{ marginTop: 5, paddingBottom: 20 }}>
+            <View style={styles.productContainer}>
                 <FlatList
                     style={{ backgroundColor: colors.cardbackground }}
                     data={productData}
@@ -77,99 +77,81 @@ export default SearchResultCard;
 
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1
+    cardContainer: {
+        borderWidth: 1,
+        borderColor: colors.grey4,
+        borderRadius: 8,
+        marginBottom: 10,
+        backgroundColor: '#fff',
+        padding: 5 // Add padding to create space between the border and margins
     },
-        view1: {
-            marginHorizontal:9,
-            borderTopRightRadius:5,
-            borderTopLeftRadius:5,
-        },
-        
-        image: {
-            position:"absolute",
-            top:0,
-            right:0,
-            backgroundColor:'rgba(52, 52, 52,0.4)',
-            padding:2,
-            alignItems:"center",
-            justifyContent:"center", 
-            borderTopRightRadius:5,
-            borderBottomLeftRadius:12
-        },
-      
-        imageStyle:{
-            borderTopLeftRadius:5,
-            borderTopRightRadius:5,
-        },
-        
-        text1:{
-            color:"white",
-            fontSize:20,
-            fontWeight:'bold',
-            marginTop:-3
-          },
-      
-        text2 : {
-            color:"white",
-            fontSize:13,
-            marginRight:0,
-            marginLeft:0
-        },
-      
-        view2 : { 
-            flexDirection:"row",
-            justifyContent:"space-between",
-            alignItems:"center",
-            marginTop:-5
-        },
-
-        text3:{
-            fontSize:10,
-            fontWeight:'bold',
-            color:colors.grey2,
-        },
-      
-        text4:{
-            fontSize:10,
-            fontWeight:'bold',
-            color:colors.grey2,
-        },
-
-        view3:{ 
-            flexDirection:"column",
-            marginHorizontal:5,
-            marginBottom:10,
-            marginLeft:0,
-            marginTop:5
-        },
-      
-        text5:{
-            fontSize:17,
-            fontWeight:'bold',
-            color:colors.grey1,
-        },
-      
-        view4 :{
-            flex:4,
-            flexDirection:"row",
-            borderRightWidth:1,
-            borderRightColor:colors.grey4,
-            paddingHorizontal:5,
-        },
-      
-        view5:  {
-            fontSize:12,
-            fontWeight:'bold',
-            paddingTop:5,
-            color:colors.grey3
-        },
-          
-        text6:{
-            fontSize:12,
-            paddingTop:5,
-            color:colors.grey2,
-            paddingHorizontal:10,
-          
-        }
+    card: {
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
+    },
+    image: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        backgroundColor: 'rgba(52, 52, 52,0.4)',
+        padding: 2,
+        alignItems: "center",
+        justifyContent: "center",
+        borderTopRightRadius: 5,
+        borderBottomLeftRadius: 12
+    },
+    imageStyle: {
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+    },
+    text1: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: -3
+    },
+    text2: {
+        color: "white",
+        fontSize: 13,
+        marginRight: 0,
+        marginLeft: 0
+    },
+    infoContainer: {
+        flexDirection: "column",
+        marginHorizontal: 5,
+        marginBottom: 10,
+        marginLeft: 0,
+        marginTop: 5
+    },
+    text5: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: colors.grey1,
+    },
+    distanceContainer: {
+        flex: 4,
+        flexDirection: "row",
+        borderRightWidth: 1,
+        borderRightColor: colors.grey4,
+        paddingHorizontal: 5,
+    },
+    distanceText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        paddingTop: 5,
+        color: colors.grey3
+    },
+    addressContainer: {
+        flex: 9,
+        paddingHorizontal: 5,
+    },
+    addressText: {
+        fontSize: 12,
+        paddingTop: 5,
+        color: colors.grey2,
+    },
+    productContainer: {
+        marginTop: 5,
+        paddingBottom: 20
+    }
 })
