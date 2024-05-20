@@ -29,7 +29,7 @@ const SearchResultScreen = ({ route }) => {
                   address={item.address}
                   OnPressRestaurantCard={() => navigation.navigate("RestaurantHomeScreen", { restaurant: item })}
                   backgroundColor={currentColors.cardbackground}
-                  textColor={isDarkMode ? 'white' : 'black'} // Adjust to 'black' in light mode for visibility
+                  textColor={isDarkMode ? 'white' : 'black'} 
               />
                 )}
                 ListHeaderComponent={
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     listHeader: {
         paddingHorizontal: 10,
         paddingVertical: 10,
+        paddingTop: 10
     },
     listHeaderText: {
         fontSize: 20,

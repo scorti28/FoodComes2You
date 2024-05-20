@@ -25,6 +25,7 @@ const SearchResultCard = ({
                 <View style={styles.textContainer}>
                     <Text style={styles.nameText}>{name}</Text>
                     <Text style={styles.reviewText}>
+                        
                         {averageReview} ({nrReviews} reviews)
                     </Text>
                 </View>
@@ -44,8 +45,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         marginBottom: 10,
-        borderWidth: 1,
-        borderColor: 'gray', // Adding border for better framing
+        borderWidth: 2,
+        borderColor: 'gray', // Adding border for better framin
+        
     },
     image: {
         height: 200,
