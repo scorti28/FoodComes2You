@@ -20,9 +20,9 @@ export default function ResetPasswordScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header title="Change Password" type="arrow-left-circle" navigation={navigation}/>
+      <Header title="Schimbă parola" type="arrow-left-circle" navigation={navigation}/>
       <View style={styles.content}>
-        <Text style={styles.title}>Reset Password</Text>
+        <Text style={styles.title}>Resetează Parola</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -30,7 +30,7 @@ export default function ResetPasswordScreen({ navigation }) {
           value={email}
         />
         <Button
-          title="Reset Password"
+          title="Resetează parola"
           buttonStyle={styles.buttonStyle}
           titleStyle={styles.buttonTitle}
           onPress={handleResetPassword}

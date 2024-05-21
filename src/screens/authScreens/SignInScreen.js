@@ -30,9 +30,9 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header title="Access account" type="arrow-left-circle" navigation={navigation} />
+      <Header title="Accesează cont" type="arrow-left-circle" navigation={navigation} />
       <View style={{ marginLeft: 20, marginTop: 30 }}>
-        <Text style={styles.title}>Sign In</Text>
+        <Text style={styles.title}>Logare</Text>
       </View>
 
       <Formik initialValues={{ email: "", password: "" }}
@@ -83,7 +83,7 @@ export default function SignInScreen({ navigation }) {
 
             <View style={{ marginHorizontal: 20, marginTop: 20 }}>
               <Button
-                title="SIGN IN"
+                title="LOGARE"
                 buttonStyle={parameters.styledButton}
                 titleStyle={parameters.buttonTitle}
                 onPress={() => props.handleSubmit()}
@@ -95,21 +95,21 @@ export default function SignInScreen({ navigation }) {
 
       <View style={{ alignItems: "center", marginTop: 15 }}>
         <Text style={{ ...styles.text1, textDecorationLine: "underline", fontSize: 17 }} onPress={() => navigation.navigate("ResetPasswordScreen")}>
-          Forgot password? Reset here!
+          Ai uitat parola? Resetează aici!
         </Text>
       </View>
 
       <View style={{ alignItems: "center", marginTop: 20, marginBottom: 20 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>OR TRY</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>SAU ÎNCEARCĂ</Text>
       </View>
 
       <View style={{ marginTop: 25, marginLeft: 20 }}>
-        <Text style={{ ...styles.text1, fontSize: 20 }}>New here? Create account!</Text>
+        <Text style={{ ...styles.text1, fontSize: 20 }}>Nou aici? Creează-ți cont!</Text>
       </View>
 
       <View style={{ alignItems: "flex-end", marginTop: 10, marginHorizontal: 20 }}>
         <Button
-          title="Create a new account!"
+          title="Creează cont nou!"
           buttonStyle={styles.createButton}
           titleStyle={styles.createButtonTitle}
           onPress={() => navigation.navigate("SignUpScreen")}

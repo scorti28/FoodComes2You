@@ -55,7 +55,7 @@ export default function SignInWelcomeScreen({navigation}) {
       <View style={{ flex: 4 }}>
         <View style={{ marginHorizontal: 20, marginTop: 60 }}>
           <Button
-            title="SIGN IN"
+            title="Loghează-te"
             buttonStyle={parameters.styledButton}
             titleStyle={parameters.buttonTitle}
             onPress={() => navigation.navigate("SignInScreen")}
@@ -64,7 +64,7 @@ export default function SignInWelcomeScreen({navigation}) {
 
         <View style={{ marginHorizontal: 20, marginTop: 10 }}>
           <Button
-            title="CREATE ACCOUNT"
+            title="Creează-ți cont"
             buttonStyle={parameters.styledButton}
             titleStyle={parameters.buttonTitle}
             onPress={() => navigation.navigate("SignUpScreen")}
