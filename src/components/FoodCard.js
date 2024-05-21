@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     cardView: {
         borderRadius: 10,
         overflow: 'hidden',
-        marginBottom: 10,
+        marginBottom: 2,
         borderWidth: 1,
         borderColor: '#dddddd',
         shadowColor: "#000",

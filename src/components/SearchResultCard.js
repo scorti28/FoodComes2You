@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, ImageBackground, View } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ThemeContext } from '../global/themeContext';
+import { colors, darkColors } from '../global/styles';
 
 const SearchResultCard = ({
     screenWidth,
@@ -10,8 +13,11 @@ const SearchResultCard = ({
     farAway,
     address,
     OnPressRestaurantCard,
-    backgroundColor
 }) => {
+    const { isDarkMode } = useContext(ThemeContext);
+    const currentColors = isDarkMode ? darkColors : colors;
+    const backgroundColor = isDarkMode ? currentColors.cardbackground : colors.cardbackground;
+
     return (
         <TouchableOpacity 
             onPress={OnPressRestaurantCard} 
@@ -24,17 +30,28 @@ const SearchResultCard = ({
             >
                 <View style={styles.textContainer}>
                     <Text style={styles.nameText}>{name}</Text>
-                    <Text style={styles.reviewText}>
-                        
-                        {averageReview} ({nrReviews} reviews)
-                    </Text>
+                    <View style={styles.reviewContainer}>
+                        <MaterialCommunityIcons
+                            name="star-check-outline"
+                            color={isDarkMode ? "white" : "white"}
+                            size={28}
+                        />
+                        <Text style={[styles.reviewText, {color: "white"}]}>
+                            {averageReview} ({nrReviews} reviews)
+                        </Text>
+                    </View>
                 </View>
             </ImageBackground>
-            <View style={styles.infoContainer}>
-                <Text style={styles.addressText}>{address}</Text>
-                <Text style={styles.distanceText}>
-                    {farAway} km away
-                </Text>
+            <View style={[styles.infoContainer, { backgroundColor: 'white' }]}>
+                <Text style={[styles.addressText, {color: 'black'}]}>{address}</Text>
+                <View style={styles.iconWithText}>
+                    <MaterialCommunityIcons
+                        name="pin"
+                        color={"black"}
+                        size={20}
+                    />
+                    <Text style={[styles.distanceText, {color: 'black'}]}>{farAway} km</Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -75,23 +92,32 @@ const styles = StyleSheet.create({
     },
     reviewText: {
         fontSize: 14,
-        color: 'white',
         textShadowColor: 'rgba(0, 0, 0, 0.75)',
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 10
     },
+    reviewContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     infoContainer: {
         padding: 10,
-        backgroundColor: 'white' // Background to ensure visibility of text
+        backgroundColor: 'white' // Always white background for restaurant details
     },
     addressText: {
         fontSize: 16,
-        color: 'black', // Black text on a light background
+        color: 'black', // Always black text for address
+    },
+    iconWithText: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     distanceText: {
         fontSize: 14,
-        color: 'black'
+        marginLeft: 5,
+        color: 'black' // Always black text for distance
     }
 });
 
 export default SearchResultCard;
+
