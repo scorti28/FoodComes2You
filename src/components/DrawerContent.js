@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Alert, StyleSheet } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
 import { darkColors } from "../global/styles"; // Import only darkColors for dark mode
@@ -7,12 +7,14 @@ import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
 import firestore from "@react-native-firebase/firestore";
 import { ThemeContext } from "../global/themeContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default function DrawerContent(props) {
   const { dispatchSignedIn } = useContext(SignInContext);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const currentColors = isDarkMode ? darkColors : null; // Use darkColors for dark mode
   const [userProfile, setUserProfile] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -40,6 +42,7 @@ export default function DrawerContent(props) {
       Alert.alert(error.code);
     }
   }
+
   return (
     <DrawerContentScrollView {...props} style={{ backgroundColor: isDarkMode ? darkColors.pageBackground : null }}>
       <View style={styles.container}>
@@ -65,6 +68,20 @@ export default function DrawerContent(props) {
           )}
           onPress={toggleTheme}
           labelStyle={{ color: currentColors ? currentColors.grey1 : null }}
+        />
+
+        <DrawerItem
+          label="Despre noi"
+          icon={({ color, size }) => (
+            <Icon
+              name="information-variant"
+              type="material-community"
+              color={isDarkMode ? darkColors.grey1 : color} // Set icon color to white in dark mode
+              size={size}
+            />
+          )}
+          onPress={() => navigation.navigate("MyOrdersScreen")} // Wrap navigation.navigate in an arrow function
+          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} // Set sign out text color to white in dark mode
         />
 
         <DrawerItem
