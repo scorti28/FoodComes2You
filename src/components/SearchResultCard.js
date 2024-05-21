@@ -15,7 +15,7 @@ const SearchResultCard = ({
     return (
         <TouchableOpacity 
             onPress={OnPressRestaurantCard} 
-            style={[styles.card, { backgroundColor, width: screenWidth }]}
+            style={[styles.card, { backgroundColor, width: screenWidth * 0.90, marginLeft: '5%', marginRight: '8%' }]}
         >
             <ImageBackground 
                 source={{ uri: image }} 
@@ -45,13 +45,21 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         marginBottom: 10,
-        borderWidth: 2,
-        borderColor: 'gray', // Adding border for better framin
-        
+        borderWidth: 1,
+        borderColor: '#dddddd',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     image: {
         height: 200,
         justifyContent: 'flex-end',
+        width: '100%'
     },
     textContainer: {
         backgroundColor: 'rgba(0, 0, 0, 0.6)', // Darker overlay for better contrast

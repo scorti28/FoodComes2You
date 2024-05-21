@@ -1,8 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { colors, darkColors} from '../global/styles';
-import { useContext } from 'react';
+import { colors, darkColors } from '../global/styles';
 import { ThemeContext } from '../global/themeContext';
 
 export default function FoodCard({
@@ -14,38 +13,33 @@ export default function FoodCard({
     averageReview,
     images,
     screenWidth
-}){
-    console.log("@@@FoodCard", [restaurantName, OnPressFoodCard])
-    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
-    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
-    return(
-        <TouchableOpacity onPress={OnPressFoodCard}>
-            <View style = {{...styles.cardView, width:screenWidth, borderColor:currentColors.grey4,}}>
-                <Image 
-                    style = {{...styles.image, width:screenWidth}}
-                    source = {images}
-                />
+}) {
+    const { isDarkMode } = useContext(ThemeContext);
+    const currentColors = isDarkMode ? darkColors : colors;
 
-            <View>
-                <View>
-                    <Text style = {[styles.restaurantName, {color:currentColors.grey1,}]}>{restaurantName}</Text>
-                </View>
-                <View style = {styles.detailsCard}>
-                    <View style = {[styles.distance, {borderRightColor:currentColors.grey4,}]}>
+    return (
+        <TouchableOpacity onPress={OnPressFoodCard} style={[styles.cardView, {width: screenWidth * 0.90, marginLeft: '5%', marginRight: '5%'}]}>
+            <ImageBackground 
+                style={styles.image}
+                source={images}
+                resizeMode='cover'
+            />
+
+            <View style={styles.details}>
+                <Text style={[styles.restaurantName, {color: currentColors.grey2}]}>{restaurantName}</Text>
+                <View style={styles.detailsCard}>
+                    <View style={[styles.distance, {borderRightColor: currentColors.grey4}]}>
                         <Icon 
-                            name = "push-pin"
-                            type= "material"
+                            name="push-pin"
+                            type="material"
                             color={currentColors.grey2}
                             size={18}
-                            iconStyle={{marginTop:3}}
+                            iconStyle={{marginTop: 3}}
                         />
-                        <Text style={[styles.textIcon, {color:currentColors.grey3}]}>{farAway} km</Text>
+                        <Text style={[styles.textIcon, {color: currentColors.grey2}]}>{farAway} km</Text>
                     </View>
-                    <View style={styles.address}>
-                        <Text style={[styles.addressText, {color:currentColors.grey2}]}>{businessAddress}</Text>
-                    </View>
+                    <Text style={[styles.addressText, {color: currentColors.grey2}]}>{businessAddress}</Text>
                 </View>
-            </View>
             </View>
 
             <View style={styles.review}>
@@ -57,70 +51,73 @@ export default function FoodCard({
 }
 
 const styles = StyleSheet.create({
-    cardView:{
-        marginHorizontal:9,
-        borderTopRightRadius:5,
-        borderTopLeftRadius:5,
-        borderWidth:2,
-        borderBottomLeftRadius:5,
-        borderBottomRightRadius:5
+    cardView: {
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#dddddd',
+        shadowColor: "#000",
+        shadowOffset: {width: 0, height: 5},
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
     },
-    image:{
-        borderTopLeftRadius:5,
-        borderTopRightRadius:5, 
-        height:150
+    image: {
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        height: 150,
+        width: '100%'  // Ensure the image covers the full width
     },
-    restaurantName:{
-        fontSize:17,
-        fontWeight:'bold',
-        marginTop:5,
-        marginLeft:10
+    details: {
+        padding: 10,
+        width: '100%',  // Stretch details to cover full width
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
     },
-    detailsCard:{
-        flex:1,
-        flexDirection:"row"
+    restaurantName: {
+        fontSize: 17,
+        fontWeight: 'bold'
     },
-    distance:{
-        flex:4,
-        flexDirection:'row',
-        paddingHorizontal:5,
-        borderRightWidth:1
+    detailsCard: {
+        flexDirection: "row",
+        marginTop: 5
     },
-    textIcon:{
-        fontSize:12,
-        fontWeight:'bold',
-        paddingTop:5,
+    distance: {
+        flexDirection: 'row',
+        paddingHorizontal: 5,
+        borderRightWidth: 1
     },
-    address:{
-        flex:9,
-        flexDirection:"row"
+    textIcon: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginLeft: 5
     },
-    addressText:{
-        fontSize:12,
-        paddingTop:5,
-        paddingHorizontal:10
+    addressText: {
+        fontSize: 12,
+        paddingLeft: 10,
+        flex: 1
     },
-    review:{
-        position:"absolute",
-        top:0,
-        right:10, 
+    review: {
+        position: "absolute",
+        top: 0,
+        right: 10,
         backgroundColor: 'rgba(52, 52, 52, 0.3)',
-        padding:2,
-        alignItems:"center",
-        justifyContent:"center",
-        borderTopRightRadius:5,
-        borderBottomLeftRadius:12
+        padding: 2,
+        alignItems: "center",
+        justifyContent: "center",
+        borderTopRightRadius: 5,
+        borderBottomLeftRadius: 12,
+        width: 'auto' // Ensure the review box positions correctly
     },
-    averageReview:{
-        color:"white",
-        fontSize:20,
-        fontWeight:'bold',
-        marginTop:-3
+    averageReview: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: 'bold'
     },
-    numberOfReview:{
-        color:"white",
-        fontSize:13,
-        marginRight:0,
-        marginLeft:0
+    numberOfReview: {
+        color: "white",
+        fontSize: 13
     }
-})
+});
