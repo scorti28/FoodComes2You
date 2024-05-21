@@ -23,8 +23,8 @@ export default function SignInWelcomeScreen({navigation}) {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', paddingTop: 25 }}>
-        <Text style={{ fontSize: 26, color: colors.buttons, fontWeight: 'bold' }}>Discover New Restaurants</Text>
-        <Text style={{ fontSize: 26, color: colors.buttons, fontWeight: 'bold' }}>In Your Neighborhood</Text>
+        <Text style={{ fontSize: 26, color: colors.buttons, fontWeight: 'bold' }}>Descoperă restaurante noi</Text>
+        <Text style={{ fontSize: 26, color: colors.buttons, fontWeight: 'bold' }}>În apropierea ta</Text>
       </View>
 
       <View style={{ flex: 4, justifyContent: "center" }}>

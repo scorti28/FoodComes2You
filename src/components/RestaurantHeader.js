@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { colors } from '../global/styles';
 
-const RestaurantHeader = ({ navigation, image }) => {
+const RestaurantHeader = ({ navigation, image, route }) => {
   const [liked, setLiked] = useState(false);
+  const fromHomeScreen = route.params?.fromHomeScreen;
 
   const likeHandler = () => {
     setLiked(!liked);
+  };
+
+  const goBackHandler = () => {
+    if (fromHomeScreen) {
+      navigation.navigate("HomeScreen");  
+    } else {
+      navigation.goBack();  
+    }
   };
 
   return (
@@ -15,7 +23,7 @@ const RestaurantHeader = ({ navigation, image }) => {
       <TouchableOpacity style={styles.heartButton} onPress={likeHandler}>
         <Icon name={liked ? 'favorite' : 'favorite-border'} type="material" color={liked ? "#48dba3" : "#ffffff"} size={30} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.arrowButton} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.arrowButton} onPress={goBackHandler}>
         <Icon name="arrow-left" type="material-community" color="#000000" size={25} />
       </TouchableOpacity>
       <ImageBackground style={styles.image} source={{ uri: image }} />

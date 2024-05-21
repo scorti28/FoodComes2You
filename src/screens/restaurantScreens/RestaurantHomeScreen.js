@@ -21,7 +21,7 @@ export default function RestaurantHomeScreen({ route, navigation }) {
   return (
     <View style={[styles.container, {backgroundColor: currentColors.background}]}>
       <ScrollView>
-        <RestaurantHeader navigation={navigation} image={restaurant.image} />
+        <RestaurantHeader navigation={navigation} image={restaurant.image} route={route}/>
         <View style={styles.restaurantInfo}>
           <Text style={[styles.restaurantName, {color: isDarkMode ? 'white' : currentColors.primary}]}>{restaurant.name}</Text>
           <View style={styles.infoRow}>

@@ -36,7 +36,10 @@ export default function HomeScreen({ navigation, route }) {
                     {restaurantData.map(restaurant => (
                         <View key={restaurant.id} style={styles.viewRestaurant}>
                             <FoodCard
-                                OnPressFoodCard={() => console.log("Pressed", restaurant.name)}
+                                OnPressFoodCard={() => navigation.navigate("RestaurantHomeScreen",{
+                                    restaurant: restaurant,
+                                    fromHomeScreen: true  
+                                })}
                                 screenWidth={SCREEN_WIDTH * 0.95}
                                 images={{ uri: restaurant.image }}
                                 restaurantName={restaurant.name}

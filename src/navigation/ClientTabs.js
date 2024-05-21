@@ -107,6 +107,17 @@ function RootClientTabs (){
           )
         }}
       />
+       <ClientTabs.Screen
+        name="RestaurantHomeScreen"
+        component={RestaurantHomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIconStyle: { display: "none" },
+          tabBarButton: () => null,
+          tabBarVisible: false,
+          tabBarStyle: {display: "none"}
+        }}
+      /> 
       <ClientTabs.Screen
         name="SearchScreenButton"
         component={ClientStack}
