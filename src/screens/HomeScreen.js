@@ -5,6 +5,7 @@ import HomeHeader from "../components/HomeHeader";
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors, darkColors } from '../global/styles'; // Import darkColors
 import { ThemeContext } from '../global/themeContext';
+import { RestaurantContext } from '../contexts/restaurantSortedContext';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -12,18 +13,15 @@ export default function HomeScreen({ navigation, route }) {
     const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
     const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
     const [restaurantData, setRestaurantData] = useState([]);
+    const { sortedRestaurants } = useContext(RestaurantContext);
 
     useEffect(() => {
-        if (route.params?.sortedRestaurants) {
-            setRestaurantData(route.params.sortedRestaurants);
+        if (sortedRestaurants.length > 0) {
+            setRestaurantData(sortedRestaurants);
         } else {
-            const fetchData = async () => {
-                const data = await restaurantMenuExtractor();
-                setRestaurantData(data);
-            };
             fetchData();
         }
-    }, [route.params?.sortedRestaurants]);
+    }, [sortedRestaurants]);
 
     return (
         <View style={[styles.container, { backgroundColor: currentColors.pageBackground }]}>

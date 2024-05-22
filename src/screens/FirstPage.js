@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity,PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import firebase from '@react-native-firebase/app';
@@ -8,6 +8,7 @@ import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
 import { colors } from '../global/styles';
+import { RestaurantContext } from '../contexts/restaurantSortedContext';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0PUMChSqEQc2VsU1RbEB5FuUxxGsu5h8",
@@ -52,6 +53,7 @@ const FirstPage = ({navigation}) => {
   const [location, setLocation] = useState(true);
   const [locationReady, setLocationReady] = useState(false);
   const [restaurantData, setRestaurantData] = useState([]);
+  const { updateRestaurants } = useContext(RestaurantContext);
 
 useEffect(() => {
   const fetchDataAndLocation = async () => {
@@ -140,10 +142,10 @@ const combineLocationHandler = () => {
 };
 
 const handleNearYouPressed = () => {
-  combineLocationHandler();
-  const sortedRestaurants = sortDistance(); 
-  console.log("*******************************************", sortedRestaurants);
-  navigation.navigate("HomeScreen", { sortedRestaurants });
+    combineLocationHandler();
+    const sortedRestaurants = sortDistance(); 
+    updateRestaurants(sortedRestaurants);
+    navigation.navigate("HomeScreen", { sortedRestaurants });
 };
 
 const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>

@@ -5,6 +5,7 @@ import RootNavigator from './src/navigation/rootNavigator';
 import 'react-native-gesture-handler';
 import { SignInContextProvider } from './src/contexts/authContext';
 import { ThemeProvider, ThemeContext } from './src/global/themeContext';
+import { RestaurantProvider } from './src/contexts/restaurantSortedContext';
 
 LogBox.ignoreAllLogs();
 
@@ -18,7 +19,9 @@ function AppContent() {
         barStyle={isDarkMode ? "light-content" : "dark-content"}
         backgroundColor={currentColors.statusbar}
       />
+      <RestaurantProvider>
       <RootNavigator />
+      </RestaurantProvider>
     </View>
   );
 }
