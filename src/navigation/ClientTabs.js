@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { colors, darkColors } from '../global/styles'; // Import colors for dark mode
 import HomeScreen from '../screens/HomeScreen';
-import MyOrdersScreen from '../screens/MyOrdersScreen';
+import MyOrdersScreen from '../screens/AboutUs';
 import FirstPage from '../screens/FirstPage';
 import TagsScreen from '../screens/TagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';

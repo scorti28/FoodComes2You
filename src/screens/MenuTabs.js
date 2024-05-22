@@ -1,8 +1,28 @@
 import React from 'react';
 import { View, StyleSheet,FlatList,TouchableOpacity} from 'react-native';
 import MenuCard from '../components/MenuCard';
+import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
+import { useEffect } from 'react';
 
 export function Route1({navigation}) {
+
+  const [restaurantData, setRestaurantData] = useState([]);
+
+useEffect(() => {
+  const fetchDataAndLocation = async () => {
+    const data = await restaurantMenuExtractor();
+    setRestaurantData(data);
+  }
+  fetchDataAndLocation();
+}, []);
+
+  // Update routes when menuData changes
+  useEffect(() => {
+    if (restaurantData.length > 0) {
+      setRoutes(restaurantData.restaurantMenu);
+    }
+  }, [restaurantData.restaurantMenu]);
+
   return (
     <View style={{flex:1}}>
       <View style={styles.view2}>

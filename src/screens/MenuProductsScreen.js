@@ -4,7 +4,6 @@ import { Route1, Route2, Route3, Route4 } from './MenuTabs';
 import { colors } from '../global/styles';
 import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
-import { menusData } from '../global/Data';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 

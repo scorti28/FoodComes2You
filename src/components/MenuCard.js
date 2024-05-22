@@ -2,20 +2,18 @@ import { StyleSheet, Text, View, Image} from 'react-native'
 import React from 'react'
 import { colors } from '../global/styles'
 
-export default function MenuCard({productName, price, image, productDetails}) {
+export default function MenuCard({name, price, quantity, details}) {
   return (
     <View style={styles.view1}>
       <View style={styles.view2}>
         <View style={styles.view3}>
-          <Text style={styles.text1}>{productName}</Text>
+          <Text style={styles.text1}>{name}</Text>
           <View>
-            <Text style={styles.text2}>{productDetails}</Text>
+            <Text style={styles.text2}>{details}</Text>
           </View>
           <Text style={styles.text3}>RON {price}</Text>
           </View>
-          <View>
-              <Image style={styles.image} source={image}/>
-          </View>
+          <Text style={styles.text3}>{quantity}</Text>
       </View>
     </View>
   )
