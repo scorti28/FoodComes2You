@@ -18,33 +18,39 @@ export default function RestaurantHomeScreen({ route, navigation }) {
     setLiked(!liked);
   };
 
+  const handleCategoryPress = (category) => {
+    const categoryKeys = Object.keys(restaurant.restaurantMenu);
+    const selectedIndex = categoryKeys.indexOf(category);
+    navigation.navigate("MenuProductsScreen", { restaurant, selectedIndex });
+  };
+
   return (
-    <View style={[styles.container, {backgroundColor: currentColors.background}]}>
+    <View style={[styles.container, { backgroundColor: currentColors.background }]}>
       <ScrollView>
-        <RestaurantHeader navigation={navigation} image={restaurant.image} route={route}/>
+        <RestaurantHeader navigation={navigation} image={restaurant.image} route={route} />
         <View style={styles.restaurantInfo}>
-          <Text style={[styles.restaurantName, {color: isDarkMode ? 'white' : currentColors.primary}]}>{restaurant.name}</Text>
+          <Text style={[styles.restaurantName, { color: isDarkMode ? 'white' : currentColors.primary }]}>{restaurant.name}</Text>
           <View style={styles.infoRow}>
             <View style={styles.iconWithText}>
               <MaterialCommunityIcons
-                 name="star-check-outline"
-                 color={isDarkMode ? 'white' : currentColors.primary}
-                 size={28}
+                name="star-check-outline"
+                color={isDarkMode ? 'white' : currentColors.primary}
+                size={28}
               />
-              <Text style={[styles.reviewText, {color: isDarkMode ? 'white' : currentColors.text}]}>{restaurant.averageReview} ({restaurant.nrReviews} reviews)</Text>
+              <Text style={[styles.reviewText, { color: isDarkMode ? 'white' : currentColors.text }]}>{restaurant.averageReview} ({restaurant.nrReviews} reviews)</Text>
             </View>
           </View>
           <View style={styles.iconWithText}>
-              <MaterialCommunityIcons
-                 name="pin"
-                 color={isDarkMode ? 'white' : currentColors.primary}
-                 size={28}
-              />
-              <Text style={[styles.reviewText, {color: isDarkMode ? 'white' : currentColors.text}]}>{restaurant.farAway} km</Text>
-            </View>
+            <MaterialCommunityIcons
+              name="pin"
+              color={isDarkMode ? 'white' : currentColors.primary}
+              size={28}
+            />
+            <Text style={[styles.reviewText, { color: isDarkMode ? 'white' : currentColors.text }]}>{restaurant.farAway} km</Text>
+          </View>
         </View>
-        <View style={[styles.divider, {borderColor: isDarkMode ? 'white' : currentColors.secondary}]} />
-        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} isDarkMode={isDarkMode} restaurant={restaurant}/>
+        <View style={[styles.divider, { borderColor: isDarkMode ? 'white' : currentColors.secondary }]} />
+        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} isDarkMode={isDarkMode} onCategoryPress={handleCategoryPress} />
       </ScrollView>
     </View>
   );

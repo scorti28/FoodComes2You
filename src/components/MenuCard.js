@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Image} from 'react-native'
-import React from 'react'
-import { colors } from '../global/styles'
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { colors } from '../global/styles';
 
-export default function MenuCard({name, price, quantity, details}) {
+export default function MenuCard({ name, price, quantity, details }) {
   return (
     <View style={styles.view1}>
       <View style={styles.view2}>
@@ -11,53 +11,45 @@ export default function MenuCard({name, price, quantity, details}) {
           <View>
             <Text style={styles.text2}>{details}</Text>
           </View>
-          <Text style={styles.text3}>RON {price}</Text>
-          </View>
-          <Text style={styles.text3}>{quantity}</Text>
+          <Text style={styles.text3}>{price}</Text>
+        </View>
+        <Text style={styles.text3}>{quantity}</Text>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-
-    view1:{backgroundColor:"white",
-    elevation:4,
-    shadowOpacity:0.4,
-    shadowColor:"black",
-    margin:5,
-    padding:10
-},
-
-view2: {flex:1,
-flexDirection:"row",
-padding:0,
-justifyContent:"space-between"
-},
-
-view3 :{flex:6,
-justifyContent:"space-between"
-},
-
-text1: {
-fontSize:15,
-color:colors.grey1,
-fontWeight:"bold"
-},
-
-text2:{
-fontSize:15,
-color:colors.grey3,
-marginRight:2
-},
-
-text3:{
-fontSize:15,
-color:colors.black,
-},
-
-image:{
-  width: 80,
-  height: 80,
-}
-})
+  view1: {
+    backgroundColor: "white",
+    elevation: 4,
+    shadowOpacity: 0.4,
+    shadowColor: "black",
+    margin: 5,
+    padding: 10,
+  },
+  view2: {
+    flex: 1,
+    flexDirection: "row",
+    padding: 0,
+    justifyContent: "space-between",
+  },
+  view3: {
+    flex: 6,
+    justifyContent: "space-between",
+  },
+  text1: {
+    fontSize: 15,
+    color: colors.grey1,
+    fontWeight: "bold",
+  },
+  text2: {
+    fontSize: 15,
+    color: colors.grey3,
+    marginRight: 2,
+  },
+  text3: {
+    fontSize: 15,
+    color: colors.black,
+  },
+});

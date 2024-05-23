@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, TouchableOpacity, Text } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import MenuCard from '../components/MenuCard';
 
 const MenuTabContent = ({ menuItems, navigation }) => {
@@ -12,15 +12,15 @@ const MenuTabContent = ({ menuItems, navigation }) => {
           <TouchableOpacity onPress={() => navigation.navigate('DetailScreen', { item })}>
             <MenuCard
               name={item.name}
-              image={item.image}
-              price={item.price}
-              details={item.details}
+              price={item.Pret}
+              details={item.Detalii}
+              quantity={item.Gramaj}
             />
           </TouchableOpacity>
         )}
       />
     </View>
-  )
+  );
 };
 
 export default MenuTabContent;

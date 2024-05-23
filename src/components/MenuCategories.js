@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import { Icon } from "react-native-elements";
+import React from 'react';
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 const getCategoryIconName = (category) => {
   switch (category) {
@@ -42,17 +42,11 @@ const getCategoryIconName = (category) => {
   }
 };
 
-const MenuCategories = ({ menu, navigation, isDarkMode, restaurant }) => {
+const MenuCategories = ({ menu, navigation, isDarkMode, onCategoryPress }) => {
   if (!menu) {
     console.log("Menu data is undefined.");
     return <Text style={{ color: isDarkMode ? 'white' : 'black' }}>No menu available</Text>;
   }
-
-  const handleCategoryPress = (category) => {
-    const categoryKeys = Object.keys(menu);
-    const selectedIndex = categoryKeys.indexOf(category);
-    navigation.navigate("MenuProductsScreen", { restaurant, selectedIndex });
-  };
 
   return (
     <View style={styles.container}>
@@ -60,7 +54,7 @@ const MenuCategories = ({ menu, navigation, isDarkMode, restaurant }) => {
         <TouchableOpacity
           key={index}
           style={[styles.menuItem, { borderColor: isDarkMode ? 'white' : 'lightgray' }]}
-          onPress={() => handleCategoryPress(category)}
+          onPress={() => onCategoryPress(category)}
         >
           <View style={[styles.iconContainer, { backgroundColor: isDarkMode ? 'black' : "#F8F8F8" }]}>
             <Icon
