@@ -1,59 +1,60 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import { Route1, Route2, Route3, Route4 } from './MenuTabs';
-import { colors } from '../global/styles';
-import { Icon } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
+import { Icon } from 'react-native-elements';
+import { colors } from '../global/styles';
+import MenuTabContent from './MenuTabContent';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MenuProductsScreen({ navigation, route }) {
   const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
-  const [restaurantData, setRestaurantData] = useState([]);
 
-useEffect(() => {
-  const fetchDataAndLocation = async () => {
-    const data = await restaurantMenuExtractor();
-    setRestaurantData(data);
-  }
-  fetchDataAndLocation();
-}, []);
-
-  // Update routes when menuData changes
   useEffect(() => {
-    if (restaurantData.length > 0) {
-      setRoutes(restaurantData.restaurantMenu);
+    if (route.params && route.params.restaurant) {
+      const restaurantMenu = route.params.restaurant.restaurantMenu;
+      const formattedRoutes = Object.keys(restaurantMenu).map((key, idx) => ({
+        key: idx.toString(),
+        title: key,
+        content: restaurantMenu[key]
+      }));
+      setRoutes(formattedRoutes);
+    } else {
+      console.log('Restaurant data is not available');
+      // Handle the case where restaurant data is not available
     }
-  }, [restaurantData.restaurantMenu]);
+  }, [route.params]);
 
-
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: colors.cardbackground }}
-      tabStyle={styles.tabStyle}
-      scrollEnabled={true}
-      style={styles.tab}
-      labelStyle={styles.tabLabel}
-      contentContainerStyle={styles.tabContainer}
-    />
-  );
+  useEffect(() => {
+    const restaurantMenu = route.params.restaurant.restaurantMenu;
+    const formattedRoutes = Object.keys(restaurantMenu).map((key, idx) => ({
+      key: idx.toString(),
+      title: key,
+      content: restaurantMenu[key]
+    }));
+    setRoutes(formattedRoutes);
+  }, []);
 
   const renderScene = ({ route }) => {
-    switch (route.key) {
-      case '1':
-        return <Route1 navigation={navigation} />
-      case '2':
-        return <Route2 navigation={navigation} />
-      case '3':
-        return <Route3 navigation={navigation} />
-      case '4':
-        return <Route4 navigation={navigation} />
-      default:
-        return null;
-    }
+    if (!route.content) return null;
+    return (
+      <MenuTabContent
+        menuItems={route.content.items}
+        navigation={navigation}
+      />
+    );
   };
+
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: '#FFFFFF' }} // this assumes white is a good contrast for visibility
+      style={{ backgroundColor: colors.buttons, elevation: 0, shadowOpacity: 0 }} // no shadow
+      labelStyle={{ color: '#FFFFFF', fontWeight: 'bold' }} // white labels, bold text
+      scrollEnabled={true}
+    />
+  );
 
   return (
     <View style={styles.container}>

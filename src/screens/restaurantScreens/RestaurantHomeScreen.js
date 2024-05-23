@@ -44,7 +44,7 @@ export default function RestaurantHomeScreen({ route, navigation }) {
             </View>
         </View>
         <View style={[styles.divider, {borderColor: isDarkMode ? 'white' : currentColors.secondary}]} />
-        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} isDarkMode={isDarkMode} />
+        <MenuCategories menu={restaurant.restaurantMenu} navigation={navigation} isDarkMode={isDarkMode} restaurant={restaurant}/>
       </ScrollView>
     </View>
   );

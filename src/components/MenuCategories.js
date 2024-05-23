@@ -42,13 +42,13 @@ const getCategoryIconName = (category) => {
   }
 };
 
-const MenuCategories = ({ menu, navigation, isDarkMode }) => {
+const MenuCategories = ({ menu, navigation, isDarkMode, restaurant }) => {
   if (!menu) {
     console.log("Menu data is undefined.");
     return <Text style={{ color: isDarkMode ? 'white' : 'black' }}>No menu available</Text>;
   }
   const handleCategoryPress = (category) => {
-    navigation.navigate("MenuProductsScreen", { category });
+    navigation.navigate("MenuProductsScreen", { category, restaurant: restaurant });
   };
 
   return (
