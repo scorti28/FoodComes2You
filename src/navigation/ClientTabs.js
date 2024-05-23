@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'react-native-elements';
 import { colors, darkColors } from '../global/styles'; // Import colors for dark mode
 import HomeScreen from '../screens/HomeScreen';
 import MyOrdersScreen from '../screens/AboutUs';
 import FirstPage from '../screens/FirstPage';
 import TagsScreen from '../screens/TagsScreen';
-import { createStackNavigator } from '@react-navigation/stack';
 import MySearchScreen from '../screens/SearchScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import RestaurantHomeScreen from '../screens/restaurantScreens/RestaurantHomeScreen';
@@ -14,59 +14,65 @@ import MenuProductsScreen from '../screens/MenuProductsScreen';
 import { ThemeContext } from '../global/themeContext'; // Import ThemeContext
 
 const ClientTabs = createBottomTabNavigator();
-const ClientSearch = createStackNavigator();
+const ClientStack = createStackNavigator();
+const HomeStack = createStackNavigator();
 
-function ClientStack() {
-  console.log("@@@ClientStack")
+// Stack pentru navigarea Home
+function HomeStackNavigator() {
   return (
-    <ClientSearch.Navigator>
-        <ClientSearch.Screen 
-            name="SearchScreen"
-            component={MySearchScreen}
-            options={
-                () => ({
-                    headerShown:false
-                })
-            }
-        />
-
-        <ClientSearch.Screen 
-            name="SearchResultScreen"
-            component={SearchResultScreen}
-            options={
-                () => ({
-                    headerShown:false
-                })
-            }
-        />
-        <ClientSearch.Screen 
-            name="RestaurantHomeScreen"
-            component={RestaurantHomeScreen}
-            options={
-                () => ({
-                    headerShown:false
-                })
-            }
-        />
-        <ClientSearch.Screen 
-            name="MenuProductsScreen"
-            component={MenuProductsScreen}
-            options={
-                () => ({
-                    headerShown:false
-                })
-            }
-        />
-        
-    </ClientSearch.Navigator>
-  )
+    <HomeStack.Navigator>
+      <HomeStack.Screen 
+        name="HomeScreen" 
+        component={HomeScreen} 
+        options={{ headerShown: false }} 
+      />
+      <HomeStack.Screen 
+        name="RestaurantHomeScreen" 
+        component={RestaurantHomeScreen} 
+        options={{ headerShown: false }} 
+      />
+      <HomeStack.Screen 
+        name="MenuProductsScreen" 
+        component={MenuProductsScreen} 
+        options={{ headerShown: false }} 
+      />
+    </HomeStack.Navigator>
+  );
 }
 
-function RootClientTabs (){
+// Stack pentru Search
+function ClientStackNavigator() {
+  return (
+    <ClientStack.Navigator>
+      <ClientStack.Screen 
+        name="SearchScreen" 
+        component={MySearchScreen} 
+        options={{ headerShown: false }} 
+      />
+      <ClientStack.Screen 
+        name="SearchResultScreen" 
+        component={SearchResultScreen} 
+        options={{ headerShown: false }} 
+      />
+      <ClientStack.Screen 
+        name="RestaurantHomeScreen" 
+        component={RestaurantHomeScreen} 
+        options={{ headerShown: false }} 
+      />
+      <ClientStack.Screen 
+        name="MenuProductsScreen" 
+        component={MenuProductsScreen} 
+        options={{ headerShown: false }} 
+      />
+    </ClientStack.Navigator>
+  );
+}
+
+// Tab-ul principal al clientului
+function RootClientTabs() {
   const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext to get dark mode state
   const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
 
-  console.log("@@@RootClientTabs")
   return (
     <ClientTabs.Navigator tabBarOptions={{ activeTintColor: currentColors.buttons }}>
       <ClientTabs.Screen
@@ -77,10 +83,10 @@ function RootClientTabs (){
           tabBarIconStyle: { display: "none" },
           tabBarButton: () => null,
           tabBarVisible: false,
-          tabBarStyle: {display: "none"}
+          tabBarStyle: { display: "none" },
         }}
       />
-       <ClientTabs.Screen
+      <ClientTabs.Screen
         name="TagsScreen"
         component={TagsScreen}
         options={{
@@ -88,12 +94,12 @@ function RootClientTabs (){
           tabBarIconStyle: { display: "none" },
           tabBarButton: () => null,
           tabBarVisible: false,
-          tabBarStyle: {display: "none"}
+          tabBarStyle: { display: "none" },
         }}
-      /> 
+      />
       <ClientTabs.Screen
         name="HomeScreen"
-        component={HomeScreen}
+        component={HomeStackNavigator}
         options={{
           headerShown: false,
           tabBarLabel: "Acasă",
@@ -104,23 +110,12 @@ function RootClientTabs (){
               color={color}
               size={size}
             />
-          )
+          ),
         }}
       />
-       <ClientTabs.Screen
-        name="RestaurantHomeScreen"
-        component={RestaurantHomeScreen}
-        options={{
-          headerShown: false,
-          tabBarIconStyle: { display: "none" },
-          tabBarButton: () => null,
-          tabBarVisible: false,
-          tabBarStyle: {display: "none"}
-        }}
-      /> 
       <ClientTabs.Screen
         name="SearchScreenButton"
-        component={ClientStack}
+        component={ClientStackNavigator}
         options={{
           headerShown: false,
           tabBarLabel: "Caută",
@@ -131,7 +126,7 @@ function RootClientTabs (){
               color={color}
               size={size}
             />
-          )
+          ),
         }}
       />
       <ClientTabs.Screen
@@ -147,7 +142,7 @@ function RootClientTabs (){
               color={color}
               size={size}
             />
-          )
+          ),
         }}
       />
     </ClientTabs.Navigator>
