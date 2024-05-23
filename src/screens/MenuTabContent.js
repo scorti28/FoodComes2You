@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
+import { ThemeContext } from '../global/themeContext';
 import MenuCard from '../components/MenuCard';
+import { colors, darkColors } from '../global/styles';
 
 const MenuTabContent = ({ menuItems, navigation }) => {
+  const { isDarkMode } = useContext(ThemeContext);
+  const currentColors = isDarkMode ? darkColors : colors;
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: currentColors.background }}>
       <FlatList
         data={menuItems}
         keyExtractor={(item, index) => index.toString()}
@@ -15,6 +20,7 @@ const MenuTabContent = ({ menuItems, navigation }) => {
               price={item.Pret}
               details={item.Detalii}
               quantity={item.Gramaj}
+              isDarkMode={isDarkMode}
             />
           </TouchableOpacity>
         )}

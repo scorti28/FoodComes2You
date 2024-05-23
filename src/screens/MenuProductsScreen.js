@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { Icon } from 'react-native-elements';
-import { colors } from '../global/styles';
+import { colors, darkColors } from '../global/styles';
+import { ThemeContext } from '../global/themeContext';
 import MenuTabContent from './MenuTabContent';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MenuProductsScreen({ navigation, route }) {
+  const { isDarkMode } = useContext(ThemeContext);
+  const currentColors = isDarkMode ? darkColors : colors;
   const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([]);
 
@@ -46,23 +49,23 @@ export default function MenuProductsScreen({ navigation, route }) {
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: '#FFFFFF' }}
-      style={{ backgroundColor: colors.buttons, elevation: 0, shadowOpacity: 0 }}
+      style={{ backgroundColor: currentColors.statusbar, elevation: 0, shadowOpacity: 0 }}
       labelStyle={{ color: '#FFFFFF', fontWeight: 'bold' }}
       scrollEnabled={true}
     />
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.view1}>
+    <View style={[styles.container, { backgroundColor: currentColors.background }]}>
+      <View style={[styles.view1, { backgroundColor: currentColors.statusbar }]}>
         <Icon
           name="arrow-left-circle"
           type="material-community"
-          color= '#FFFFFF'
+          color='#FFFFFF'
           size={25}
           onPress={() => navigation.goBack()}
         />
-        <Text style={styles.text1}>Menu</Text>
+        <Text style={[styles.text1, { color: '#FFFFFF' }]}>Menu</Text>
       </View>
       <TabView
         navigationState={{ index, routes }}
@@ -82,7 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    backgroundColor: colors.buttons,
     top: 0,
     left: 0,
     right: 0,
@@ -91,7 +93,6 @@ const styles = StyleSheet.create({
   text1: {
     fontWeight: 'bold',
     marginLeft: 40,
-    color: '#ffffff',
     fontSize: 18,
   },
   scene: {
