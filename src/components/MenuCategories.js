@@ -47,8 +47,11 @@ const MenuCategories = ({ menu, navigation, isDarkMode, restaurant }) => {
     console.log("Menu data is undefined.");
     return <Text style={{ color: isDarkMode ? 'white' : 'black' }}>No menu available</Text>;
   }
+
   const handleCategoryPress = (category) => {
-    navigation.navigate("MenuProductsScreen", { category, restaurant: restaurant });
+    const categoryKeys = Object.keys(menu);
+    const selectedIndex = categoryKeys.indexOf(category);
+    navigation.navigate("MenuProductsScreen", { restaurant, selectedIndex });
   };
 
   return (
@@ -56,10 +59,10 @@ const MenuCategories = ({ menu, navigation, isDarkMode, restaurant }) => {
       {Object.keys(menu).map((category, index) => (
         <TouchableOpacity
           key={index}
-          style={[styles.menuItem, {borderColor: isDarkMode ? 'white' : 'lightgray'}]}
-          onPress={() => handleCategoryPress(category, navigation)}
+          style={[styles.menuItem, { borderColor: isDarkMode ? 'white' : 'lightgray' }]}
+          onPress={() => handleCategoryPress(category)}
         >
-          <View style={[styles.iconContainer, {backgroundColor: isDarkMode ? 'black' : "#F8F8F8"}]}>
+          <View style={[styles.iconContainer, { backgroundColor: isDarkMode ? 'black' : "#F8F8F8" }]}>
             <Icon
               name={getCategoryIconName(category)}
               type="material"
@@ -67,7 +70,7 @@ const MenuCategories = ({ menu, navigation, isDarkMode, restaurant }) => {
               color={isDarkMode ? 'white' : 'black'}
             />
           </View>
-          <Text style={[styles.menuText, {color: isDarkMode ? 'white' : 'black'}]}>{category}</Text>
+          <Text style={[styles.menuText, { color: isDarkMode ? 'white' : 'black' }]}>{category}</Text>
         </TouchableOpacity>
       ))}
     </View>

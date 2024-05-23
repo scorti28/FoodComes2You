@@ -20,9 +20,13 @@ export default function MenuProductsScreen({ navigation, route }) {
         content: restaurantMenu[key]
       }));
       setRoutes(formattedRoutes);
+
+      // Set the index from the route if provided
+      if (route.params.selectedIndex !== undefined) {
+        setIndex(route.params.selectedIndex);
+      }
     } else {
       console.log('Restaurant data is not available');
-      // Handle the case where restaurant data is not available
     }
   }, [route.params]);
 
