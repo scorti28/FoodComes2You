@@ -1,13 +1,15 @@
- import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect, useContext } from 'react';
  import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
  import { CheckBox } from '@rneui/themed';
  import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
  import { colors } from '../global/styles';
+ import { RestaurantContext } from '../contexts/restaurantSortedContext';
 
  const TagsScreen = ({ navigation }) => {
        const [checkedFacilities, setCheckedFacilities] = useState({});
     const [checkedFoodTypes, setCheckedFoodTypes] = useState({});
     const [restaurantData, setRestaurantData] = useState([]);
+    const { updateRestaurants } = useContext(RestaurantContext);
 
    useEffect(() => {
      const fetchData = async () => {
@@ -89,6 +91,7 @@
        <TouchableOpacity style={styles.button} onPress={() => {
          const sortedRestaurants = filterAndSortRestaurants();
          console.log("Sorted Restaurants:", sortedRestaurants);
+         updateRestaurants(sortedRestaurants);
          navigation.navigate("HomeScreen", { sortedRestaurants });
        }}>
          <Text style={styles.buttonText}>Cautare</Text>
