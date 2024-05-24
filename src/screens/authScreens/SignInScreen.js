@@ -62,7 +62,7 @@ export default function SignInScreen({ navigation }) {
 
                 <TextInput
                   style={{ flex: 1 }}
-                  placeholder='Password'
+                  placeholder='Parolă'
                   ref={textInput2}
                   onFocus={() => setTextInput2Focussed(false)}
                   onBlur={() => setTextInput2Focussed(true)}

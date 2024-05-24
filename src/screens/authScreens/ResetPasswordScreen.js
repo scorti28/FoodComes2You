@@ -11,7 +11,7 @@ export default function ResetPasswordScreen({ navigation }) {
   async function handleResetPassword() {
     try {
       await auth().sendPasswordResetEmail(email);
-      Alert.alert('Password Reset Email Sent', 'Check your email to reset your password.');
+      Alert.alert('Emailul pentru resetarea parolei a fost trimis', 'Verifica emailul pentru a reseta parola.');
       navigation.goBack(); 
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginTop: 80, // Adjust the marginTop to create space for the header
+    marginTop: 80, 
   },
   title: {
     fontSize: 24,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: parameters.styledButton.backgroundColor,
     borderRadius: parameters.styledButton.borderRadius,
     height: parameters.styledButton.height,
-    paddingHorizontal: 20, // Adjust the padding to your preference
+    paddingHorizontal: 20, 
   },
   buttonTitle: {
     color: 'white',

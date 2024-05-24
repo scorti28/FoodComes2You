@@ -14,7 +14,7 @@ export default function SignInWelcomeScreen({navigation}) {
     auth().onAuthStateChanged((user) => {
       if(user){
         dispatchSignedIn({type:"UPDATE_SIGN_IN", payload:{userToken:"signed-in"}})
-      } else { //user is signed out
+      } else {
         dispatchSignedIn({type:"UPDATE_SIGN_IN", payload:{userToken:null}})
       }
     })

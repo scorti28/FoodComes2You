@@ -93,7 +93,6 @@ export default function SignUpScreen() {
         const userCredential = await auth().createUserWithEmailAndPassword(email, password);
         const uid = userCredential.user.uid;
     
-        // Create an object with non-empty fields
         const userFields = {
           phoneNumber,
           latitude,
@@ -101,12 +100,10 @@ export default function SignUpScreen() {
           timestamp
         };
     
-        // Add name to the userFields object only if it's not empty
         if (name) {
           userFields.name = name;
         }
     
-        // Add familyName to the userFields object only if it's not empty
         if (familyName) {
           userFields.familyName = familyName;
         }
@@ -114,7 +111,7 @@ export default function SignUpScreen() {
         await firestore().collection('users').doc(uid).set(userFields);
     
         await userCredential.user.updateProfile({
-          displayName: name && familyName ? `${name} ${familyName}` : name || familyName || '', // Set the display name here
+          displayName: name && familyName ? `${name} ${familyName}` : name || familyName || '', 
         });
     
         console.log("Creating user document in Firestore:", { ...userFields, name, familyName });
@@ -122,9 +119,9 @@ export default function SignUpScreen() {
 
       } catch (error) {
         if (error.code === 'auth/email-already-in-use')
-          Alert.alert("Email address already exists!");
+          Alert.alert("Emailul exista deja!");
         if (error.code === 'auth/invalid-email')
-          Alert.alert("Email address is incorrect!");
+          Alert.alert("Emailul este incorect!");
         else {
           Alert.alert(error.code);
         }
@@ -133,10 +130,10 @@ export default function SignUpScreen() {
 
   return (
     <View style={styles.container}>
-    <Header title="Create Account" type="arrow-left-circle" navigation = {navigation}/>
+    <Header title="Creează cont" type="arrow-left-circle" navigation = {navigation}/>
       <ScrollView keyboardShouldPersistTaps="always">
            <View style={styles.view1}>
-                <Text style={styles.text1}>Sign Up</Text>
+                <Text style={styles.text1}>Înregistrare</Text>
           </View> 
           <Formik initialValues={initialValues} onSubmit={(values, props) => {
                  signUp(values);
@@ -146,11 +143,11 @@ export default function SignUpScreen() {
                 (props) => (
                     <View style={styles.view2}>
                         <View>
-                            <Text style={styles.text2}>New here? Create account!</Text>
+                            <Text style={styles.text2}>Nou aici? Creează cont!</Text>
                         </View>
                             <View style={styles.view6}>
                             <TextInput 
-                                   placeholder='Phone number'
+                                   placeholder='Număr de telefon'
                                    style={styles.input1}
                                    keyboardType='number-pad'
                                    autoFocus={true}
@@ -162,7 +159,7 @@ export default function SignUpScreen() {
                             {phoneNumberError.length > 0 && <Text style={styles.error}>{phoneNumberError}</Text>}
                             <View style={styles.view6}>
                                 <TextInput 
-                                    placeholder='First Name'
+                                    placeholder='Nume'
                                     style = {styles.input1}
                                     autoFocus={false}
                                     onChangeText={props.handleChange("name")}
@@ -171,7 +168,7 @@ export default function SignUpScreen() {
                             </View>
                             <View style={styles.view6}>
                                 <TextInput 
-                                    placeholder='Last Name'
+                                    placeholder='Prenume'
                                     style = {styles.input1}
                                     autoFocus={false}
                                     onChangeText={props.handleChange("familyName")}
@@ -206,7 +203,7 @@ export default function SignUpScreen() {
                                     />
                                 </Animatable.View>
                                 <TextInput 
-                                    placeholder='Password'
+                                    placeholder='Parolă'
                                     style = {{flex:1}}
                                     autoFocus={false}
                                     onChangeText={props.handleChange("password")}
@@ -226,7 +223,7 @@ export default function SignUpScreen() {
                             {passwordError.length > 0 && <Text style={styles.error}>{passwordError}</Text>}
                             <View  style={styles.view17}>
                                 <Button 
-                                     title="Create account"
+                                     title="Creează cont"
                                      buttonStyle={styles.button1}
                                      titleStyle={styles.title1}
                                      onPress={() => {validateCredentials(props)}}
@@ -237,11 +234,11 @@ export default function SignUpScreen() {
             )}
           </Formik>
           <View style={styles.view18}>
-            <Text style={styles.text5}>OR TRY</Text>
+            <Text style={styles.text5}>SAU ÎNCEARCĂ</Text>
           </View>
           <View style={styles.view19}>
                 <View style={styles.view20}>
-                    <Text style={styles.text5}>Already created an account? Sign In!</Text>
+                    <Text style={styles.text5}>Ai deja un cont creat? Loghează-te!</Text>
                 </View>
                 <View style={styles.view21}>
                     <Button 
@@ -261,8 +258,6 @@ const styles = StyleSheet.create({
   error: {
     flex: 1,
     color: '#FF0000',
-    // marginTop: 5,
-    // marginLeft: 10,
     flexDirection: 'column'
   },
     container:{flex:1,
