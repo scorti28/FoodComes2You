@@ -79,14 +79,14 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     textContainer: {
-        backgroundColor: 'rgba(0, 0, 0, 0.6)', // Darker overlay for better contrast
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', 
         padding: 10,
     },
     nameText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'white', // Ensuring text is white
-        textShadowColor: 'rgba(0, 0, 0, 0.75)', // Text shadow for better visibility
+        color: 'white', 
+        textShadowColor: 'rgba(0, 0, 0, 0.75)', 
         textShadowOffset: {width: -1, height: 1},
         textShadowRadius: 10
     },
@@ -102,11 +102,11 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         padding: 10,
-        backgroundColor: 'white' // Always white background for restaurant details
+        backgroundColor: 'white' 
     },
     addressText: {
         fontSize: 16,
-        color: 'black', // Always black text for address
+        color: 'black', 
     },
     iconWithText: {
         flexDirection: 'row',
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     distanceText: {
         fontSize: 14,
         marginLeft: 5,
-        color: 'black' // Always black text for distance
+        color: 'black' 
     }
 });
 

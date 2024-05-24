@@ -106,7 +106,6 @@ const handleLocationUpdate = async () => {
   console.log(location);
 };
 
-  // Function to Store Location in Firebase
   const storeLocationInFirebase = () => {
     try {
       const user = auth().currentUser;
@@ -158,7 +157,7 @@ const getDistance = (lattitude1, longittude1, lattitude2, longittude2) =>
     let lon1 = longittude1
 
     console.log(lat1, lon1+"==="+lat2, lon2)
-    let R = 6371  // km
+    let R = 6371  
     let x1 = lat2 - lat1
     let dLat = toRadian(x1)
     let x2 = lon2 - lon1
@@ -200,7 +199,7 @@ const sortDistance = () => {
    }
 
   const sortedData = restaurantData.sort((a, b) => {
-    const distanceA = parseFloat(a.farAway || Infinity); // Treat undefined as infinitely far away
+    const distanceA = parseFloat(a.farAway || Infinity); 
     const distanceB = parseFloat(b.farAway || Infinity);
     return distanceA - distanceB;
   });
@@ -213,7 +212,6 @@ const sortDistance = () => {
     console.log("@@@@@@@@@@@@@@@@@@@@@", restaurant);
     console.log("------------------------------------------------")
   })
-//console.log("Sorted data:", sortedData);
 
   return sortedData;
 };

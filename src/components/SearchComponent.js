@@ -15,8 +15,8 @@ export default function SearchComponent() {
     const [filterData, setFilterData] = useState([]); 
     const [data, setData] = useState([]);
     const navigation = useNavigation();
-    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
-    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+    const { isDarkMode } = useContext(ThemeContext); 
+    const currentColors = isDarkMode ? darkColors : colors; 
 
     useEffect(() => {
         const fetchData = async () => {

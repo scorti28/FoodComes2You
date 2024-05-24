@@ -40,17 +40,15 @@
    const filterAndSortRestaurants = () => {
      const chosenFacilities = Object.entries(checkedFacilities).filter(([_, value]) => value).map(([key]) => key);
      const chosenFoodTypes = Object.entries(checkedFoodTypes).filter(([_, value]) => value).map(([key]) => key)
-     // Scoring and sorting restaurants
      const scoredRestaurants = restaurantData.map(restaurant => {
        const facilityScore = chosenFacilities.reduce((acc, facility) =>
          acc + (Object.values(restaurant.facilities || {}).includes(facility) ? 1 : 0), 0);
        const foodTypeScore = chosenFoodTypes.reduce((acc, type) =>
          acc + (restaurant.foodCategories.includes(type) ? 1 : 0), 0);
-       const totalScore = facilityScore + foodTypeScore;  // Total score based on both categorie
+       const totalScore = facilityScore + foodTypeScore;  
        return { ...restaurant, score: totalScore };
      })
-     const sortedRestaurants = scoredRestaurants.sort((a, b) => b.score - a.score); // Sorting by total score descendin
-     // Detailed console logging to show the scores and sorted results
+     const sortedRestaurants = scoredRestaurants.sort((a, b) => b.score - a.score); 
      console.log("Detailed Scores and Sorted Restaurants:");
      sortedRestaurants.forEach((restaurant, index) => {
        console.log(`Rank ${index + 1}: ${restaurant.name} (Score: ${restaurant.score})`);

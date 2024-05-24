@@ -10,8 +10,8 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function MySearchScreen({navigation}) {
     const [filterData, setFilterData] = useState([]);
-    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
-    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+    const { isDarkMode } = useContext(ThemeContext); 
+    const currentColors = isDarkMode ? darkColors : colors; 
     useEffect(() => {
         const fetchDataAndLocation = async () => {
           const data = await extractDataFromFirebase();
@@ -52,7 +52,7 @@ export default function MySearchScreen({navigation}) {
                 showsVerticalScrollIndicator={false}
                 numColumns={2}
                 ListHeaderComponent={
-                    <Text style={[styles.listHeader, {color: currentColors.grey2, marginTop: 20}]}>Categorii de mâncare</Text> // Added marginTop for spacing
+                    <Text style={[styles.listHeader, {color: currentColors.grey2, marginTop: 20}]}>Categorii de mâncare</Text> 
                 }
                 ListFooterComponent={<Footer />}
                 contentContainerStyle={{ paddingBottom: 20 }}
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     imageBackground:{
         flex: 0,
         borderRadius:10,
-        overflow: 'hidden', // Ensure image doesn't overflow its container
+        overflow: 'hidden', 
     },
     listHeader:{
         fontSize:16,

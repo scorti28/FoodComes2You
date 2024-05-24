@@ -2,16 +2,15 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import FoodCard from "../components/FoodCard";
 import HomeHeader from "../components/HomeHeader";
-import { restaurantMenuExtractor } from '../global/restaurantMenuExtract';
-import { colors, darkColors } from '../global/styles'; // Import darkColors
+import { colors, darkColors } from '../global/styles'; 
 import { ThemeContext } from '../global/themeContext';
 import { RestaurantContext } from '../contexts/restaurantSortedContext';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({ navigation, route }) {
-    const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
-    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+    const { isDarkMode } = useContext(ThemeContext); 
+    const currentColors = isDarkMode ? darkColors : colors; 
     const [restaurantData, setRestaurantData] = useState([]);
     const { sortedRestaurants } = useContext(RestaurantContext);
 
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     viewRestaurant: {
-        alignItems: 'center', // Center the content horizontally
+        alignItems: 'center', 
         paddingBottom: 20,
         paddingHorizontal: 10
     }

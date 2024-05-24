@@ -14,8 +14,8 @@ export const colors = {
   
   export const darkColors = {
     buttons: "#1b9e70",
-    grey1: '#ffffff', // Bright color for text in dark mode
-    grey2: '#b0b0b0', // Lighter grey for secondary text
+    grey1: '#ffffff', 
+    grey2: '#b0b0b0', 
     grey3: 'white',
     grey4: '#2b2b2b',
     grey5: '#141414',
@@ -24,10 +24,10 @@ export const colors = {
     statusbar: '#00A86B',
     headerText: "white",
     pageBackground: "#000000",
-    background: '#121212', // Dark background for the main area
-    text: '#ffffff', // Light text for better readability in dark mode
-    primary: '#bb86fc', // Example primary color in dark theme
-    secondary: '#03dac6', // Example secondary color in dark theme
+    background: '#121212', 
+    text: '#ffffff', 
+    primary: '#bb86fc', 
+    secondary: '#03dac6', 
   };
   
   export const parameters = {

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Alert, StyleSheet } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
-import { darkColors } from "../global/styles"; // Import only darkColors for dark mode
+import { darkColors } from "../global/styles"; 
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
 import firestore from "@react-native-firebase/firestore";
@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function DrawerContent(props) {
   const { dispatchSignedIn } = useContext(SignInContext);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
-  const currentColors = isDarkMode ? darkColors : null; // Use darkColors for dark mode
+  const currentColors = isDarkMode ? darkColors : null; 
   const [userProfile, setUserProfile] = useState(null);
   const navigation = useNavigation();
 
@@ -62,7 +62,7 @@ export default function DrawerContent(props) {
             <Icon
               name={isDarkMode ? "brightness-3" : "brightness-5"}
               type="material"
-              color={isDarkMode ? darkColors.grey1 : color} // Set icon color to white in dark mode
+              color={isDarkMode ? darkColors.grey1 : color} 
               size={size}
             />
           )}
@@ -76,12 +76,12 @@ export default function DrawerContent(props) {
             <Icon
               name="information-variant"
               type="material-community"
-              color={isDarkMode ? darkColors.grey1 : color} // Set icon color to white in dark mode
+              color={isDarkMode ? darkColors.grey1 : color} 
               size={size}
             />
           )}
-          onPress={() => navigation.navigate("MyOrdersScreen")} // Wrap navigation.navigate in an arrow function
-          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} // Set sign out text color to white in dark mode
+          onPress={() => navigation.navigate("MyOrdersScreen")} 
+          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
         />
 
         <DrawerItem
@@ -90,12 +90,12 @@ export default function DrawerContent(props) {
             <Icon
               name="logout-variant"
               type="material-community"
-              color={isDarkMode ? darkColors.grey1 : color} // Set icon color to white in dark mode
+              color={isDarkMode ? darkColors.grey1 : color} 
               size={size}
             />
           )}
           onPress={signOut}
-          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} // Set sign out text color to white in dark mode
+          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
         />
       </View>
     </DrawerContentScrollView>

@@ -11,8 +11,8 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function RestaurantHomeScreen({ route, navigation }) {
   const { restaurant } = route.params;
   const [liked, setLiked] = useState(false);
-  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
-  const currentColors = isDarkMode ? darkColors : colors; // Determine current colors based on the theme
+  const { isDarkMode } = useContext(ThemeContext); 
+  const currentColors = isDarkMode ? darkColors : colors; 
 
   const likeHandler = () => {
     setLiked(!liked);

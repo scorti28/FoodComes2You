@@ -67,11 +67,11 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         height: 150,
-        width: '100%'  // Ensure the image covers the full width
+        width: '100%'  
     },
     details: {
         padding: 10,
-        width: '100%',  // Stretch details to cover full width
+        width: '100%',  
         backgroundColor: '#fff',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderTopRightRadius: 5,
         borderBottomLeftRadius: 12,
-        width: 'auto' // Ensure the review box positions correctly
+        width: 'auto' 
     },
     averageReview: {
         color: "white",

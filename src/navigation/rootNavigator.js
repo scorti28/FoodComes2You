@@ -9,7 +9,7 @@ export default function RootNavigator(){
     return(
         <NavigationContainer>
             {
-                signedIn.userToken !== 'signed-in' ? ( //user is logged out => don't have access to the app
+                signedIn.userToken !== 'signed-in' ? ( 
                     <AuthFunction />
                 ) : (
                     <DrawerNavigator />

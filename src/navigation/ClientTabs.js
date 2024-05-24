@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'react-native-elements';
-import { colors, darkColors } from '../global/styles'; // Import colors for dark mode
+import { colors, darkColors } from '../global/styles';
 import HomeScreen from '../screens/HomeScreen';
 import MyOrdersScreen from '../screens/AboutUs';
 import FirstPage from '../screens/FirstPage';
@@ -11,13 +11,12 @@ import MySearchScreen from '../screens/SearchScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import RestaurantHomeScreen from '../screens/restaurantScreens/RestaurantHomeScreen';
 import MenuProductsScreen from '../screens/MenuProductsScreen';
-import { ThemeContext } from '../global/themeContext'; // Import ThemeContext
+import { ThemeContext } from '../global/themeContext'; 
 
 const ClientTabs = createBottomTabNavigator();
 const ClientStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 
-// Stack pentru navigarea Home
 function HomeStackNavigator() {
   return (
     <HomeStack.Navigator>
@@ -40,7 +39,6 @@ function HomeStackNavigator() {
   );
 }
 
-// Stack pentru Search
 function ClientStackNavigator() {
   return (
     <ClientStack.Navigator>
@@ -68,10 +66,9 @@ function ClientStackNavigator() {
   );
 }
 
-// Tab-ul principal al clientului
 function RootClientTabs() {
-  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext to get dark mode state
-  const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+  const { isDarkMode } = useContext(ThemeContext); 
+  const currentColors = isDarkMode ? darkColors : colors; 
 
   return (
     <ClientTabs.Navigator tabBarOptions={{ activeTintColor: currentColors.buttons }}>

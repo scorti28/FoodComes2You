@@ -7,8 +7,8 @@ import { ThemeContext } from '../global/themeContext';
 export default function HomeHeader({navigation}) {
   const BadgeIcon = withBadge(0)(Icon);
 
-  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
-    const currentColors = isDarkMode ? darkColors : colors; // Determine current colors
+  const { isDarkMode } = useContext(ThemeContext); 
+    const currentColors = isDarkMode ? darkColors : colors; 
 
   return (
     <View style={[styles.header, {backgroundColor: currentColors.statusbar}]}>
