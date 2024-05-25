@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, Alert, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
-import { darkColors } from "../global/styles"; 
 import auth from "@react-native-firebase/auth";
 import { SignInContext } from "../contexts/authContext";
 import firestore from "@react-native-firebase/firestore";
 import { ThemeContext } from "../global/themeContext";
 import { useNavigation } from "@react-navigation/native";
+import { colors, darkColors } from "../global/styles";
 
 export default function DrawerContent(props) {
   const { dispatchSignedIn } = useContext(SignInContext);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
-  const currentColors = isDarkMode ? darkColors : null; 
+  const currentColors = isDarkMode ? darkColors : colors; 
   const [userProfile, setUserProfile] = useState(null);
   const navigation = useNavigation();
 
@@ -25,7 +25,7 @@ export default function DrawerContent(props) {
         if (userData) {
           setUserProfile({
             name: userData.name,
-            familyName: userData.familyName
+            email: user.email,
           });
         }
       }
@@ -44,15 +44,19 @@ export default function DrawerContent(props) {
   }
 
   return (
-    <DrawerContentScrollView {...props} style={{ backgroundColor: isDarkMode ? darkColors.pageBackground : null }}>
+    <DrawerContentScrollView {...props} style={{ backgroundColor: isDarkMode ? darkColors.pageBackground : colors.pageBackground }}>
       <View style={styles.container}>
-        <View style={[styles.userContainer, { borderBottomColor: isDarkMode ? darkColors.grey1 : null }]}>
+        <View style={[styles.userContainer, { borderBottomColor: isDarkMode ? darkColors.grey1 : colors.grey1 }]}>
           <View style={styles.avatarContainer}>
-            <Text style={[styles.avatarText, { color: currentColors ? currentColors.grey1 : null }]}>👤</Text>
+            {userProfile?.profilePicture ? (
+              <Image source={{ uri: userProfile.profilePicture }} style={styles.avatarImage} />
+            ) : (
+              <Icon name="person" type="material" color={isDarkMode ? darkColors.grey1 : colors.primary} size={50} />
+            )}
           </View>
           <View style={styles.nameContainer}>
-            <Text style={[styles.nameText, { color: currentColors ? currentColors.grey1 : null }]}>Bine ai venit,</Text>
-            <Text style={[styles.nameText, { color: currentColors ? currentColors.grey1 : null }]}>{userProfile ? `${userProfile.name} ${userProfile.familyName}` : "Name"}!</Text>
+            <Text style={[styles.nameText, { color: currentColors ? currentColors.text : colors.text }]}>{userProfile ? userProfile.name : "Name"}</Text>
+            <Text style={[styles.emailText, { color: currentColors ? currentColors.text : colors.text }]}>{userProfile ? userProfile.email : "Email"}</Text>
           </View>
         </View>
 
@@ -63,40 +67,40 @@ export default function DrawerContent(props) {
               <Icon
                 name={isDarkMode ? "brightness-3" : "brightness-5"}
                 type="material"
-                color={isDarkMode ? darkColors.grey1 : color} 
+                color={isDarkMode ? darkColors.grey1 : colors.primary}
                 size={size}
               />
             )}
             onPress={toggleTheme}
-            labelStyle={{ color: currentColors ? currentColors.grey1 : null }}
+            labelStyle={{ color: currentColors ? currentColors.text : colors.text }}
           />
 
           <DrawerItem
             label="Despre noi"
             icon={({ color, size }) => (
               <Icon
-                name="information-variant"
-                type="material-community"
-                color={isDarkMode ? darkColors.grey1 : color} 
+                name="info"
+                type="material"
+                color={isDarkMode ? darkColors.grey1 : colors.primary}
                 size={size}
               />
             )}
-            onPress={() => navigation.navigate("MyOrdersScreen")} 
-            labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
+            onPress={() => navigation.navigate("MyOrdersScreen")}
+            labelStyle={{ color: currentColors ? currentColors.text : colors.text }}
           />
 
           <DrawerItem
             label="Sign out"
             icon={({ color, size }) => (
               <Icon
-                name="logout-variant"
-                type="material-community"
-                color={isDarkMode ? darkColors.grey1 : color} 
+                name="logout"
+                type="material"
+                color={isDarkMode ? darkColors.grey1 : colors.primary}
                 size={size}
               />
             )}
             onPress={signOut}
-            labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
+            labelStyle={{ color: currentColors ? currentColors.text : colors.text }}
           />
         </View>
       </View>
@@ -119,8 +123,10 @@ const styles = StyleSheet.create({
   avatarContainer: {
     marginRight: 20,
   },
-  avatarText: {
-    fontSize: 24,
+  avatarImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   nameContainer: {
     flex: 1,
@@ -129,9 +135,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  emailText: {
+    fontSize: 14,
+    color: "gray",
+  },
   drawerItemsContainer: {
     flex: 1,
-    justifyContent: 'center',
-    paddingTop: 200, // Add padding to move the items down
+    paddingTop: 20,
   },
 });
