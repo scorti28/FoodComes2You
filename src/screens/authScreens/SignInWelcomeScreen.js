@@ -31,21 +31,21 @@ export default function SignInWelcomeScreen({navigation}) {
         <Swiper autoplay={true}>
           <View style={styles.slide1}>
             <Image
-              source={require('../../images/SignInWelcomeScreenSliderP1.jpeg')}
+              source={{uri: "https://firebasestorage.googleapis.com/v0/b/foodcomes2you.appspot.com/o/SignInWelcomeScreenSliderP1.jpeg?alt=media&token=cea4a1cb-cdf0-45d5-9d96-bd5614b5228f"}}
               style={styles.imageStyle}
             />
           </View>
 
           <View style={styles.slide2}>
             <Image
-              source={require('../../images/SignInWelcomeScreenSliderP2.jpeg')}
+              source={{uri: "https://firebasestorage.googleapis.com/v0/b/foodcomes2you.appspot.com/o/SignInWelcomeScreenSliderP2.jpeg?alt=media&token=735cf619-1893-4c02-be6f-143bfe13cb7e"}}
               style={styles.imageStyle}
             />
           </View>
 
           <View style={styles.slide3}>
             <Image
-              source={require('../../images/SignInWelcomeScreenSliderP3.jpeg')}
+              source={{uri: "https://firebasestorage.googleapis.com/v0/b/foodcomes2you.appspot.com/o/SignInWelcomeScreenSliderP3.jpeg?alt=media&token=0e554b6c-39de-48b6-9929-6eff598577fc"}}
               style={styles.imageStyle}
             />
           </View>
