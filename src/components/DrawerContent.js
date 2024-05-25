@@ -21,7 +21,6 @@ export default function DrawerContent(props) {
     const fetchUserProfile = async () => {
       const user = auth().currentUser;
       if (user) {
-        // Adding a delay to ensure data is fetched
         await new Promise(resolve => setTimeout(resolve, 500));
         const userDoc = await firestore().collection('users').doc(user.uid).get();
         const userData = userDoc.data();
@@ -32,12 +31,11 @@ export default function DrawerContent(props) {
             email: user.email,
           });
         }
-        setLoading(false); // Stop loading when data is fetched
+        setLoading(false); 
       }
     };
     fetchUserProfile();
 
-    // Listen for authentication state changes
     const authListener = auth().onAuthStateChanged((user) => {
       if (user) {
         fetchUserProfile();
