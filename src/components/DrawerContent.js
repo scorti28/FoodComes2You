@@ -56,47 +56,49 @@ export default function DrawerContent(props) {
           </View>
         </View>
 
-        <DrawerItem
-          label="Dark Mode"
-          icon={({ color, size }) => (
-            <Icon
-              name={isDarkMode ? "brightness-3" : "brightness-5"}
-              type="material"
-              color={isDarkMode ? darkColors.grey1 : color} 
-              size={size}
-            />
-          )}
-          onPress={toggleTheme}
-          labelStyle={{ color: currentColors ? currentColors.grey1 : null }}
-        />
+        <View style={styles.drawerItemsContainer}>
+          <DrawerItem
+            label="Dark Mode"
+            icon={({ color, size }) => (
+              <Icon
+                name={isDarkMode ? "brightness-3" : "brightness-5"}
+                type="material"
+                color={isDarkMode ? darkColors.grey1 : color} 
+                size={size}
+              />
+            )}
+            onPress={toggleTheme}
+            labelStyle={{ color: currentColors ? currentColors.grey1 : null }}
+          />
 
-        <DrawerItem
-          label="Despre noi"
-          icon={({ color, size }) => (
-            <Icon
-              name="information-variant"
-              type="material-community"
-              color={isDarkMode ? darkColors.grey1 : color} 
-              size={size}
-            />
-          )}
-          onPress={() => navigation.navigate("MyOrdersScreen")} 
-          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
-        />
+          <DrawerItem
+            label="Despre noi"
+            icon={({ color, size }) => (
+              <Icon
+                name="information-variant"
+                type="material-community"
+                color={isDarkMode ? darkColors.grey1 : color} 
+                size={size}
+              />
+            )}
+            onPress={() => navigation.navigate("MyOrdersScreen")} 
+            labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
+          />
 
-        <DrawerItem
-          label="Sign out"
-          icon={({ color, size }) => (
-            <Icon
-              name="logout-variant"
-              type="material-community"
-              color={isDarkMode ? darkColors.grey1 : color} 
-              size={size}
-            />
-          )}
-          onPress={signOut}
-          labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
-        />
+          <DrawerItem
+            label="Sign out"
+            icon={({ color, size }) => (
+              <Icon
+                name="logout-variant"
+                type="material-community"
+                color={isDarkMode ? darkColors.grey1 : color} 
+                size={size}
+              />
+            )}
+            onPress={signOut}
+            labelStyle={{ color: isDarkMode ? darkColors.grey1 : null }} 
+          />
+        </View>
       </View>
     </DrawerContentScrollView>
   );
@@ -112,6 +114,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
+    width: '100%',
   },
   avatarContainer: {
     marginRight: 20,
@@ -125,5 +128,10 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  drawerItemsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 200, // Add padding to move the items down
   },
 });

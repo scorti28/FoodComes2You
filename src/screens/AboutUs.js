@@ -11,8 +11,8 @@ export default function MyOrdersScreen({ navigation }) {
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: currentColors.pageBackground }]}>
             <View style={styles.header}>
-                <Text style={[styles.title, { color: currentColors.buttons }]}>FoodComes2You</Text>
-                <Text style={[styles.subtitle, { color: currentColors.buttons }]}>Despre noi</Text>
+                <Text style={[styles.title, { color: currentColors.text }]}>FoodComes2You</Text>
+                <Text style={[styles.subtitle, { color: currentColors.text }]}>Despre noi</Text>
             </View>
             <View style={styles.content}>
                 <Text style={[styles.paragraph, { color: currentColors.text }]}>

@@ -50,7 +50,7 @@ export default function SearchComponent() {
             <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
                 <View style={[styles.searchArea, {
                     backgroundColor: currentColors.grey5, 
-                    borderColor: currentColors.grey4,
+                    borderColor: isDarkMode ? currentColors.grey4_1 : currentColors.grey4 ,
                     }]}
                 >
                     <Icon
@@ -77,8 +77,8 @@ export default function SearchComponent() {
                             </Animatable.View>
                             <TextInput
                                 style={{ width: "90%", color: currentColors.grey1 }}
-                                placeholder="Search..."
-                                placeholderTextColor={currentColors.grey2}
+                                placeholder="Caută..."
+                                placeholderTextColor={isDarkMode ?  currentColors.grey2_1 : currentColors.grey2}
                                 autoFocus={true}
                                 ref={textInput}
                                 onFocus={() => setTextInputFocussed(true)}
@@ -89,7 +89,7 @@ export default function SearchComponent() {
                                 <Icon
                                     name="window-close"
                                     type="material-community"
-                                    iconStyle={{ color: currentColors.grey3, marginRight: -10 }}
+                                    iconStyle={{ color: currentColors.grey3 }}
                                     onPress={() => {
                                         textInput.current.clear();
                                         handleSearch('');  
@@ -104,7 +104,7 @@ export default function SearchComponent() {
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => handleSelectCategory(item.name)}>
                                 <View style={styles.view2}>
-                                    <Text style={{ color: currentColors.grey2, fontSize: 15 }}>{item.name}</Text>
+                                    <Text style={{ color: isDarkMode ?  currentColors.grey2_1 : currentColors.grey2, fontSize: 15 }}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}

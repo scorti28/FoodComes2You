@@ -41,8 +41,8 @@ export default function MySearchScreen({navigation}) {
                                 style={styles.imageBackground}
                                 source={{ uri: item.image }}
                             >
-                                <View style={[styles.textView, {backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(52, 52, 52, 0.3)'}]}>
-                                    <Text style={{ color: isDarkMode ? '#FFFFFF' : '#FFFFFF' }}>{item.name}</Text>
+                                <View style={[styles.textView, /*{backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(52, 52, 52, 0.3)'}*/]}>
+                                    <Text style={{ color: isDarkMode ? '#FFFFFF' : '#FFFFFF', fontWeight: 'bold'}}>{item.name}</Text>
                                 </View>
                             </ImageBackground>
                         </View>
@@ -52,7 +52,7 @@ export default function MySearchScreen({navigation}) {
                 showsVerticalScrollIndicator={false}
                 numColumns={2}
                 ListHeaderComponent={
-                    <Text style={[styles.listHeader, {color: currentColors.grey2, marginTop: 20}]}>Categorii de mâncare</Text> 
+                    <Text style={[styles.listHeader, {color: isDarkMode ? currentColors.grey2_1 : currentColors.grey2, marginTop: 20}]}>Categorii de mâncare</Text> 
                 }
                 ListFooterComponent={<Footer />}
                 contentContainerStyle={{ paddingBottom: 20 }}
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
         height: SCREEN_WIDTH * 0.4475,
         width: (SCREEN_WIDTH - 3 * SCREEN_WIDTH * 0.035) / 2, 
         alignItems:"center",
-        justifyContent:"center",
+        justifyContent:"flex-end",
     }
 });

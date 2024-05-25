@@ -97,6 +97,5 @@ const styles = StyleSheet.create({
   },
   scene: {
     flex: 1,
-  },
-  scene2: { backgroundColor: '#3a8bb7' },
+  }
 });

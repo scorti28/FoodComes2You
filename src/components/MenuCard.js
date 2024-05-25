@@ -6,7 +6,7 @@ export default function MenuCard({ name, price, quantity, details, isDarkMode })
   const currentColors = isDarkMode ? darkColors : colors;
 
   return (
-    <View style={[styles.view1, { backgroundColor: isDarkMode ? '#424242' : '#f0f0f0' }]}>
+    <View style={[styles.view1, { backgroundColor: isDarkMode ? '#2E8B57' : '#f0f0f0' }]}>
       <View style={styles.view2}>
         <View style={styles.view3}>
           <Text style={[styles.text1, { color: currentColors.text }]}>{name}</Text>
