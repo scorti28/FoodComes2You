@@ -25,6 +25,7 @@ export default function DrawerContent(props) {
         if (userData) {
           setUserProfile({
             name: userData.name,
+            familyName: userData.familyName,
             email: user.email,
           });
         }
@@ -55,7 +56,7 @@ export default function DrawerContent(props) {
             )}
           </View>
           <View style={styles.nameContainer}>
-            <Text style={[styles.nameText, { color: currentColors ? currentColors.text : colors.text }]}>{userProfile ? userProfile.name : "Name"}</Text>
+            <Text style={[styles.nameText, { color: currentColors ? currentColors.text : colors.text }]}>{userProfile ? userProfile.name + " " + userProfile.familyName : "Name"}</Text>
             <Text style={[styles.emailText, { color: currentColors ? currentColors.text : colors.text }]}>{userProfile ? userProfile.email : "Email"}</Text>
           </View>
         </View>
