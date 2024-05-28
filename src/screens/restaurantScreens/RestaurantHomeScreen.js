@@ -46,7 +46,15 @@ export default function RestaurantHomeScreen({ route, navigation }) {
               color={isDarkMode ? 'white' : currentColors.primary}
               size={28}
             />
-            <Text style={[styles.reviewText, { color: isDarkMode ? 'white' : currentColors.text }]}>{restaurant.farAway} km</Text>
+            <Text style={[styles.reviewText, { color: isDarkMode ? 'white' : currentColors.text }]}>{restaurant.address} ({restaurant.farAway} km)</Text>
+          </View>
+          <View style={styles.iconWithText}>
+            <MaterialCommunityIcons
+              name="phone"
+              color={isDarkMode ? 'white' : currentColors.primary}
+              size={28}
+            />
+            <Text style={[styles.reviewText, { color: isDarkMode ? 'white' : currentColors.text }]}>{restaurant.phoneNumber}</Text>
           </View>
         </View>
         <View style={[styles.divider, { borderColor: isDarkMode ? 'white' : currentColors.secondary }]} />

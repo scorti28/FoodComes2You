@@ -23,10 +23,10 @@ export async function restaurantMenuExtractor() {
 
   querySnapshot.forEach((doc) => {
       const data = doc.data();
-      const { id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway} = data;
+      const { id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway, phoneNumber} = data;
       restaurantData.push({
           docId: doc.id, 
-          id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway
+          id, address, averageReview, coordinates, facilities, foodCategories, restaurantMenu, name, image, nrReviews, farAway, phoneNumber
       });
   });
 

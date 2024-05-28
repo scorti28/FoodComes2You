@@ -32,13 +32,9 @@ export default function SignUpScreen() {
       var phoneValid = false;
       if (props.values.phoneNumber.length === 0) {
           setPhoneNumberError("Phone number is required");
-      } else if (props.values.phoneNumber.length !== 10) {
-          setPhoneNumberError("Phone number should be exactly 10 characters");
-      } else if (!props.values.phoneNumber.startsWith("07")) {
-          setPhoneNumberError("Phone number should start with 07");
       } else if (props.values.phoneNumber.indexOf(' ') >= 0) {
           setPhoneNumberError('Phone number cannot contain spaces');
-      } else if (!props.values.phoneNumber.match(/^[0-9]+$/)) {
+      } else if (!props.values.phoneNumber.match(/^\+?[0-9]+$/)) {
           setPhoneNumberError('Phone number can only contain digits');
       }
        else {
@@ -123,7 +119,7 @@ export default function SignUpScreen() {
         if (error.code === 'auth/invalid-email')
           Alert.alert("Emailul este incorect!");
         else {
-          Alert.alert(error.code);
+          //Alert.alert(error.code);
         }
       }
     }

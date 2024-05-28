@@ -208,11 +208,6 @@ const sortDistance = () => {
     console.log(`${restaurant.name}: ${restaurant.farAway || 'Distance not available'} km`);
   });
 
-  sortedData.forEach(restaurant => {
-    console.log("@@@@@@@@@@@@@@@@@@@@@", restaurant);
-    console.log("------------------------------------------------")
-  })
-
   return sortedData;
 };
   
