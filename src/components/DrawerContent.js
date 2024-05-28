@@ -11,7 +11,7 @@ import { colors, darkColors } from "../global/styles";
 
 export default function DrawerContent(props) {
   const { dispatchSignedIn } = useContext(SignInContext);
-  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const { isDarkMode, toggleTheme, setIsDarkMode } = useContext(ThemeContext);
   const currentColors = isDarkMode ? darkColors : colors;
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -48,6 +48,7 @@ export default function DrawerContent(props) {
   async function signOut() {
     try {
       await auth().signOut();
+      setIsDarkMode(false);
       dispatchSignedIn({ type: "UPDATE_SIGN_IN", payload: { userToken: null } });
     } catch (error) {
       Alert.alert(error.code);
