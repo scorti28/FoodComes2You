@@ -35,7 +35,7 @@ const SearchResultScreen = ({ route }) => {
                 ListHeaderComponent={
                     <View style={styles.listHeader}>
                         <Text style={[styles.listHeaderText, {color: currentColors.grey1}]}>
-                            {filteredRestaurants.length} results for {route.params.foodType}
+                            {filteredRestaurants.length} rezultat/e pentru {route.params.foodType}
                         </Text>
                     </View>
                 }        

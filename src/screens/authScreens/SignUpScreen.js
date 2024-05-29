@@ -26,8 +26,30 @@ export default function SignUpScreen() {
     const [passwordError, setPasswordError] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [phoneNumberError, setPhoneNumberError] = useState("")
+    const [nameError, setNameError] = useState("")
+    const [familyNameError, setFamilyNameError] = useState("")
+    const [name, setName] = useState("")
+    const [familyName, setFamilyName] = useState("")
 
     function validateCredentials(props) {
+
+      var nameValid = false;
+      if (props.values.name.length === 0) {
+        setNameError("Name is required");
+      }
+       else {
+        setNameError("");
+        nameValid = true;
+      }
+
+      var familyNameValid = false;
+      if (props.values.familyName.length === 0) {
+        setFamilyNameError("Family name is required");
+      }
+       else {
+        setFamilyNameError("");
+        familyNameValid = true;
+      }
 
       var phoneValid = false;
       if (props.values.phoneNumber.length === 0) {
@@ -76,10 +98,12 @@ export default function SignUpScreen() {
           passwordValid = true;
       }
   
-      if (emailValid && passwordValid && phoneValid) {
+      if (emailValid && passwordValid && phoneValid && nameValid && familyNameValid) {
           setEmail("");
           setPassword("");
           setPhoneNumber("");
+          setName("")
+          setFamilyName("")
           props.handleSubmit();
       }
   }
@@ -119,7 +143,7 @@ export default function SignUpScreen() {
         if (error.code === 'auth/invalid-email')
           Alert.alert("Emailul este incorect!");
         else {
-          //Alert.alert(error.code);
+          //Alert.alert(error.code);12356
         }
       }
     }
@@ -162,6 +186,7 @@ export default function SignUpScreen() {
                                     value={props.values.name}
                                 />
                             </View>
+                            {nameError.length > 0 && <Text style={styles.error}>{nameError}</Text>}
                             <View style={styles.view6}>
                                 <TextInput 
                                     placeholder='Prenume'
@@ -171,6 +196,7 @@ export default function SignUpScreen() {
                                     value={props.values.familyName}
                                 />
                             </View>
+                            {familyNameError.length > 0 && <Text style={styles.error}>{familyNameError}</Text>}
                             <View style={styles.view10}>
                                 <View>
                                     <Icon 
