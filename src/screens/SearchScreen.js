@@ -41,7 +41,7 @@ export default function MySearchScreen({navigation}) {
                                 style={styles.imageBackground}
                                 source={{ uri: item.image }}
                             >
-                                <View style={[styles.textView, /*{backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(52, 52, 52, 0.3)'}*/]}>
+                                <View style={[styles.textView]}>
                                     <Text style={{ color: isDarkMode ? '#FFFFFF' : '#FFFFFF', fontWeight: 'bold'}}>{item.name}</Text>
                                 </View>
                             </ImageBackground>

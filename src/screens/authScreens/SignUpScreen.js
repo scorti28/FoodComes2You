@@ -142,9 +142,6 @@ export default function SignUpScreen() {
           Alert.alert("Emailul exista deja!");
         if (error.code === 'auth/invalid-email')
           Alert.alert("Emailul este incorect!");
-        else {
-          //Alert.alert(error.code);
-        }
       }
     }
 
