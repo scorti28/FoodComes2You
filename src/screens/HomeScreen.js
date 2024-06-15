@@ -17,9 +17,7 @@ export default function HomeScreen({ navigation, route }) {
     useEffect(() => {
         if (sortedRestaurants.length > 0) {
             setRestaurantData(sortedRestaurants);
-        } else {
-            fetchData();
-        }
+        } 
     }, [sortedRestaurants]);
 
     return (
